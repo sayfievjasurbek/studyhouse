@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study House — International Education Agency | Universities in Europe, Australia, China & USA</title>
+  <meta name="description" content="Study House helps ambitious students get into world-class universities in Europe, Australia, China and the USA. Expert guidance from consultation to arrival.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛️</text></svg>">
+</head>
+<body>
+
+  <!-- ============================================
+       NAVIGATION
+       ============================================ -->
+  <nav class="navbar" id="navbar">
+    <div class="container navbar__inner">
+      <a href="#" class="navbar__logo" id="nav-logo">
+        <div class="navbar__logo-mark">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M20 6L22.5 16.5L33 14L24.5 21L30 31L20 24.5L10 31L15.5 21L7 14L17.5 16.5L20 6Z" fill="currentColor" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="navbar__logo-text">
+          <span class="navbar__logo-name">Study House</span>
+          <span class="navbar__logo-subtitle">International Education Agency</span>
+        </div>
+      </a>
+
+      <ul class="navbar__links" id="nav-links">
+        <li><a href="#" class="navbar__link navbar__link--active" id="nav-home">Home</a></li>
+        <li><a href="#universities-section" class="navbar__link" id="nav-universities">Universities</a></li>
+        <li><a href="#destinations-section" class="navbar__link" id="nav-destinations">Destinations</a></li>
+        <li><a href="#how-section" class="navbar__link" id="nav-services">Services</a></li>
+        <li><a href="#why-section" class="navbar__link" id="nav-about">About</a></li>
+        <li><a href="#stories-section" class="navbar__link" id="nav-contact">Contact</a></li>
+      </ul>
+
+      <div class="navbar__cta">
+        <a href="#" class="btn btn--primary" id="nav-cta">Book a Consultation →</a>
+      </div>
+
+      <button class="navbar__hamburger" id="hamburger-btn" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav Overlay -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#" class="mobile-nav__link" data-nav-close>Home</a>
+    <a href="#universities-section" class="mobile-nav__link" data-nav-close>Universities</a>
+    <a href="#destinations-section" class="mobile-nav__link" data-nav-close>Destinations</a>
+    <a href="#how-section" class="mobile-nav__link" data-nav-close>Services</a>
+    <a href="#why-section" class="mobile-nav__link" data-nav-close>About</a>
+    <a href="#stories-section" class="mobile-nav__link" data-nav-close>Contact</a>
+    <a href="#" class="btn btn--primary" data-nav-close>Book a Consultation →</a>
+  </div>
+
+  <!-- ============================================
+       HERO SECTION
+       ============================================ -->
+  <section class="hero" id="hero-section">
+    <div class="container">
+      <div class="hero__inner">
+        <div class="hero__content reveal">
+          <div class="eyebrow">International Education Agency</div>
+          <h1 class="hero__heading">
+            Your Future Starts at the Right <em>University.</em>
+          </h1>
+          <p class="hero__subtext">
+            We help ambitious students get into world-class universities in Europe, Australia, China and the USA.
+          </p>
+          <div class="hero__buttons">
+            <a href="#universities-section" class="btn btn--primary" id="hero-explore-btn">Explore Universities →</a>
+            <a href="#" class="btn btn--outline" id="hero-consult-btn">Book a Consultation</a>
+          </div>
+          <p class="hero__regions">Europe &nbsp;·&nbsp; Australia &nbsp;·&nbsp; China &nbsp;·&nbsp; USA</p>
+        </div>
+
+        <div class="hero__image-wrapper reveal reveal-delay-2">
+          <img src="images/hero-student.jpg" alt="Student with backpack looking up at a prestigious gothic university building" class="hero__image">
+          <!-- Decorative gold arc + star -->
+          <svg class="hero__image-arc" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 150C10 72 72 10 150 10" stroke="#B08D57" stroke-width="1.5" fill="none" opacity="0.7"/>
+            <path d="M150 4L152 10L158 10L153 14L155 20L150 16L145 20L147 14L142 10L148 10L150 4Z" fill="#B08D57" opacity="0.8"/>
+          </svg>
+          <div class="hero__image-caption">
+            <em>Global Opportunities. Real Futures.</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       TOP DESTINATIONS
+       ============================================ -->
+  <section class="destinations" id="destinations-section">
+    <div class="container">
+      <div class="destinations__header reveal">
+        <div>
+          <div class="eyebrow">Top Destinations</div>
+          <h2 class="section-heading">Study in the World's Best Countries</h2>
+        </div>
+        <a href="#" class="section-link" id="dest-view-all">
+          View all destinations
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="destinations__grid">
+        <!-- Europe -->
+        <a href="destinations/europe/index.html" class="dest-card reveal reveal-delay-1" id="dest-europe">
+          <img src="images/dest-europe.jpg" alt="European university campus with classical architecture" class="dest-card__image">
+          <div class="dest-card__overlay">
+            <h3 class="dest-card__name">Europe</h3>
+            <p class="dest-card__desc">World-renowned universities with rich academic traditions</p>
+            <div class="dest-card__arrow">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Australia -->
+        <div class="dest-card reveal reveal-delay-2" id="dest-australia">
+          <img src="images/dest-australia.jpg" alt="Sydney harbour and skyline at sunset" class="dest-card__image">
+          <div class="dest-card__overlay">
+            <h3 class="dest-card__name">Australia</h3>
+            <p class="dest-card__desc">Top-ranked institutions in a vibrant, welcoming environment</p>
+            <div class="dest-card__arrow">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- USA -->
+        <div class="dest-card reveal reveal-delay-3" id="dest-usa">
+          <img src="images/dest-usa.jpg" alt="Prestigious American university campus in autumn" class="dest-card__image">
+          <div class="dest-card__overlay">
+            <h3 class="dest-card__name">USA</h3>
+            <p class="dest-card__desc">Ivy League and beyond — limitless academic possibilities</p>
+            <div class="dest-card__arrow">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- China -->
+        <div class="dest-card reveal reveal-delay-4" id="dest-china">
+          <img src="images/dest-china.jpg" alt="Beautiful Chinese university campus with traditional architecture" class="dest-card__image">
+          <div class="dest-card__overlay">
+            <h3 class="dest-card__name">China</h3>
+            <p class="dest-card__desc">Fast-growing academic powerhouse with global connections</p>
+            <div class="dest-card__arrow">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M4 14L14 4M14 4H6M14 4v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       WHY CHOOSE STUDY HOUSE
+       ============================================ -->
+  <section class="why" id="why-section">
+    <div class="container">
+      <div class="why__inner">
+        <div class="why__content reveal">
+          <div class="eyebrow">Why Choose Study House</div>
+          <h2 class="section-heading">
+            More Than an Agency.<br><em>Your Global Partner.</em>
+          </h2>
+          <p class="why__text">
+            With years of experience and a network of 200+ partner universities worldwide, we provide comprehensive support at every step of your educational journey — from initial consultation to your first day on campus.
+          </p>
+        </div>
+
+        <div class="why__features reveal reveal-delay-1">
+          <!-- Feature 1 -->
+          <div class="feature-item" id="feature-personalized">
+            <div class="feature-item__icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/></svg>
+            </div>
+            <h3 class="feature-item__title">Personalized Approach</h3>
+            <p class="feature-item__desc">Tailored guidance based on your goals, budget, and preferences.</p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="feature-item" id="feature-expert">
+            <div class="feature-item__icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="feature-item__title">Expert Guidance</h3>
+            <p class="feature-item__desc">Seasoned advisors with deep knowledge of global admissions.</p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="feature-item" id="feature-top-unis">
+            <div class="feature-item__icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/></svg>
+            </div>
+            <h3 class="feature-item__title">Top Universities</h3>
+            <p class="feature-item__desc">Access to 200+ partner universities across 20+ countries.</p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="feature-item" id="feature-support">
+            <div class="feature-item__icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="feature-item__title">Full Support</h3>
+            <p class="feature-item__desc">End-to-end help from application to visa to departure.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-2" style="display: flex; align-items: center;">
+          <img src="images/why-building.jpg" alt="Elegant university building with columns and ivy" class="why__image">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       HOW IT WORKS
+       ============================================ -->
+  <section class="how" id="how-section">
+    <div class="container">
+      <div class="how__header reveal">
+        <div>
+          <div class="eyebrow">How It Works</div>
+          <h2 class="section-heading">Your Path to a Global Education</h2>
+        </div>
+        <a href="#" class="section-link" id="how-learn-more">
+          Learn more about our process
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="how__steps">
+        <!-- Step 01 -->
+        <div class="step reveal reveal-delay-1" id="step-01">
+          <div class="step__number">01</div>
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="step__title">Consultation</h3>
+          <p class="step__desc">We discuss your goals and choose the best options.</p>
+        </div>
+
+        <!-- Step 02 -->
+        <div class="step reveal reveal-delay-2" id="step-02">
+          <div class="step__number">02</div>
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="step__title">University Selection</h3>
+          <p class="step__desc">We help you find the right university and program.</p>
+        </div>
+
+        <!-- Step 03 -->
+        <div class="step reveal reveal-delay-3" id="step-03">
+          <div class="step__number">03</div>
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="step__title">Application & Visa</h3>
+          <p class="step__desc">We handle the paperwork and visa process.</p>
+        </div>
+
+        <!-- Step 04 -->
+        <div class="step reveal reveal-delay-4" id="step-04">
+          <div class="step__number">04</div>
+          <div class="step__icon">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="step__title">Departure & Arrival</h3>
+          <p class="step__desc">You get ready for your next chapter abroad.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FEATURED UNIVERSITIES
+       ============================================ -->
+  <section class="universities" id="universities-section">
+    <div class="container">
+      <div class="universities__header reveal">
+        <div>
+          <div class="eyebrow">Featured Universities</div>
+          <h2 class="section-heading">Top Universities, Global Opportunities</h2>
+        </div>
+        <a href="#" class="section-link" id="uni-view-all">
+          View all universities
+          <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="universities__grid">
+        <!-- Oxford -->
+        <div class="uni-card reveal reveal-delay-1" id="uni-oxford">
+          <img src="images/uni-oxford.jpg" alt="University of Oxford Radcliffe Camera" class="uni-card__image">
+          <div class="uni-card__info">
+            <div class="uni-card__crest">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" stroke-width="1.5"/><path d="M12 14v7" stroke="currentColor" stroke-width="1.5"/><path d="M5 9.5v5c0 2 3.5 4 7 4s7-2 7-4v-5" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="uni-card__details">
+              <h3 class="uni-card__name">University of Oxford</h3>
+              <p class="uni-card__country">United Kingdom</p>
+            </div>
+            <div class="uni-card__arrow">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- ETH Zürich -->
+        <div class="uni-card reveal reveal-delay-2" id="uni-eth">
+          <img src="images/uni-eth.jpg" alt="ETH Zürich main building with Alps" class="uni-card__image">
+          <div class="uni-card__info">
+            <div class="uni-card__crest">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" stroke-width="1.5"/><path d="M12 14v7" stroke="currentColor" stroke-width="1.5"/><path d="M5 9.5v5c0 2 3.5 4 7 4s7-2 7-4v-5" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="uni-card__details">
+              <h3 class="uni-card__name">ETH Zürich</h3>
+              <p class="uni-card__country">Switzerland</p>
+            </div>
+            <div class="uni-card__arrow">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Melbourne -->
+        <div class="uni-card reveal reveal-delay-3" id="uni-melbourne">
+          <img src="images/uni-melbourne.jpg" alt="University of Melbourne historic quadrangle" class="uni-card__image">
+          <div class="uni-card__info">
+            <div class="uni-card__crest">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" stroke-width="1.5"/><path d="M12 14v7" stroke="currentColor" stroke-width="1.5"/><path d="M5 9.5v5c0 2 3.5 4 7 4s7-2 7-4v-5" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="uni-card__details">
+              <h3 class="uni-card__name">University of Melbourne</h3>
+              <p class="uni-card__country">Australia</p>
+            </div>
+            <div class="uni-card__arrow">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- NYU -->
+        <div class="uni-card reveal reveal-delay-4" id="uni-nyu">
+          <img src="images/uni-nyu.jpg" alt="New York University Washington Square campus" class="uni-card__image">
+          <div class="uni-card__info">
+            <div class="uni-card__crest">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" stroke-width="1.5"/><path d="M12 14v7" stroke="currentColor" stroke-width="1.5"/><path d="M5 9.5v5c0 2 3.5 4 7 4s7-2 7-4v-5" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="uni-card__details">
+              <h3 class="uni-card__name">New York University</h3>
+              <p class="uni-card__country">United States</p>
+            </div>
+            <div class="uni-card__arrow">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       STUDENT STORIES
+       ============================================ -->
+  <section class="stories" id="stories-section">
+    <!-- Decorative arc -->
+    <svg class="stories__arc" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 190C10 90 90 10 190 10" stroke="#B08D57" stroke-width="1.5" fill="none"/>
+      <path d="M190 4L192.5 11L199 11L194 15L196 22L190 17.5L184 22L186 15L181 11L187.5 11L190 4Z" fill="#B08D57"/>
+    </svg>
+
+    <div class="container">
+      <div class="stories__inner">
+        <div class="stories__left reveal">
+          <div class="eyebrow eyebrow--gold">Student Stories</div>
+          <h2 class="stories__heading">Real People.<br>Real Results.</h2>
+        </div>
+
+        <div class="stories__right reveal reveal-delay-2">
+          <blockquote class="stories__quote" id="story-quote">
+            "Study House made my dream of studying in the UK come true. Their team was with me at every step — from choosing a university to getting my visa."
+          </blockquote>
+          <p class="stories__attribution" id="story-attribution">
+            <strong>Amina T.</strong> — University of Oxford
+          </p>
+          <div class="stories__dots" id="story-dots">
+            <button class="stories__dot stories__dot--active" data-story="0" aria-label="Story 1"></button>
+            <button class="stories__dot" data-story="1" aria-label="Story 2"></button>
+            <button class="stories__dot" data-story="2" aria-label="Story 3"></button>
+            <button class="stories__dot" data-story="3" aria-label="Story 4"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER
+       ============================================ -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__logo">
+          <div class="footer__logo-mark">
+            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M20 6L22.5 16.5L33 14L24.5 21L30 31L20 24.5L10 31L15.5 21L7 14L17.5 16.5L20 6Z" fill="currentColor" opacity="0.9"/>
+            </svg>
+          </div>
+          <div class="footer__logo-text">
+            <span class="footer__logo-name">Study House</span>
+            <span class="footer__logo-subtitle">International Education Agency</span>
+          </div>
+        </div>
+
+        <ul class="footer__links">
+          <li><a href="#" class="footer__link" id="footer-home">Home</a></li>
+          <li><a href="#universities-section" class="footer__link" id="footer-universities">Universities</a></li>
+          <li><a href="#destinations-section" class="footer__link" id="footer-destinations">Destinations</a></li>
+          <li><a href="#how-section" class="footer__link" id="footer-services">Services</a></li>
+          <li><a href="#why-section" class="footer__link" id="footer-about">About</a></li>
+          <li><a href="#stories-section" class="footer__link" id="footer-contact">Contact</a></li>
+        </ul>
+
+        <div class="footer__social">
+          <!-- Instagram -->
+          <a href="#" class="footer__social-icon" id="social-instagram" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg>
+          </a>
+          <!-- Telegram -->
+          <a href="#" class="footer__social-icon" id="social-telegram" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <!-- LinkedIn -->
+          <a href="#" class="footer__social-icon" id="social-linkedin" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <!-- YouTube -->
+          <a href="#" class="footer__social-icon" id="social-youtube" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" stroke="currentColor" stroke-width="1.5"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="currentColor"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copyright">© 2025 Study House. All rights reserved.</p>
+        <p class="footer__tagline">Your Global Education Partner</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
