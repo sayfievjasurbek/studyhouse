@@ -249,6 +249,7 @@ button {
   gap: 14px;
   text-decoration: none;
   flex-shrink: 0;
+  background: transparent;
 }
 
 .navbar__logo-mark-img {
@@ -256,6 +257,7 @@ button {
   width: auto;
   object-fit: contain;
   display: block;
+  background: transparent;
   transition: transform 0.25s ease;
 }
 
@@ -264,11 +266,11 @@ button {
 }
 
 .navbar__logo-text-img {
-  height: 33px;
+  height: 30px;
   width: auto;
   object-fit: contain;
   display: block;
-  transform: translateY(-1px);
+  background: transparent;
 }
 
 .navbar__links {
@@ -837,21 +839,23 @@ button {
   align-items: center;
   gap: 12px;
   text-decoration: none;
+  background: transparent;
 }
 
 .footer__logo-mark-img {
-  height: 42px;
+  height: 44px;
   width: auto;
   object-fit: contain;
   display: block;
+  background: transparent;
 }
 
 .footer__logo-text-img {
-  height: 26px;
+  height: 25px;
   width: auto;
   object-fit: contain;
   display: block;
-  transform: translateY(-1px);
+  background: transparent;
 }
 
 .footer__links {
@@ -1062,23 +1066,37 @@ button {
   }
 
   .navbar__logo {
-    gap: 10px;
+    gap: 12px;
   }
 
   .navbar__logo-mark-img {
-    height: 44px;
+    height: 46px;
   }
 
   .navbar__logo-text-img {
-    height: 28px;
+    height: 26px;
   }
 
   .footer__logo-mark-img {
-    height: 38px;
+    height: 40px;
   }
 
   .footer__logo-text-img {
-    height: 24px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 420px) {
+  .navbar__logo {
+    gap: 8px;
+  }
+
+  .navbar__logo-mark-img {
+    height: 38px;
+  }
+
+  .navbar__logo-text-img {
+    height: 20px;
   }
 
   .container {
