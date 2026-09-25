@@ -355,7 +355,7 @@ button {
    is a little tighter, drops its CTA on mid-size screens (it stays in the
    mobile menu) and collapses to the hamburger earlier. */
 .navbar__links {
-  gap: 18px;
+  gap: 16px;
 }
 
 .navbar__link {
@@ -372,19 +372,19 @@ button {
   font-size: 12px;
 }
 
-@media (max-width: 1360px) {
+@media (max-width: 1440px) {
   html:not([lang="en"]) .navbar__cta {
     display: none;
   }
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1360px) {
   .navbar__cta {
     display: none;
   }
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1280px) {
   .navbar__links {
     display: none;
   }
@@ -939,115 +939,201 @@ button {
 }
 
 /* ============================================
-   FOOTER
+   FOOTER  (markup is built by site.js)
    ============================================ */
 .footer {
-  padding: 60px 0 30px;
-  background-color: var(--color-bg);
-  border-top: 1px solid var(--color-border);
+  padding: 72px 0 28px;
+  background: var(--gradient-navy);
+  color: rgba(255, 255, 255, 0.72);
 }
 
-.footer__top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 40px;
-  border-bottom: 1px solid var(--color-border);
-  flex-wrap: wrap;
-  gap: 24px;
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+  gap: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid rgba(232, 187, 125, 0.22);
+}
+
+.footer__brand {
+  max-width: 320px;
 }
 
 .footer__logo {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  text-decoration: none;
   background: transparent;
 }
 
 .footer__logo-mark-img {
-  height: 44px;
+  height: 52px;
   width: auto;
   object-fit: contain;
   display: block;
-  background: transparent;
 }
 
-.footer__logo-text-img {
-  height: 25px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-  background: transparent;
+.footer__tagline {
+  margin-top: 14px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--color-champagne);
 }
 
-.footer__links {
-  display: flex;
-  gap: 32px;
+.footer__blurb {
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+/* --- Link columns --- */
+.footer__col-title {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--color-champagne);
+  margin-bottom: 18px;
+}
+
+.footer__col-list {
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .footer__link {
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.78);
+  transition: color 0.25s ease;
+}
+
+.footer__link:hover,
+.footer__link:focus-visible {
+  color: var(--color-champagne);
+}
+
+/* --- Contact column --- */
+.footer__contact-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer__contact-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.footer__contact-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
   text-transform: uppercase;
-  color: var(--color-gray);
-  transition: color 0.3s ease;
+  color: rgba(255, 255, 255, 0.5);
 }
 
-.footer__link:hover {
-  color: var(--color-navy);
+.footer__contact-list a:hover {
+  color: var(--color-champagne);
 }
 
+.footer__contact-empty {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 18px;
+}
+
+.footer__contact-btn {
+  padding: 12px 24px;
+  font-size: 13px;
+}
+
+/* --- Social --- */
 .footer__social {
   display: flex;
-  gap: 16px;
+  gap: 12px;
+  margin-top: 22px;
 }
 
 .footer__social-icon {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(232, 187, 125, 0.35);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-gray);
-  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.25s ease;
 }
 
 .footer__social-icon:hover {
   border-color: var(--color-champagne);
   color: var(--color-champagne);
-  background: rgba(204, 152, 85, 0.06);
+  background: rgba(232, 187, 125, 0.1);
 }
 
 .footer__social-icon svg {
-  width: 18px;
-  height: 18px;
+  width: 17px;
+  height: 17px;
 }
 
+/* --- Bottom bar --- */
 .footer__bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 24px;
-  flex-wrap: wrap;
   gap: 16px;
+  flex-wrap: wrap;
+  padding-top: 24px;
 }
 
 .footer__copyright {
   font-size: 13px;
-  color: var(--color-gray-light);
+  color: rgba(255, 255, 255, 0.55);
 }
 
-.footer__tagline {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 14px;
-  color: var(--color-champagne);
+.footer__note {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 560px;
+}
+
+@media (max-width: 1024px) {
+  .footer__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .footer__brand {
+    grid-column: 1 / -1;
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 52px 0 24px;
+  }
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /* ============================================
@@ -1205,9 +1291,6 @@ button {
     height: 40px;
   }
 
-  .footer__logo-text-img {
-    height: 22px;
-  }
 }
 
 @media (max-width: 420px) {
@@ -1299,21 +1382,6 @@ button {
   .uni-logo-card__img {
     max-height: 40px;
     max-width: 140px;
-  }
-
-  .footer__top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footer__links {
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .footer__bottom {
-    flex-direction: column;
-    align-items: flex-start;
   }
 
   .section-heading {
@@ -3258,7 +3326,3 @@ h3 em {
   }
 }
 
-/* Social icons stay hidden until the owner adds real profile URLs (remove `hidden`, set href) */
-.footer__social-icon[hidden] {
-  display: none;
-}

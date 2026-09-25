@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-root="../../../" data-page="destinations">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,43 +9,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap">
   <link rel="stylesheet" href="../../../styles.css">
-  <link rel="icon" type="image/png" href="../../../images/favicon-64.png"><text y='.9em' font-size='90'>🏛️</text></svg>">
+  <link rel="icon" type="image/png" href="../../../images/favicon-64.png">
 </head>
 <body>
-
-  <!-- NAVIGATION -->
-  <nav class="navbar" id="navbar">
-    <div class="container navbar__inner">
-      <a href="../../../index.html" class="navbar__logo" id="nav-logo" aria-label="Study House - International Education Agency">
-        <img src="../../../images/logo-mark.webp" alt="Study House Emblem" class="navbar__logo-mark-img">
-        <img src="../../../images/logo-text.webp" alt="Study House — International Education Agency" class="navbar__logo-text-img">
-      </a>
-      <ul class="navbar__links" id="nav-links">
-        <li><a href="../../../index.html" class="navbar__link" id="nav-home">Home</a></li>
-        <li><a href="../../../index.html#universities-section" class="navbar__link" id="nav-universities">Universities</a></li>
-        <li><a href="../../../index.html#destinations-section" class="navbar__link navbar__link--active" id="nav-destinations">Destinations</a></li>
-        <li><a href="../../../index.html#how-section" class="navbar__link" id="nav-services">Services</a></li>
-        <li><a href="../../../expertise/" class="navbar__link" id="nav-expertise">Our Expertise</a></li>
-        <li><a href="../../../index.html#footer" class="navbar__link" id="nav-contact">Contact</a></li>
-      </ul>
-      <div class="navbar__cta">
-        <a href="#book-a-consultation" data-booking class="btn btn--primary" id="nav-cta">Book a Consultation →</a>
-      </div>
-      <button class="navbar__hamburger" id="hamburger-btn" aria-label="Toggle navigation menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </nav>
-
-  <div class="mobile-nav" id="mobile-nav">
-    <a href="../../../index.html" class="mobile-nav__link" data-nav-close>Home</a>
-    <a href="../../../index.html#universities-section" class="mobile-nav__link" data-nav-close>Universities</a>
-    <a href="../../../index.html#destinations-section" class="mobile-nav__link" data-nav-close>Destinations</a>
-    <a href="../../../index.html#how-section" class="mobile-nav__link" data-nav-close>Services</a>
-    <a href="../../../expertise/" class="mobile-nav__link" data-nav-close>Our Expertise</a>
-    <a href="../../../index.html#footer" class="mobile-nav__link" data-nav-close>Contact</a>
-    <a href="#book-a-consultation" data-booking class="btn btn--primary" data-nav-close>Book a Consultation →</a>
-  </div>
 
   <!-- BREADCRUMB -->
   <div class="breadcrumb">
@@ -53,7 +19,7 @@
       <nav class="breadcrumb__nav" aria-label="Breadcrumb">
         <a href="../../../index.html" class="breadcrumb__link">Home</a>
         <span class="breadcrumb__sep"><svg viewBox="0 0 8 12" fill="none"><path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <a href="../../../index.html#destinations-section" class="breadcrumb__link">Destinations</a>
+        <a href="../../../destinations/index.html" class="breadcrumb__link">Destinations</a>
         <span class="breadcrumb__sep"><svg viewBox="0 0 8 12" fill="none"><path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         <a href="../index.html" class="breadcrumb__link">Europe</a>
         <span class="breadcrumb__sep"><svg viewBox="0 0 8 12" fill="none"><path d="M1.5 1L6.5 6L1.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -208,67 +174,8 @@
       <a href="#book-a-consultation" data-booking class="btn btn--gold">Apply for France Diagnostic →</a>
     </div>
   </section>
-
-  <!-- FOOTER -->
-  <footer class="footer" id="footer">
-    <div class="container">
-      <div class="footer__top">
-        <a href="../../../index.html" class="footer__logo" id="footer-logo" aria-label="Study House - International Education Agency">
-          <img src="../../../images/logo-mark.webp" alt="Study House Emblem" class="footer__logo-mark-img" loading="lazy" decoding="async">
-          <img src="../../../images/logo-text.webp" alt="Study House — International Education Agency" class="footer__logo-text-img" loading="lazy" decoding="async">
-        </a>
-        <ul class="footer__links">
-          <li><a href="../../../index.html" class="footer__link" id="footer-home">Home</a></li>
-          <li><a href="../../../index.html#universities-section" class="footer__link" id="footer-universities">Universities</a></li>
-          <li><a href="../../../index.html#destinations-section" class="footer__link" id="footer-destinations">Destinations</a></li>
-          <li><a href="../../../index.html#how-section" class="footer__link" id="footer-services">Services</a></li>
-          <li><a href="../../../expertise/" class="footer__link" id="footer-expertise">Our Expertise</a></li>
-          <li><a href="../../../index.html#footer" class="footer__link" id="footer-contact">Contact</a></li>
-        </ul>
-        <div class="footer__social">
-          <a class="footer__social-icon" data-social="instagram" aria-label="Instagram" hidden><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
-          <a class="footer__social-icon" data-social="telegram" aria-label="Telegram" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a class="footer__social-icon" data-social="linkedin" aria-label="LinkedIn" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a class="footer__social-icon" data-social="youtube" aria-label="YouTube" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" stroke="currentColor" stroke-width="1.5"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="currentColor"/></svg></a>
-        </div>
-      </div>
-      <div class="footer__bottom">
-        <p class="footer__copyright">© 2025 Study House. All rights reserved.</p>
-        <p class="footer__tagline">Your Global Education Partner</p>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const revealElements = document.querySelectorAll('.reveal');
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
-      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-      revealElements.forEach(el => revealObserver.observe(el));
-
-      const navbar = document.getElementById('navbar');
-      window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
-
-      const hamburgerBtn = document.getElementById('hamburger-btn');
-      const mobileNav = document.getElementById('mobile-nav');
-      hamburgerBtn.addEventListener('click', () => {
-        hamburgerBtn.classList.toggle('active');
-        mobileNav.classList.toggle('open');
-        document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
-      });
-      document.querySelectorAll('[data-nav-close]').forEach(link => {
-        link.addEventListener('click', () => { hamburgerBtn.classList.remove('active'); mobileNav.classList.remove('open'); document.body.style.overflow = ''; });
-      });
-
-      document.querySelectorAll('.pill').forEach(pill => {
-        pill.addEventListener('click', () => {
-          document.querySelectorAll('.pill').forEach(p => p.classList.remove('pill--active'));
-          pill.classList.add('pill--active');
-        });
-      });
-    });
-  </script>
+  <script src="../../../site.js"></script>
+  <script src="../../../script.js"></script>
   <script src="../../../booking.js"></script>
   <script src="../../../i18n.js"></script>
 </body>
