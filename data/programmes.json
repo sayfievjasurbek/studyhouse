@@ -1,0 +1,216 @@
+{
+  "updated": "2026-09-26",
+  "_note": "Content for the six cards and the five programme modals on /services/. A value of null is a fact we could not verify on an official page: it renders as a clearly marked placeholder, never a guess.",
+
+  "programmes": [
+    {
+      "id": "universities",
+      "name": "Universities",
+      "title": "University admission",
+      "line": "Bachelor's and master's admission in Europe, the USA, Australia and China.",
+      "action": "booking"
+    },
+
+    {
+      "id": "uwc",
+      "name": "UWC",
+      "title": "United World Colleges",
+      "line": "A two-year IB Diploma, selected through the UWC Uzbekistan national committee.",
+      "action": "modal",
+      "intro": "UWC selects students through national committees rather than through the schools themselves. In Uzbekistan that committee is UWC Uzbekistan, and it runs its own application, test, interview and selection day before nominating students to a UWC school.",
+      "facts": [
+        ["Level", "Grade 9, 10 or 11 at the time of applying — not yet a university student"],
+        ["Duration", "Two years: the IB Diploma Programme 2027–2029"],
+        ["Funding", "More than 80% of UWC students receive financial support; a financial needs assessment is part of the selection"],
+        ["Application period", "1 August – 30 September, through UWC Uzbekistan"],
+        ["Application fee", null]
+      ],
+      "eligibility": [
+        "You are a citizen of Uzbekistan.",
+        "You are a student in the 9th, 10th or 11th grade of a secondary school or post-secondary institution.",
+        "You are 16 or 17 years old as of 1 September, the start of the academic year.",
+        "You speak fluent English, or you can learn it quickly.",
+        "You are a highly capable student with a strong academic record."
+      ],
+      "steps": [
+        ["1 August – 30 September", "Online application"],
+        ["2 – 6 October", "Online logical reasoning test"],
+        ["November", "Online video interview, then the final selection day"],
+        ["December", "Financial needs assessment"],
+        ["January – June", "Nominations to UWC schools"],
+        ["July", "Orientation course"]
+      ],
+      "stepsNote": "UWC Uzbekistan publishes this as a preliminary timeline for the 2027–2029 programme and notes that exact dates can change.",
+      "faq": [
+        ["Do I choose which UWC school I go to?", "No. You apply to the UWC Uzbekistan national committee, and the committee nominates selected students to a UWC school."],
+        ["Will I get a scholarship?", "UWC states that more than 80% of its students receive financial support, and UWC Uzbekistan runs a financial needs assessment in December. Nobody can tell you in advance what your award will be."],
+        ["Can Study House get me selected?", "No. The selection is made by the UWC Uzbekistan committee and we have no part in it."]
+      ],
+      "sources": [
+        ["UWC Uzbekistan — Eligibility criteria", "https://uz.uwc.org/eligibility-criteria/"],
+        ["UWC Uzbekistan — How to apply", "https://uz.uwc.org/how-to-apply/"],
+        ["UWC International — Apply", "https://www.uwc.org/apply"]
+      ]
+    },
+
+    {
+      "id": "work-and-travel",
+      "name": "Work and Travel",
+      "title": "Work and Travel in Germany",
+      "line": "Work, gain experience and travel in Germany, starting May 2026.",
+      "action": "modal",
+      "intro": "A programme for students to work, gain experience and travel in Germany, starting in May 2026. It is organised through the Youth Affairs Agency of Uzbekistan together with Youth Globe XBA, Edu Action and Bildung & Beruf. Study House is an independent preparation service, not an organiser of this programme.",
+      "facts": [
+        ["Who it is for", "Students"],
+        ["Where", "Germany"],
+        ["Starts", "May 2026"],
+        ["Organised by", "The Youth Affairs Agency of Uzbekistan with Youth Globe XBA, Edu Action and Bildung & Beruf"],
+        ["Age requirement", null],
+        ["Exact dates", null],
+        ["Cost", null]
+      ],
+      "eligibility": [
+        "You are a student — the announcement describes the programme as being for students.",
+        "The Youth Affairs Agency has not published an age range, exact dates or costs, so confirm those with the organisers before you commit to anything."
+      ],
+      "steps": [
+        ["Step 1", "Check the current announcement and registration link on the Youth Affairs Agency's own channels"],
+        ["Step 2", "Register directly with the organisers"],
+        ["Step 3", "The organisers cover the visa procedure, the place of work and salary, and living conditions"],
+        ["Step 4", "Travel to Germany and work the agreed placement from May 2026"]
+      ],
+      "stepsNote": "The published announcement lists the support as covering the visa procedure, the place of work and salary, living conditions and work experience. Everything else — age, exact dates, costs — is not stated on it.",
+      "faq": [
+        ["Is Study House the organiser?", "No. The programme is organised through the Youth Affairs Agency of Uzbekistan with Youth Globe XBA, Edu Action and Bildung & Beruf. Study House is an independent service that helps you prepare; we cannot place you on it."],
+        ["How much does it cost?", null],
+        ["What age do I need to be?", null],
+        ["What does the programme support cover?", "The announcement states that support covers the visa procedure, the place of work and salary, living conditions and work experience."]
+      ],
+      "sources": [
+        ["Youth Affairs Agency (gov.uz) — Opportunity to work and travel in Germany", "https://gov.uz/en/yoshlar/news/view/94426"]
+      ]
+    },
+
+    {
+      "id": "flex",
+      "name": "FLEX",
+      "title": "Future Leaders Exchange",
+      "line": "A fully funded academic year at a US high school, sponsored by the U.S. Department of State.",
+      "action": "modal",
+      "intro": "FLEX is sponsored by the U.S. Department of State and administered by American Councils for International Education. Uzbekistan is one of the participating countries. The official application is free and is made directly to American Councils, not through an agency.",
+      "facts": [
+        ["Level", "Secondary school or lyceum/college students in Uzbekistan"],
+        ["Duration", "One academic year in the United States"],
+        ["Cost", "Fully funded by the U.S. Department of State — the official application is free"],
+        ["Application period", null]
+      ],
+      "eligibility": [
+        "You are a citizen of Uzbekistan.",
+        "You are enrolled in a secondary school or a lyceum/college in Uzbekistan.",
+        "You meet the age criteria and class of study FLEX publishes for the current round.",
+        "You have excellent and good grades.",
+        "You have studied English and can demonstrate it at registration.",
+        "You meet the requirements for a United States entry visa."
+      ],
+      "steps": [
+        ["Round 1", "Preliminary online application with short essay questions, submitted within ten days of starting it"],
+        ["Later rounds", "Further testing and interviews run by American Councils"],
+        ["Selection", "Finalists are placed with a volunteer host family and a US high school"],
+        ["Departure", "One academic year in the United States"]
+      ],
+      "stepsNote": "American Councils publishes the round dates for each cycle and advises checking FLEX Uzbekistan's own channels for the current requirements and dates.",
+      "faq": [
+        ["Does FLEX cost anything?", "No. American Councils lists FLEX as fully funded, sponsored by the U.S. Department of State, and the official application is made directly to American Councils at no charge."],
+        ["Is FLEX still running in Uzbekistan?", "Yes. Uzbekistan is listed as a participating country and American Councils administers it in Uzbekistan."],
+        ["When is the deadline?", null],
+        ["Can Study House improve my chances?", "We can help you understand the requirements and practise your English and your essays. We cannot influence the selection."]
+      ],
+      "sources": [
+        ["FLEX — Discover FLEX Global", "https://www.discoverflexglobal.org/"],
+        ["American Councils — FLEX programme", "https://www.americancouncils.org/programs/future-leaders-exchange-flex-program"],
+        ["American Councils Uzbekistan — FLEX", "https://uzbekistan.americancouncils.org/flex-en"]
+      ]
+    },
+
+    {
+      "id": "erasmus-plus",
+      "name": "Erasmus+",
+      "title": "Erasmus+",
+      "line": "Two EU routes: an Erasmus Mundus Joint Master, or an exchange through your own university.",
+      "action": "modal",
+      "intro": "Erasmus+ is not a single application. For a student in Uzbekistan there are two realistic routes, and they work very differently: an Erasmus Mundus Joint Master, which you apply to yourself, and international credit mobility, which is arranged by your own university.",
+      "facts": [
+        ["Route 1", "Erasmus Mundus Joint Master — you apply directly to the consortium running the course"],
+        ["Route 2", "Credit mobility — arranged through your home university's international office"],
+        ["Duration", "Joint Masters run 12, 18 or 24 months (60/90/120 ECTS); credit mobility runs 2 to 12 months"],
+        ["Application period", "Most Joint Masters take applications between October and January for the following academic year"]
+      ],
+      "eligibility": [
+        "For an Erasmus Mundus Joint Master: you are a master's-level applicant. The European Commission states these programmes are open to students from all over the world, with no nationality restriction.",
+        "Each consortium sets its own academic and language requirements, published on the course's own website.",
+        "For credit mobility: you are already enrolled at a university in Uzbekistan that has an inter-institutional agreement with a European university.",
+        "Credit mobility lasts a minimum of 2 months and a maximum of 12 months within one study cycle."
+      ],
+      "steps": [
+        ["Step 1", "Decide which route applies to you"],
+        ["Step 2", "For a Joint Master, find the course in the official Erasmus Mundus catalogue and read the consortium's requirements"],
+        ["Step 3", "Apply directly to the consortium, usually between October and January"],
+        ["Step 4", "For credit mobility, contact the international or Erasmus+ office at your own university — there is no central application form"],
+        ["Step 5", "If you are selected, arrange your visa for the country where you will study"]
+      ],
+      "stepsNote": "The European Commission states there is no central application form for Erasmus+ study mobility; students are told to contact the international or Erasmus+ office of their university.",
+      "faq": [
+        ["Can I apply to Erasmus+ directly as an individual?", "For an Erasmus Mundus Joint Master, yes. For an exchange, no: credit mobility is arranged between universities, so it goes through your own university's international office."],
+        ["Does Erasmus+ pay for everything?", "Not necessarily. For study mobility the European Commission says the grant contributes to travel and daily living costs, and the amount varies with distance and the cost of living in the destination."],
+        ["Can Study House guarantee a place or a scholarship?", "No. Selection is made by the consortium or by the universities involved."]
+      ],
+      "sources": [
+        ["European Commission — Studying abroad with Erasmus+", "https://erasmus-plus.ec.europa.eu/opportunities/individuals/students/studying-abroad"],
+        ["EACEA — Erasmus Mundus Joint Masters catalogue", "https://www.eacea.ec.europa.eu/scholarships/emjmd-catalogue_en"]
+      ]
+    },
+
+    {
+      "id": "chevening",
+      "name": "Chevening",
+      "title": "Chevening Scholarship",
+      "line": "The UK government's fully funded scholarship for a one-year master's, for people with work experience.",
+      "action": "modal",
+      "intro": "Chevening is funded by the UK's Foreign, Commonwealth and Development Office and its partner organisations. Uzbekistan is an eligible country. It is aimed at people who already have around two years of work experience, and the official application is free and made on chevening.org yourself.",
+      "facts": [
+        ["Level", "A one-year taught master's at a UK university"],
+        ["Work experience", "2,800 hours, acquired after your undergraduate degree"],
+        ["Funding", "Tuition, a monthly living allowance, economy return flights, an arrival allowance and the visa cost"],
+        ["Deadline", "6 October 2026 at 11:00 UTC, for studies starting in autumn 2027"],
+        ["Application fee", null]
+      ],
+      "eligibility": [
+        "You are a citizen of a Chevening-eligible country or territory. Uzbekistan is eligible.",
+        "You hold an undergraduate degree that qualifies you for a UK master's programme.",
+        "You have completed 2,800 hours of work experience after your undergraduate degree — roughly two years at 35 hours a week. Full-time, part-time, remote, voluntary work and paid or unpaid internships all count.",
+        "You commit to returning to your country of award for at least two years after the scholarship ends.",
+        "There is no upper age limit."
+      ],
+      "steps": [
+        ["4 August 2026, 11:00 UTC", "Applications open"],
+        ["6 October 2026, 11:00 UTC", "Applications close — nothing is accepted after this time"],
+        ["March – April 2027", "Interviews"],
+        ["Mid-June 2027 onwards", "Results announced"],
+        ["September / October 2027", "Scholars begin their studies in the UK"]
+      ],
+      "stepsNote": "These are the dates Chevening publishes for the 2026–27 application cycle, for awards beginning in the 2027–28 academic year.",
+      "faq": [
+        ["What exactly does Chevening pay for?", "Tuition fees invoiced directly to Chevening; a monthly living allowance that differs inside and outside London; economy return flights; an arrival allowance; and the entry clearance (visa) cost."],
+        ["What counts towards the 2,800 hours?", "Full-time and part-time employment, remote work, voluntary work, and paid or unpaid internships, all acquired after you finished your undergraduate degree."],
+        ["Do I have to come back to Uzbekistan afterwards?", "Yes. Returning to your country of award for at least two years after the scholarship ends is one of the eligibility criteria."],
+        ["Can Study House get me a Chevening award?", "No. Chevening selects its scholars. We help you shape your essays and prepare for the interview."]
+      ],
+      "sources": [
+        ["Chevening — Who can apply", "https://www.chevening.org/scholarships/who-can-apply/"],
+        ["Chevening — Work experience", "https://www.chevening.org/scholarships/who-can-apply/work-experience/"],
+        ["Chevening — Application timeline", "https://www.chevening.org/scholarships/application-timeline/"],
+        ["Chevening — Uzbekistan", "https://www.chevening.org/scholarship/uzbekistan/"]
+      ]
+    }
+  ]
+}

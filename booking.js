@@ -42,7 +42,7 @@
       ['australia', 'Australia'], ['usa', 'USA'], ['china', 'China']
     ] },
     { group: 'Programmes', kind: 'programme', items: [
-      ['uwc', 'UWC'], ['work-and-travel', 'Work and Travel'], ['flex', 'FLEX'],
+      ['uwc', 'UWC'], ['work-and-travel', 'Work and Travel in Germany'], ['flex', 'FLEX'],
       ['erasmus-plus', 'Erasmus+'], ['chevening', 'Chevening']
     ] },
     { group: '', kind: 'other', items: [['other', 'Other / not sure yet']] }

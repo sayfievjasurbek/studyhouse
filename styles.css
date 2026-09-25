@@ -3454,39 +3454,6 @@ h3 em {
   padding: 8px 0 var(--section-padding);
 }
 
-/* The base .pill is built for navy sections (white text). On the white
-   Services page the filters need the inverse treatment. */
-.prog-filter {
-  border-color: var(--color-border);
-  background: var(--color-white);
-  color: var(--color-navy);
-}
-
-.prog-filter:hover {
-  border-color: var(--color-navy);
-  background: var(--color-surface);
-  color: var(--color-navy);
-}
-
-.prog-filter.pill--active,
-.prog-filter.pill--active:hover {
-  background: var(--gradient-navy);
-  border-color: transparent;
-  color: var(--color-white);
-}
-
-.prog-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.prog-count {
-  font-size: 13px;
-  color: var(--color-gray-light);
-  margin-bottom: 28px;
-}
 
 /* --- Programme cards --- */
 .prog-grid {
@@ -3513,13 +3480,6 @@ h3 em {
 .prog-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow-hover);
-}
-
-/* The Universities card is the main service: wider, taller, gold border */
-.prog-card--featured {
-  grid-column: span 2;
-  min-height: 520px;
-  border: 2px solid var(--color-gold);
 }
 
 .prog-card__img {
@@ -3562,33 +3522,11 @@ h3 em {
   color: var(--color-white);
 }
 
-.prog-card--featured .prog-card__title {
-  font-size: 30px;
-}
-
 .prog-card__blurb {
   font-size: 14px;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.85);
   max-width: 44ch;
-}
-
-.prog-card__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.prog-chip {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  color: var(--color-champagne);
-  border: 1px solid rgba(232, 187, 125, 0.45);
-  border-radius: var(--radius-pill);
-  padding: 5px 11px;
-  white-space: nowrap;
 }
 
 .prog-card__btn {
@@ -3845,10 +3783,6 @@ h3 em {
   .prog-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .prog-card--featured {
-    grid-column: span 2;
-    min-height: 420px;
-  }
   .dowork {
     grid-template-columns: 1fr;
   }
@@ -3892,16 +3826,11 @@ h3 em {
   .prog-grid {
     grid-template-columns: 1fr;
   }
-  .prog-card,
-  .prog-card--featured {
-    grid-column: span 1;
+  .prog-card {
     min-height: 380px;
   }
   .prog-card__body {
     padding: 22px;
-  }
-  .prog-card--featured .prog-card__title {
-    font-size: 24px;
   }
 }
 
@@ -4640,5 +4569,240 @@ h3 em {
   }
   .gpa__score {
     width: 100%;
+  }
+}
+
+/* ============================================
+   PROGRAMME MODAL  (built by services.js)
+   ============================================ */
+.pmodal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(2, 31, 71, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.pmodal--open {
+  opacity: 1;
+}
+
+.pmodal[hidden] {
+  display: none;
+}
+
+.pmodal__panel {
+  position: relative;
+  width: min(880px, 100%);
+  max-height: min(880px, 92vh);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--color-white);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 30px 80px rgba(2, 31, 71, 0.35);
+  transform: translateY(14px) scale(0.985);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pmodal--open .pmodal__panel {
+  transform: none;
+}
+
+.pmodal__panel:focus {
+  outline: none;
+}
+
+.pmodal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-navy);
+  font-size: 26px;
+  line-height: 1;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.pmodal__close:hover {
+  background: var(--color-white);
+  transform: rotate(90deg);
+}
+
+/* --- Head --- */
+.pmodal__head {
+  position: relative;
+  min-height: 230px;
+  display: flex;
+  align-items: flex-end;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+}
+
+.pmodal__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.pmodal__head-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, rgba(2, 31, 71, 0.95) 0%, rgba(2, 31, 71, 0.74) 50%, rgba(7, 51, 109, 0.3) 100%);
+}
+
+.pmodal__head-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 28px 32px;
+  width: 100%;
+}
+
+.pmodal__title {
+  font-family: var(--font-serif);
+  font-size: clamp(24px, 3.2vw, 34px);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-white);
+}
+
+.pmodal__line {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 56ch;
+}
+
+/* --- Body --- */
+.pmodal__main {
+  padding: 30px 32px 34px;
+}
+
+.pmodal__intro {
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--color-gray);
+  margin-bottom: 8px;
+}
+
+.pmodal__section {
+  padding-top: 26px;
+  margin-top: 26px;
+  border-top: 1px solid var(--color-border);
+}
+
+.pmodal__h {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-bottom: 16px;
+}
+
+.pmodal__facts {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 10px 20px;
+}
+
+.pmodal__facts dt {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-gold-ink);
+  padding-top: 3px;
+}
+
+.pmodal__facts dd {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--color-navy);
+}
+
+.check-list--modal {
+  margin-top: 0;
+}
+
+.tl--modal {
+  margin-top: 0;
+}
+
+.pmodal__work {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.pmodal__work-item {
+  padding: 18px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.pmodal__work-title {
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-navy);
+  margin-bottom: 8px;
+}
+
+.pmodal__work-text {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--color-gray);
+}
+
+.pmodal__cta {
+  margin-top: 26px;
+}
+
+@media (max-width: 768px) {
+  .pmodal {
+    padding: 0;
+  }
+  .pmodal__panel {
+    width: 100%;
+    max-height: 100vh;
+    height: 100%;
+    border-radius: 0;
+  }
+  .pmodal__head {
+    border-radius: 0;
+    min-height: 190px;
+  }
+  .pmodal__head-text,
+  .pmodal__main {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .pmodal__facts {
+    grid-template-columns: 1fr;
+    gap: 4px 0;
+  }
+  .pmodal__facts dd {
+    margin-bottom: 12px;
+  }
+  .pmodal__work {
+    grid-template-columns: 1fr;
   }
 }
