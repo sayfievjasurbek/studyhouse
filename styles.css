@@ -491,7 +491,7 @@ button {
 .hero__heading {
   font-family: var(--font-serif);
   font-size: clamp(40px, 5vw, 60px);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-navy);
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -1380,7 +1380,7 @@ button {
 .page-header__heading {
   font-family: var(--font-serif);
   font-size: clamp(36px, 5vw, 56px);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--color-navy);
   line-height: 1.1;
   letter-spacing: -0.03em;
@@ -2119,7 +2119,7 @@ button {
   margin-top: 16px;
   font-family: var(--font-serif);
   font-size: clamp(2rem, 4.2vw, 3.4rem);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.15;
   color: var(--color-white);
 }
