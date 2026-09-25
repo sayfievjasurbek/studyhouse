@@ -2367,3 +2367,365 @@ h3 em {
   font-style: italic;
   font-weight: 500;
 }
+
+/* ============================================
+   BOOKING MODAL (markup + logic in /booking.js)
+   ============================================ */
+.booking {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  padding: 24px;
+  overflow-y: auto;
+  background: rgba(15, 42, 71, 0.62);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.booking[hidden] {
+  display: none;
+}
+
+.booking--open {
+  opacity: 1;
+}
+
+.booking__panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  background: var(--color-bg);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-hover);
+  transform: translateY(12px);
+  transition: transform 0.25s ease;
+  outline: none;
+}
+
+.booking--open .booking__panel {
+  transform: none;
+}
+
+.booking__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--color-navy);
+  background: rgba(255, 255, 255, 0.85);
+  transition: background-color 0.2s ease;
+}
+
+.booking__close:hover {
+  background: var(--color-white);
+}
+
+.booking__close:focus-visible,
+.booking input:focus-visible,
+.booking select:focus-visible,
+.booking .btn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* --- Mascot side (backdrop colour matches the character sheet's studio grey) --- */
+.booking__mascot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  padding: 24px 16px 20px;
+  background: #A8A6A7;
+}
+
+.booking__stage {
+  width: 100%;
+  max-width: 260px;
+}
+
+.booking__mascot-img {
+  width: 100%;
+  height: auto;
+  transition: opacity 0.15s ease;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent),
+                      linear-gradient(to bottom, transparent, #000 3%, #000 97%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent),
+              linear-gradient(to bottom, transparent, #000 3%, #000 97%, transparent);
+  mask-composite: intersect;
+}
+
+.booking__mascot-img.is-fading {
+  opacity: 0;
+}
+
+/* No mascot file yet: show the Study House emblem instead */
+.booking__mascot--emblem .booking__mascot-img {
+  width: 110px;
+  height: auto;
+  margin: 24px auto;
+  padding: 16px;
+  background: var(--color-bg);
+  border-radius: 50%;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.booking__bubble {
+  order: -1;
+  position: relative;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  color: var(--color-navy);
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.booking__bubble::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 12px;
+  height: 12px;
+  background: var(--color-white);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* --- Form side --- */
+.booking__main {
+  padding: 44px 40px 36px;
+}
+
+.booking__title {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-navy);
+}
+
+.booking__intro {
+  margin: 8px 0 24px;
+  font-size: 0.95rem;
+  color: var(--color-gray);
+}
+
+.booking__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.booking .field {
+  margin-bottom: 14px;
+}
+
+.booking .field > label:not(.check) {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.booking input[type="text"],
+.booking input[type="tel"],
+.booking select {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-sans);
+  font-size: 16px; /* 16px stops iOS zooming into the field */
+  color: var(--color-navy);
+  background: var(--color-white);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.booking input[type="text"]:focus,
+.booking input[type="tel"]:focus,
+.booking select:focus {
+  outline: none;
+  border-color: var(--color-navy);
+  box-shadow: 0 0 0 3px rgba(176, 141, 87, 0.3);
+}
+
+.booking .field--invalid input,
+.booking .field--invalid select {
+  border-color: #B3261E;
+}
+
+.field__error {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: #B3261E;
+}
+
+.booking__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.booking .check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--color-gray);
+  cursor: pointer;
+}
+
+.booking .check input {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--color-navy);
+}
+
+.booking__privacy {
+  margin: 4px 0 18px;
+  font-size: 0.8rem;
+  color: var(--color-gray-light);
+}
+
+.booking__status {
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: #8A1F17;
+  background: #FDECEA;
+  border-radius: var(--radius-sm);
+}
+
+.booking__submit {
+  width: 100%;
+  justify-content: center;
+}
+
+.booking__submit:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.booking__success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  min-height: 240px;
+  outline: none;
+}
+
+.booking__success[hidden],
+#bk-formwrap[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking,
+  .booking__panel,
+  .booking__mascot-img {
+    transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .booking {
+    padding: 16px;
+  }
+
+  .booking__panel {
+    grid-template-columns: 1fr;
+  }
+
+  /* Mobile: small mascot strip above the form */
+  .booking__mascot {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 64px 0 16px;
+    overflow: hidden;
+  }
+
+  .booking__stage {
+    flex: 0 0 84px;
+    width: 84px;
+    align-self: flex-end;
+  }
+
+  .booking__bubble {
+    order: 0;
+    align-self: center;
+    margin-bottom: 12px;
+    text-align: left;
+    font-size: 0.85rem;
+  }
+
+  .booking__bubble::after {
+    left: -6px;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .booking__mascot--emblem .booking__mascot-img {
+    width: 64px;
+    margin: 0 0 12px;
+    padding: 8px;
+  }
+
+  .booking__main {
+    padding: 28px 24px 28px;
+  }
+
+  .booking__title {
+    font-size: 1.55rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .booking {
+    padding: 0;
+  }
+
+  .booking__panel {
+    min-height: 100%;
+    border-radius: 0;
+  }
+
+  .booking__row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .booking__main {
+    padding: 24px 20px 32px;
+  }
+}

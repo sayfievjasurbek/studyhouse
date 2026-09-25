@@ -118,6 +118,37 @@
     "Complutense University of Madrid": ["Complutense University of Madrid", "Мадридский университет Комплутенсе"],
     "University of Valencia": ["University of Valencia", "Валенсийский университет"],
 
+    /* ---------- Booking modal ---------- */
+    "Leave your details and we will reply within 24 hours.": ["Maʼlumotlaringizni qoldiring, biz 24 soat ichida javob beramiz.", "Оставьте свои данные, и мы ответим в течение 24 часов."],
+    "First name": ["Ism", "Имя"],
+    "Surname": ["Familiya", "Фамилия"],
+    "Mobile phone": ["Mobil telefon", "Мобильный телефон"],
+    "Telegram username (optional)": ["Telegram username (ixtiyoriy)", "Имя пользователя Telegram (необязательно)"],
+    "Country of interest": ["Qiziqqan davlat", "Интересующая страна"],
+    "Select a country": ["Davlatni tanlang", "Выберите страну"],
+    "United Kingdom": ["Buyuk Britaniya", "Великобритания"],
+    "Other / not sure yet": ["Boshqa / hali aniq emas", "Другая / пока не уверен(а)"],
+    "I agree that Study House may contact me using these details about my consultation request.": ["Study House konsultatsiya soʻrovim yuzasidan men bilan shu maʼlumotlar orqali bogʻlanishiga roziman.", "Я согласен(на), чтобы Study House связывался со мной по этим данным по поводу моей заявки на консультацию."],
+    "Your details are sent to the Study House team only so we can reply to your request.": ["Maʼlumotlaringiz Study House jamoasiga faqat soʻrovingizga javob berish uchun yuboriladi.", "Ваши данные передаются команде Study House только для того, чтобы мы могли ответить на вашу заявку."],
+    "Send request": ["Soʻrov yuborish", "Отправить заявку"],
+    "Sending…": ["Yuborilmoqda…", "Отправка…"],
+    "Close": ["Yopish", "Закрыть"],
+    "Thank you, we will reply within 24 hours": ["Rahmat, 24 soat ichida javob beramiz", "Спасибо, мы ответим в течение 24 часов"],
+    "Please enter your first name.": ["Iltimos, ismingizni kiriting.", "Пожалуйста, введите имя."],
+    "Please enter your surname.": ["Iltimos, familiyangizni kiriting.", "Пожалуйста, введите фамилию."],
+    "Enter a valid Uzbek mobile number: +998 followed by 9 digits.": ["Oʻzbekiston mobil raqamini toʻgʻri kiriting: +998 va undan keyin 9 ta raqam.", "Введите корректный узбекский мобильный номер: +998 и далее 9 цифр."],
+    "Telegram username must be 5–32 characters: letters, numbers and underscores, starting with a letter.": ["Telegram username 5–32 belgidan iborat boʻlishi kerak: harflar, raqamlar va pastki chiziq, harf bilan boshlanadi.", "Имя пользователя Telegram — от 5 до 32 символов: буквы, цифры и подчёркивание, начинается с буквы."],
+    "Please choose a country.": ["Iltimos, davlatni tanlang.", "Пожалуйста, выберите страну."],
+    "Please tick the box to agree.": ["Iltimos, rozilik belgisini qoʻying.", "Пожалуйста, поставьте галочку в знак согласия."],
+    "Please check the highlighted fields.": ["Iltimos, belgilangan maydonlarni tekshiring.", "Пожалуйста, проверьте выделенные поля."],
+    "Sorry, we could not send your request. Please try again in a moment.": ["Kechirasiz, soʻrovingizni yubora olmadik. Iltimos, birozdan soʻng qayta urinib koʻring.", "К сожалению, не удалось отправить заявку. Пожалуйста, повторите попытку чуть позже."],
+    "Hi! Let's plan your studies abroad.": ["Salom! Xorijda oʻqishingizni birga rejalashtiramiz.", "Привет! Давайте спланируем вашу учёбу за границей."],
+    "Nice to meet you! What is your name?": ["Tanishganimdan xursandman! Ismingiz nima?", "Приятно познакомиться! Как вас зовут?"],
+    "How can we reach you?": ["Siz bilan qanday bogʻlansak boʻladi?", "Как с вами связаться?"],
+    "Where would you like to study?": ["Qayerda oʻqishni xohlaysiz?", "Где бы вы хотели учиться?"],
+    "Yay! We got your request.": ["Ura! Soʻrovingiz bizga yetib keldi.", "Ура! Мы получили вашу заявку."],
+    "Oops, let's fix that together.": ["Voy, buni birga tuzatamiz.", "Ой, давайте исправим это вместе."],
+
     /* ---------- Home page ---------- */
     "Study House — International Education Agency | Universities in Europe, Australia, China & USA": ["Study House — xalqaro taʼlim agentligi | Yevropa, Avstraliya, Xitoy va AQShdagi universitetlar", "Study House — международное образовательное агентство | Университеты Европы, Австралии, Китая и США"],
     "Study House helps ambitious students get into world-class universities in Europe, Australia, China and the USA. Expert guidance from consultation to arrival.": ["Study House intiluvchan talabalarga Yevropa, Avstraliya, Xitoy va AQShdagi jahon darajasidagi universitetlarga kirishda yordam beradi. Konsultatsiyadan yetib borishgacha mutaxassis yoʻl-yoʻrigʻi.", "Study House помогает целеустремлённым студентам поступить в университеты мирового уровня в Европе, Австралии, Китае и США. Экспертное сопровождение от консультации до прибытия."],
@@ -485,7 +516,7 @@
 
   /* ---------- Helpers ---------- */
   var SKIP_TAGS = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, TEXTAREA: 1 };
-  var ATTRS = ['alt', 'aria-label', 'title'];
+  var ATTRS = ['alt', 'aria-label', 'title', 'placeholder'];
 
   function norm(s) { return s.replace(/\s+/g, ' ').trim(); }
 
@@ -508,45 +539,76 @@
 
   /* Text nodes and attributes remember their original English so any
      language (including English) can be restored at any time. */
+  var currentLang = DEFAULT_LANG;
   var textNodes = [];
   var attrNodes = [];
+  var seenNodes = new WeakSet();
+  var seenAttrs = new WeakMap();
   var meta = null;
   var titleEn = document.title;
 
-  function collect() {
-    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+  function textEntry(node, en) {
+    seenNodes.add(node);
+    var entry = { node: node, en: en };
+    textNodes.push(entry);
+    return entry;
+  }
+
+  function renderText(t, lang) {
+    var tr = lang === 'en' ? null : lookup(t.en, lang);
+    if (tr === null) { t.node.nodeValue = t.en; return; }
+    var lead = t.en.match(/^\s*/)[0];
+    var trail = t.en.match(/\s*$/)[0];
+    t.node.nodeValue = lead + tr + trail;
+  }
+
+  function renderAttr(a, lang) {
+    var tr = lang === 'en' ? null : lookup(a.en, lang);
+    a.el.setAttribute(a.attr, tr === null ? a.en : tr);
+  }
+
+  /* Register every translatable text node / attribute under `root` that has
+     not been seen yet. Safe to call again after injecting new markup. */
+  function register(root) {
+    root = root || document.body;
+    var added = [];
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode: function (n) {
         var p = n.parentNode;
-        if (!p || SKIP_TAGS[p.nodeName]) return NodeFilter.FILTER_REJECT;
+        if (!p || SKIP_TAGS[p.nodeName] || seenNodes.has(n)) return NodeFilter.FILTER_REJECT;
         return D[norm(n.nodeValue)] ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
       }
     });
     var n;
-    while ((n = walker.nextNode())) textNodes.push({ node: n, en: n.nodeValue });
+    while ((n = walker.nextNode())) added.push(textEntry(n, n.nodeValue));
 
-    document.querySelectorAll('[alt],[aria-label],[title]').forEach(function (el) {
+    var els = root.querySelectorAll ? Array.prototype.slice.call(root.querySelectorAll('[alt],[aria-label],[title],[placeholder]')) : [];
+    if (root.nodeType === 1) els.push(root);
+    els.forEach(function (el) {
+      var done = seenAttrs.get(el) || {};
       ATTRS.forEach(function (a) {
         var v = el.getAttribute(a);
-        if (v && D[norm(v)]) attrNodes.push({ el: el, attr: a, en: v });
+        if (!done[a] && v && D[norm(v)]) {
+          done[a] = true;
+          var entry = { el: el, attr: a, en: v };
+          attrNodes.push(entry);
+          added.push(entry);
+        }
       });
+      seenAttrs.set(el, done);
     });
+    return added;
+  }
 
+  function collectHead() {
     meta = document.querySelector('meta[name="description"]');
     if (meta) meta = { el: meta, en: meta.getAttribute('content') };
   }
 
   function apply(lang) {
-    textNodes.forEach(function (t) {
-      var tr = lang === 'en' ? null : lookup(t.en, lang);
-      if (tr === null) { t.node.nodeValue = t.en; return; }
-      var lead = t.en.match(/^\s*/)[0];
-      var trail = t.en.match(/\s*$/)[0];
-      t.node.nodeValue = lead + tr + trail;
-    });
-    attrNodes.forEach(function (a) {
-      var tr = lang === 'en' ? null : lookup(a.en, lang);
-      a.el.setAttribute(a.attr, tr === null ? a.en : tr);
-    });
+    currentLang = lang;
+    textNodes.forEach(function (t) { renderText(t, lang); });
+    attrNodes.forEach(function (a) { renderAttr(a, lang); });
     var titleTr = lang === 'en' ? null : lookup(titleEn, lang);
     document.title = titleTr === null ? titleEn : titleTr;
     if (meta) {
@@ -559,6 +621,7 @@
       b.classList.toggle('lang-switch__btn--active', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
+    document.dispatchEvent(new CustomEvent('shlangchange', { detail: { lang: lang } }));
   }
 
   /* Switcher lives in the sticky navbar, so it sits at the top of every page.
@@ -596,7 +659,32 @@
     if (burger) actions.appendChild(burger);
   }
 
-  collect();
+  /* Public API for scripts that build or change content at runtime
+     (booking form, comparison tables). */
+  window.shI18n = {
+    lang: function () { return currentLang; },
+    /* Translate an English string now (falls back to the English text). */
+    t: function (en) {
+      var tr = currentLang === 'en' ? null : lookup(en, currentLang);
+      return tr === null ? en : tr;
+    },
+    /* Register markup added after page load and translate it. */
+    refresh: function (root) {
+      register(root).forEach(function (e) {
+        if (e.node) renderText(e, currentLang); else renderAttr(e, currentLang);
+      });
+    },
+    /* Set an element's text to `en`; it re-translates on every language switch. */
+    setText: function (el, en) {
+      el.textContent = '';
+      var node = document.createTextNode(en);
+      el.appendChild(node);
+      renderText(textEntry(node, en), currentLang);
+    }
+  };
+
+  register(document.body);
+  collectHead();
   buildSwitcher();
   apply(getSaved());
 })();
