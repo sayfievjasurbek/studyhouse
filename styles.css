@@ -2239,7 +2239,7 @@ button {
 .expertise-hero__subtext {
   font-size: 1.05rem;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 /* --- Stage overview row: static, information only (no hover / click state) --- */
@@ -2387,7 +2387,7 @@ button {
 }
 
 .expertise-panel__item--bad {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .expertise-panel__item--good {
