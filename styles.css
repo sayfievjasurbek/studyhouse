@@ -3,7 +3,7 @@
    ============================================ */
 
 /* --- Google Fonts --- */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
 /* --- CSS Custom Properties --- */
 :root {
@@ -289,6 +289,7 @@ button {
   color: var(--color-gray);
   position: relative;
   padding: 4px 0;
+  white-space: nowrap;
   transition: color 0.3s ease;
 }
 
@@ -314,6 +315,102 @@ button {
 .navbar__cta .btn {
   padding: 12px 24px;
   font-size: 13px;
+  white-space: nowrap;
+}
+
+/* --- Language switcher (UZ / RU / EN) --- */
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+/* The language switcher and longer UZ/RU labels need more room, so the navbar
+   is a little tighter, drops its CTA on mid-size screens (it stays in the
+   mobile menu) and collapses to the hamburger earlier. */
+.navbar__links {
+  gap: 18px;
+}
+
+.navbar__link {
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.navbar__actions {
+  gap: 12px;
+}
+
+.navbar__cta .btn {
+  padding: 11px 18px;
+  font-size: 12px;
+}
+
+@media (max-width: 1360px) {
+  html:not([lang="en"]) .navbar__cta {
+    display: none;
+  }
+}
+
+@media (max-width: 1280px) {
+  .navbar__cta {
+    display: none;
+  }
+}
+
+@media (max-width: 1180px) {
+  .navbar__links {
+    display: none;
+  }
+
+  .navbar__hamburger {
+    display: flex;
+  }
+
+  .mobile-nav {
+    display: flex;
+  }
+}
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  gap: 2px;
+  background: var(--color-cream-dark);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.lang-switch__btn {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 1;
+  padding: 7px 10px;
+  color: var(--color-gray);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.lang-switch__btn:hover {
+  color: var(--color-navy);
+}
+
+.lang-switch__btn--active,
+.lang-switch__btn--active:hover {
+  background: var(--color-navy);
+  color: var(--color-white);
+}
+
+.lang-switch__btn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
 }
 
 .navbar__hamburger {
@@ -1087,6 +1184,20 @@ button {
 }
 
 @media (max-width: 420px) {
+  .navbar__actions {
+    gap: 6px;
+  }
+
+  .lang-switch__btn {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    padding: 6px 8px;
+  }
+
+  .navbar__hamburger {
+    padding: 6px 4px;
+  }
+
   .navbar__logo {
     gap: 8px;
   }
@@ -2036,6 +2147,11 @@ button {
   color: rgba(255, 255, 255, 0.45);
   transition: color 0.3s ease;
   white-space: nowrap;
+}
+
+/* Uzbek / Russian tab labels are longer — let them wrap instead of scrolling off */
+html:not([lang="en"]) .expertise-tabs__label {
+  white-space: normal;
 }
 
 .expertise-tabs__tab--active .expertise-tabs__label,
