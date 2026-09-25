@@ -473,7 +473,7 @@ button {
    HERO SECTION
    ============================================ */
 .hero {
-  padding: 80px 0 100px;
+  padding: 80px 0 48px;
   overflow: hidden;
 }
 
@@ -835,17 +835,19 @@ button {
 /* ============================================
    FEATURED UNIVERSITIES
    ============================================ */
+/* The logo strip sits directly under the hero buttons, so it keeps very
+   little top padding of its own. */
 .universities {
-  padding: var(--section-padding);
+  padding: 8px 0 72px;
 }
 
-.universities__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 48px;
-  flex-wrap: wrap;
-  gap: 20px;
+.universities__heading {
+  font-family: var(--font-serif);
+  font-size: clamp(22px, 2.6vw, 30px);
+  font-weight: 600;
+  color: var(--color-navy);
+  text-align: center;
+  margin-bottom: 8px;
 }
 
 /* --- Universities Logo Carousel --- */
@@ -884,12 +886,27 @@ button {
   align-items: center;
   gap: 64px;
   width: max-content;
-  animation: logoCarouselScroll 28s linear infinite;
+  /* Slow and steady: one full pass takes ~9s per copy of the logo list. */
+  animation: logoCarouselScroll calc(var(--logo-copies, 4) * 9s) linear infinite;
   will-change: transform;
 }
 
-.universities__carousel:hover .universities__carousel-track {
+.universities__carousel:hover .universities__carousel-track,
+.universities__carousel:focus-within .universities__carousel-track {
   animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .universities__carousel-track {
+    animation: none;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .universities__carousel {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
 }
 
 @keyframes logoCarouselScroll {
@@ -912,12 +929,10 @@ button {
   padding: 4px 8px;
   flex-shrink: 0;
   text-decoration: none;
-  opacity: 0.85;
-  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .uni-logo-card:hover {
-  opacity: 1;
   transform: scale(1.08);
   background: transparent;
   box-shadow: none;
@@ -936,6 +951,36 @@ button {
 
 .uni-logo-card:hover .uni-logo-card__img {
   transform: none;
+}
+
+
+/* ============================================
+   GPA CALCULATOR — homepage section
+   ============================================ */
+.gpa-home {
+  padding: var(--section-padding);
+}
+
+.gpa-home__inner {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.gpa-home__text {
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: var(--color-gray);
+  margin: 20px 0 24px;
+  max-width: 460px;
+}
+
+@media (max-width: 1024px) {
+  .gpa-home__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
 
 /* ============================================
@@ -1354,8 +1399,7 @@ button {
   }
 
   .destinations__header,
-  .how__header,
-  .universities__header {
+  .how__header {
     flex-direction: column;
     align-items: flex-start;
   }

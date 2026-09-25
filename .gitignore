@@ -1,2 +1,5 @@
 .DS_Store
 **/.DS_Store
+
+# local test harnesses (see the report; not part of the site)
+_*.html
