@@ -414,7 +414,7 @@
         t('Universities and credential-evaluation services apply their own rules.')));
 
       var cta = h('button', {
-        type: 'button', class: 'btn btn--gold gpa__cta',
+        type: 'button', class: 'btn btn--consult--dark gpa__cta',
         text: t('Get my personal shortlist') + ' →'
       });
       cta.addEventListener('click', function () {

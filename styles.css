@@ -203,6 +203,39 @@ button {
   transform: translateY(-1px);
 }
 
+/* --- The consultation button ---------------------------------------------
+   Every control that opens the booking form uses this one style: the same
+   navy gradient as the footer, sampled from the logo, white text and a gold
+   hover glow. On navy sections a filled navy button would disappear, so the
+   --dark variant keeps the same shape with a thin champagne-gold border. */
+.btn--consult {
+  background: var(--gradient-navy);
+  color: var(--color-white);
+  border: 1.5px solid transparent;
+}
+
+.btn--consult:hover,
+.btn--consult:focus-visible {
+  background: linear-gradient(135deg, #07336D 0%, #0B4489 100%);
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(204, 152, 85, 0.28), 0 10px 28px rgba(204, 152, 85, 0.34);
+  transform: translateY(-1px);
+}
+
+.btn--consult--dark {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--color-white);
+  border: 1.5px solid var(--color-champagne);
+}
+
+.btn--consult--dark:hover,
+.btn--consult--dark:focus-visible {
+  background: rgba(232, 187, 125, 0.18);
+  border-color: var(--gold-pale);
+  box-shadow: 0 0 0 3px rgba(232, 187, 125, 0.24), 0 10px 28px rgba(232, 187, 125, 0.3);
+  transform: translateY(-1px);
+}
+
 .btn--outline {
   border: 1.5px solid var(--color-border);
   color: var(--color-navy);

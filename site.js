@@ -109,7 +109,7 @@
           '</a>' +
           '<ul class="navbar__links" id="nav-links">' + links + '</ul>' +
           '<div class="navbar__cta">' +
-            '<a href="#book-a-consultation" data-booking class="btn btn--primary" id="nav-cta">Book a Consultation →</a>' +
+            '<a href="#book-a-consultation" data-booking class="btn btn--consult" id="nav-cta">Book a Consultation →</a>' +
           '</div>' +
           '<button class="navbar__hamburger" id="hamburger-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-nav">' +
             '<span></span><span></span><span></span>' +
@@ -117,7 +117,7 @@
         '</div>' +
       '</nav>' +
       '<div class="mobile-nav" id="mobile-nav">' + mobile +
-        '<a href="#book-a-consultation" data-booking class="btn btn--primary" data-nav-close>Book a Consultation →</a>' +
+        '<a href="#book-a-consultation" data-booking class="btn btn--consult" data-nav-close>Book a Consultation →</a>' +
       '</div>';
   }
 
@@ -142,7 +142,7 @@
       /* Nothing is invented: until the owner fills in CONTACT above, the column
          offers the booking form instead of a placeholder phone number. */
       return '<p class="footer__contact-empty">The fastest way to reach us is the booking form — we reply within 24 hours.</p>' +
-             '<a href="#book-a-consultation" data-booking class="btn btn--gold footer__contact-btn">Book a Consultation →</a>';
+             '<a href="#book-a-consultation" data-booking class="btn btn--consult--dark footer__contact-btn">Book a Consultation →</a>';
     }
 
     return '<ul class="footer__contact-list">' + rows.map(function (r) {

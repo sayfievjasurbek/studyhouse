@@ -116,7 +116,7 @@
               '</div>' +
               '<p class="booking__privacy">Your details are sent to the Study House team only so we can reply to your request.</p>' +
               '<p class="booking__status" id="bk-status" role="alert" hidden></p>' +
-              '<button type="submit" class="btn btn--primary booking__submit" id="bk-submit">Send request</button>' +
+              '<button type="submit" class="btn btn--consult booking__submit" id="bk-submit">Send request</button>' +
             '</form>' +
           '</div>' +
           '<div class="booking__success" id="bk-success" tabindex="-1" hidden>' +

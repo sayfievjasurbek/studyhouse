@@ -201,7 +201,7 @@
     box.appendChild(details);
 
     box.appendChild(h('div', { class: 'cmp-cta' },
-      h('a', { href: '#book-a-consultation', class: 'btn btn--primary', 'data-booking': '', 'data-booking-country': cfg.country || '', text: t('Get my personal shortlist') + ' →' })));
+      h('a', { href: '#book-a-consultation', class: 'btn btn--consult', 'data-booking': '', 'data-booking-country': cfg.country || '', text: t('Get my personal shortlist') + ' →' })));
     return box;
   }
 
