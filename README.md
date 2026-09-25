@@ -15,6 +15,8 @@ python3 -m http.server 8000     # then open http://localhost:8000/
 | `script.js` | Home-page behaviour (reveal, navbar, smooth scroll) |
 | `i18n.js` | Uzbek / Russian / English switcher — Uzbek is the default |
 | `booking.js` | Shared "Book a Consultation" modal |
+| `compare.js` | "Compare universities" component used by the USA / Australia / China pages |
+| `destinations/{usa,australia,china}/data.js` | Each page's university data, sources and translations |
 | `images/mascot/` | Polar-bear mascot images used by the booking form |
 
 ## Languages
@@ -120,3 +122,26 @@ Study House emblem is shown):
 Use transparent PNGs, roughly 450×545 px (portrait, same framing for every pose so the swap does
 not jump). The current `mascot-wave.png` is cropped from the character sheet and still has the grey
 studio backdrop — the booking panel uses the matching grey (`#A8A6A7`) until transparent versions exist.
+
+## Country pages with the compare tool (USA, Australia, China)
+
+`destinations/<country>/data.js` holds `window.SH_COMPARE` (universities, one cell per table row, a
+`sources` list per university, the "last updated" date) and `window.SH_EXTRA_DICT` (Uzbek/Russian
+translations of that page's copy). `compare.js` renders it.
+
+- A cell is a string, or `{"todo": true}` for a figure that is **not verified yet** — it shows as a marked
+  placeholder ("Not verified yet — see the official site"). Never fill a cell without an official source.
+- Every fee, deadline and rank needs a year and a link in `sources`. Update `updated` when you re-check.
+- Ranks are QS World University Rankings 2027 (`qsYear`, `qsEdition`).
+- The "Most prestigious / Best value / Best for scholarships" tags are set in `tags` and must follow the
+  figures shown in the table.
+
+## Footer social icons
+
+The four social icons in the footer are `hidden` until real profile URLs exist. To turn one on, set its
+`href` and delete the `hidden` attribute (in every page's footer).
+
+## Images
+
+Photos and logos are WebP. Keep new photos at most 1600px wide (heroes) or ~800px (cards), 80–250 KB, and
+add `loading="lazy"` to anything below the fold (hero images use `fetchpriority="high"`).
