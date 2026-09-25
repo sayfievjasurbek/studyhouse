@@ -149,7 +149,7 @@
     "Expert Guidance": ["Mutaxassis maslahati", "Экспертное сопровождение"],
     "Seasoned advisors with deep knowledge of global admissions.": ["Xalqaro qabul jarayonini chuqur biladigan tajribali maslahatchilar.", "Опытные консультанты, глубоко знающие международное поступление."],
     "Top Universities": ["Yetakchi universitetlar", "Ведущие университеты"],
-    "Access to 200+ partner universities across 20+ countries.": ["20 dan ortiq davlatdagi 200+ hamkor universitetlarga kirish imkoni.", "Доступ к 200+ университетам-партнёрам в 20+ странах."],
+    "Access to 200+ partner universities with a high level of education.": ["Taʼlim darajasi yuqori boʻlgan 200+ hamkor universitetlarga kirish imkoni.", "Доступ к 200+ университетам-партнёрам с высоким уровнем образования."],
     "Full Support": ["Toʻliq yordam", "Полная поддержка"],
     "End-to-end help from application to visa to departure.": ["Hujjat topshirishdan viza va joʻnab ketishgacha toʻliq yordam.", "Помощь на всех этапах — от подачи документов до визы и вылета."],
     "Elegant university building with columns and ivy": ["Ustunlar va tokzor bilan bezatilgan noyob universitet binosi", "Элегантное здание университета с колоннами и плющом"],
