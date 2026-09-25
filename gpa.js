@@ -3,15 +3,22 @@
 
    Mounts into any element with a data-gpa attribute:
 
-     <div data-gpa></div>            compact: calculator + result only
+     <div data-gpa></div>            compact: the three steps, short result
      <div data-gpa="full"></div>     also the Ambitious / Realistic / Safe lists
 
-   All conversion tables live in data/grades.json, with their sources and the
-   year. The university lists are the same data/<country>.json files the
-   comparison tables use, so a figure is only ever corrected in one place.
+   Three steps: 1 Grades, 2 Profile, 3 Results, with a "Start over" link.
 
-   Every number this produces is an estimate and is labelled as one. It is not
-   a prediction of admission, and it never claims to be.
+   Every conversion table, scale, score range and threshold lives in
+   data/grades.json with its source and year. The university lists are the same
+   data/<country>.json files the comparison tables use.
+
+   Everything this produces is an estimate and is labelled as one. It is not a
+   prediction of admission, and it shows no percentile or earnings claims,
+   because there is no cited source for them.
+
+   Input rules: no minus or decrement control anywhere, every field is clamped
+   to its published range, no negative number can reach a result, and a subject
+   row is removed with a small "x".
    ============================================ */
 
 (function () {
@@ -21,10 +28,9 @@
   if (!mounts.length) return;
 
   var root = document.documentElement.getAttribute('data-root') || '';
-  var COUNTRIES = ['usa', 'australia', 'china'];
-
-  var G = null;          // grades.json
-  var UNIS = [];         // flattened universities from the country files
+  var G = null;                 // grades.json
+  var UNIS = [];                // universities from the country files
+  var LOADED = {};              // country data id -> true when its file was read
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function t(en) { return window.shI18n ? window.shI18n.t(en) : en; }
@@ -32,6 +38,7 @@
   function h(tag, attrs) {
     var el = document.createElement(tag);
     Object.keys(attrs || {}).forEach(function (k) {
+      if (attrs[k] === null || attrs[k] === undefined) return;
       if (k === 'class') el.className = attrs[k];
       else if (k === 'text') el.textContent = attrs[k];
       else if (k === 'html') el.innerHTML = attrs[k];
@@ -45,320 +52,255 @@
     return el;
   }
 
-  /* ---------- Conversions ---------- */
-
-  /* A grade on `scale` -> the band it falls in (Scholaro's table for Uzbekistan). */
-  function band(scale, value) {
-    var bands = G.scales[scale].bands;
-    for (var i = 0; i < bands.length; i++) if (value >= bands[i].min) return bands[i];
-    return bands[bands.length - 1];
+  /* ---------- Scales ---------- */
+  function scale(id) {
+    var s = G.scales[id];
+    if (s && s.sameAs) {
+      var merged = {};
+      var base = G.scales[s.sameAs];
+      Object.keys(base).forEach(function (k) { merged[k] = base[k]; });
+      Object.keys(s).forEach(function (k) { if (k !== 'sameAs') merged[k] = s[k]; });
+      return merged;
+    }
+    return s;
   }
 
-  /* Weighted mean of the band grade points -> GPA on the 4.0 scale. */
-  function gpaOf(rows, scale) {
-    var points = 0, credits = 0;
+  function isLetterScale(id) { return scale(id).kind === 'letter'; }
+
+  function clamp(id, v) {
+    var s = scale(id);
+    if (v === null || isNaN(v)) return null;
+    return Math.min(s.max, Math.max(Math.max(0, s.min), v));
+  }
+
+  function bandOf(id, v) {
+    var bands = scale(id).bands || [];
+    for (var i = 0; i < bands.length; i++) if (v >= bands[i].min) return bands[i];
+    return null;
+  }
+
+  /* ONE overall GPA on the 4.0 scale across every row, weighted by credits or
+     hours when they are given. null when the scale has no published conversion
+     (IB, A-Level) — the calculator then shows no GPA rather than inventing one. */
+  function gpaOf(id, rows) {
+    var s = scale(id);
+    if (!s.gpa) return null;
+    var points = 0, weight = 0;
     rows.forEach(function (r) {
       if (r.value === null) return;
-      var w = r.credits > 0 ? r.credits : 1;
-      points += band(scale, r.value).gpa * w;
-      credits += w;
+      var w = r.weight > 0 ? r.weight : 1;
+      var p;
+      if (s.gpa === 'direct' || s.gpa === 'letters') p = r.value;
+      else { var b = bandOf(id, r.value); p = b ? b.gpa : 0; }
+      points += p * w;
+      weight += w;
     });
-    return credits ? points / credits : null;
+    if (!weight) return null;
+    return Math.max(0, Math.min(4, points / weight));
   }
 
-  /* Modified Bavarian formula: 1 + 3 * (Nmax - Nd) / (Nmax - Nmin).
-     Applied to the weighted average of the raw grades, then clamped to the
-     German 1.0-4.0 range. */
-  function germanOf(rows, scale) {
-    var sc = G.scales[scale];
-    var sum = 0, credits = 0;
+  function rawMean(id, rows) {
+    var sum = 0, weight = 0;
     rows.forEach(function (r) {
       if (r.value === null) return;
-      var w = r.credits > 0 ? r.credits : 1;
+      var w = r.weight > 0 ? r.weight : 1;
       sum += r.value * w;
-      credits += w;
+      weight += w;
     });
-    if (!credits) return null;
-    var nd = sum / credits;
-    if (nd < sc.pass) return null;                       // below the pass mark: no German grade
-    var g = 1 + 3 * (sc.max - nd) / (sc.max - sc.pass);
+    return weight ? sum / weight : null;
+  }
+
+  /* Modified Bavarian formula, clamped to the German 1.0-4.0 range. */
+  function germanOf(id, rows) {
+    var s = scale(id);
+    var nd = rawMean(id, rows);
+    if (nd === null || nd < s.pass) return null;
+    var g = 1 + 3 * (s.max - nd) / (s.max - s.pass);
     return Math.min(G.german.passLimit, Math.max(G.german.best, g));
   }
 
-  function ukOf(gpa) {
-    var bands = G.uk.bands;
-    for (var i = 0; i < bands.length; i++) if (gpa >= bands[i].min) return bands[i].label;
-    return bands[bands.length - 1].label;
+  /* Position on the student's own scale, 0..1 — works for every scale. */
+  function ratioOf(id, rows) {
+    var s = scale(id);
+    var nd = rawMean(id, rows);
+    if (nd === null) return null;
+    var r = (nd - s.pass) / (s.max - s.pass);
+    /* Round before comparing: an exact threshold like 0.8 otherwise arrives as
+       0.7999999999999998 and drops the profile a band. */
+    return Math.max(0, Math.min(1, Math.round(r * 1e6) / 1e6));
   }
 
-  function profileOf(gpa) {
-    for (var i = 0; i < G.profile.length; i++) if (gpa >= G.profile[i].minGpa) return G.profile[i];
+  function ukOf(gpa) {
+    var b = G.uk.bands;
+    for (var i = 0; i < b.length; i++) if (gpa >= b[i].min) return b[i].label;
+    return b[b.length - 1].label;
+  }
+
+  function profileOf(ratio) {
+    for (var i = 0; i < G.profile.length; i++) if (ratio >= G.profile[i].minRatio) return G.profile[i];
     return G.profile[G.profile.length - 1];
   }
 
-  /* QS rank as a number ("=20" -> 20) so it can be compared */
+  function testById(id) {
+    for (var i = 0; i < G.tests.length; i++) if (G.tests[i].id === id) return G.tests[i];
+    return null;
+  }
+
+  function countryById(id) {
+    for (var i = 0; i < G.countries.length; i++) if (G.countries[i].id === id) return G.countries[i];
+    return null;
+  }
+
+  /* ---------- Shortlist ---------- */
   function rankNum(qs) {
     var n = parseInt(String(qs).replace(/^=/, ''), 10);
     return isNaN(n) ? 9999 : n;
   }
 
-  function shortlist(profileId) {
-    var b = G.shortlist.bands[profileId];
+  /* Read a published minimum IELTS / TOEFL out of the university's English
+     cell, only where it is unambiguous. Nothing parses, nothing is claimed. */
+  function englishMinimum(u) {
+    var txt = typeof u.english === 'string' ? u.english : '';
+    var out = {};
+    var m = txt.match(/IELTS\s*([0-9](?:\.[05])?)/i);
+    if (m) out.ielts = parseFloat(m[1]);
+    m = txt.match(/TOEFL[^0-9]{0,18}?(\d{2,3})/i);
+    if (m) out.toefl = parseInt(m[1], 10);
+    return out;
+  }
+
+  function shortlist(state, result) {
+    var bands = G.shortlist.bands[result.profile.id];
+    var picked = state.countries.length
+      ? UNIS.filter(function (u) { return state.countries.indexOf(u.countryId) !== -1; })
+      : UNIS.slice();
+
     var out = { ambitious: [], realistic: [], safe: [] };
-    UNIS.forEach(function (u) {
+    picked.forEach(function (u) {
       var r = rankNum(u.qs);
-      if (r < b.ambitious) out.ambitious.push(u);
-      else if (r < b.realistic) out.realistic.push(u);
-      else out.safe.push(u);
+      var group = r < bands.ambitious ? 'ambitious' : (r < bands.realistic ? 'realistic' : 'safe');
+      var note = null;
+      var need = englishMinimum(u);
+      var ielts = state.scores.ielts, toefl = state.scores.toefl;
+      if (need.ielts && ielts !== undefined && ielts < need.ielts) {
+        group = 'ambitious';
+        note = t('Published IELTS minimum') + ' ' + need.ielts + ' — ' + t('above your') + ' ' + ielts;
+      } else if (need.toefl && toefl !== undefined && toefl < need.toefl) {
+        group = 'ambitious';
+        note = t('Published TOEFL minimum') + ' ' + need.toefl + ' — ' + t('above your') + ' ' + toefl;
+      }
+      out[group].push({ u: u, note: note });
     });
+
     Object.keys(out).forEach(function (k) {
-      out[k].sort(function (a, c) { return rankNum(a.qs) - rankNum(c.qs); });
+      out[k].sort(function (a, b) { return rankNum(a.u.qs) - rankNum(b.u.qs); });
     });
     return out;
   }
 
-  /* ---------- One calculator instance ---------- */
+  function countriesWithoutData(state) {
+    return state.countries.filter(function (id) {
+      var c = countryById(id);
+      return !c || !c.data || !LOADED[c.data];
+    }).map(function (id) { return countryById(id).label; });
+  }
+
+  /* ---------- One calculator ---------- */
   function Calculator(el) {
     var full = el.getAttribute('data-gpa') === 'full';
-    var tab = 'school';                 // 'school' | 'university'
-    var scale = 'uz5';                  // university tab can switch to uz100
-    var rows = [];
-    var nextId = 1;
-    var result = null;
-    var ui = {};
+    var state, result, ui;
 
-    function scaleForTab() { return tab === 'school' ? 'uz5' : scale; }
-
-    function addRow(name, value, credits, key) {
-      rows.push({
-        id: nextId++, name: name || '', key: key || null, edited: false,
-        value: value == null ? null : value, credits: credits || null
-      });
+    function isUniLevel() {
+      return state.level === 'university-student' || state.level === 'university-graduate';
     }
 
-    /* What to show in the name box: the visitor's own text once they type, the
-       translated template name until then. */
+    function fresh() {
+      state = {
+        step: 1,
+        mode: 'known',
+        scaleId: 'uz5',
+        known: null,
+        rows: [],
+        nextRowId: 1,
+        countries: [],
+        firstName: '',
+        level: 'school-11',
+        tests: [],
+        scores: {}
+      };
+      result = null;
+      ui = {};
+      seedRows();
+    }
+
+    function seedRows() {
+      state.rows = [];
+      var tpl = G.templates[isUniLevel() ? 'university' : 'school'][0];
+      tpl.subjects.slice(0, full ? tpl.subjects.length : 5).forEach(function (s) { addRow(s, s); });
+    }
+
+    function addRow(name, key) {
+      state.rows.push({ id: state.nextRowId++, name: name || '', key: key || null,
+                        edited: false, value: null, weight: null });
+    }
+
     function rowName(r) { return (r.key && !r.edited) ? t(r.key) : r.name; }
 
-    function seed() {
-      rows = [];
-      var tpl = G.templates[tab][0];
-      tpl.subjects.slice(0, full ? tpl.subjects.length : 4).forEach(function (s) { addRow(t(s), null, null, s); });
-    }
-
-    /* ----- Markup ----- */
-    function build() {
+    /* ---------- Shell ---------- */
+    function render() {
       el.textContent = '';
       el.className = 'gpa' + (full ? ' gpa--full' : '');
-
-      /* Tabs */
-      var tabs = h('div', { class: 'gpa__tabs', role: 'tablist', 'aria-label': t('Grade scale') });
-      [['school', 'School'], ['university', 'University']].forEach(function (p) {
-        var b = h('button', {
-          type: 'button', class: 'gpa__tab' + (tab === p[0] ? ' gpa__tab--on' : ''),
-          role: 'tab', 'aria-selected': tab === p[0] ? 'true' : 'false', text: t(p[1])
-        });
-        b.addEventListener('click', function () {
-          if (tab === p[0]) return;
-          tab = p[0];
-          scale = tab === 'school' ? 'uz5' : 'uz100';
-          seed();
-          build();
-        });
-        tabs.appendChild(b);
-      });
-      el.appendChild(tabs);
+      el.appendChild(progress());
 
       var card = h('div', { class: 'gpa__card' });
+      card.appendChild(mascotFor(state.step));
+      card.appendChild(state.step === 1 ? stepGrades() : state.step === 2 ? stepProfile() : stepResults());
       el.appendChild(card);
 
-      /* Scale switch + templates */
-      var bar = h('div', { class: 'gpa__bar' });
-      if (tab === 'university') {
-        var sw = h('div', { class: 'gpa__scales', role: 'group', 'aria-label': t('Grade scale') });
-        [['uz100', '100-point'], ['uz5', '5-point']].forEach(function (p) {
-          var b = h('button', {
-            type: 'button', class: 'gpa__scale' + (scale === p[0] ? ' gpa__scale--on' : ''),
-            'aria-pressed': scale === p[0] ? 'true' : 'false', text: t(p[1])
-          });
-          b.addEventListener('click', function () {
-            if (scale === p[0]) return;
-            scale = p[0];
-            rows.forEach(function (r) { r.value = null; });
-            build();
-          });
-          sw.appendChild(b);
-        });
-        bar.appendChild(sw);
-      }
-
-      var tplWrap = h('div', { class: 'gpa__templates' });
-      tplWrap.appendChild(h('span', { class: 'gpa__templates-label', text: t('Quick start') + ':' }));
-      G.templates[tab].forEach(function (tpl) {
-        var b = h('button', { type: 'button', class: 'gpa__tpl', text: t(tpl.label) });
-        b.addEventListener('click', function () {
-          rows = [];
-          tpl.subjects.forEach(function (s) { addRow(t(s), null, null, s); });
-          build();
-        });
-        tplWrap.appendChild(b);
-      });
-      bar.appendChild(tplWrap);
-      card.appendChild(bar);
-
-      /* Rows */
-      ui.list = h('div', { class: 'gpa__rows' });
-      card.appendChild(ui.list);
-      rows.forEach(function (r) { ui.list.appendChild(rowEl(r)); });
-
-      var actions = h('div', { class: 'gpa__actions' });
-      var add = h('button', { type: 'button', class: 'gpa__add', text: '+ ' + t('Add subject') });
-      add.addEventListener('click', function () {
-        addRow('', null, null);
-        ui.list.appendChild(rowEl(rows[rows.length - 1]));
-        ui.list.lastChild.querySelector('input').focus();
-        recalc();
-      });
-      actions.appendChild(add);
-      card.appendChild(actions);
-
-      /* Result */
-      ui.result = h('div', { class: 'gpa__result', 'aria-live': 'polite' });
-      card.appendChild(ui.result);
-
-      if (full) {
-        ui.lists = h('div', { class: 'gpa__lists' });
-        el.appendChild(ui.lists);
-      }
-
-      recalc();
+      if (state.step === 3 && full) el.appendChild(listsSection());
       if (window.shI18n) window.shI18n.refresh(el);
     }
 
-    function rowEl(r) {
-      var sc = G.scales[scaleForTab()];
-      var wrap = h('div', { class: 'gpa__row' });
-
-      var name = h('input', {
-        type: 'text', class: 'gpa__name', value: rowName(r),
-        'aria-label': t('Subject name'), placeholder: t('Subject')
-      });
-      name.addEventListener('input', function () { r.name = name.value; r.edited = true; });
-
-      var grade = h('input', {
-        type: 'number', class: 'gpa__grade', inputmode: 'numeric',
-        min: '0', max: String(sc.max), step: String(sc.step),
-        'aria-label': t('Grade'), placeholder: tab === 'school' ? '5' : (scaleForTab() === 'uz100' ? '85' : '5')
-      });
-      if (r.value !== null) grade.value = r.value;
-      grade.addEventListener('input', function () {
-        var v = grade.value === '' ? null : Number(grade.value);
-        if (v !== null && (isNaN(v) || v < 0 || v > sc.max)) {
-          wrap.classList.add('gpa__row--bad');
-          r.value = null;
-        } else {
-          wrap.classList.remove('gpa__row--bad');
-          r.value = v;
-        }
-        recalc();
-      });
-
-      wrap.appendChild(name);
-      wrap.appendChild(grade);
-
-      if (tab === 'university') {
-        var cr = h('input', {
-          type: 'number', class: 'gpa__credits', inputmode: 'numeric', min: '0', step: '1',
-          'aria-label': t('Credits (optional)'), placeholder: t('Cr.')
-        });
-        if (r.credits) cr.value = r.credits;
-        cr.addEventListener('input', function () {
-          r.credits = cr.value === '' ? null : Number(cr.value);
-          recalc();
-        });
-        wrap.appendChild(cr);
+    function goto(step) {
+      state.step = step;
+      render();
+      var card = el.querySelector('.gpa__card');
+      if (card && !reduceMotion) {
+        card.classList.add('gpa__card--enter');
+        var show = function () { card.classList.remove('gpa__card--enter'); };
+        requestAnimationFrame(function () { requestAnimationFrame(show); });
+        setTimeout(show, 60);
       }
+    }
 
-      var del = h('button', {
-        type: 'button', class: 'gpa__del', 'aria-label': t('Remove subject'), html: '&times;'
+    function progress() {
+      var steps = [['1', 'Grades'], ['2', 'Profile'], ['3', 'Results']];
+      var wrap = h('div', { class: 'gpa__progress' });
+      var list = h('ol', { class: 'gpa__steps' });
+      steps.forEach(function (s, i) {
+        var n = i + 1;
+        var cls = 'gpa__step' + (n === state.step ? ' gpa__step--on' : '') + (n < state.step ? ' gpa__step--done' : '');
+        var li = h('li', { class: cls, 'aria-current': n === state.step ? 'step' : null },
+          h('span', { class: 'gpa__step-num', text: s[0] }),
+          h('span', { class: 'gpa__step-label', text: t(s[1]) }));
+        if (n < state.step) {
+          li.classList.add('gpa__step--clickable');
+          li.addEventListener('click', function () { goto(n); });
+        }
+        list.appendChild(li);
       });
-      del.addEventListener('click', function () {
-        rows = rows.filter(function (x) { return x.id !== r.id; });
-        wrap.remove();
-        recalc();
-      });
-      wrap.appendChild(del);
+      wrap.appendChild(list);
+      wrap.appendChild(h('div', { class: 'gpa__bar-track' },
+        h('div', { class: 'gpa__bar-fill', style: 'width:' + (state.step / 3 * 100) + '%' })));
+
+      var reset = h('button', { type: 'button', class: 'gpa__reset', text: t('Start over') });
+      reset.addEventListener('click', function () { fresh(); render(); });
+      wrap.appendChild(reset);
       return wrap;
     }
 
-    /* ----- Result ----- */
-    var thinkTimer = null;
-
-    function recalc() {
-      var sc = scaleForTab();
-      var filled = rows.filter(function (r) { return r.value !== null; });
-      if (!filled.length) {
-        result = null;
-        renderEmpty();
-        return;
-      }
-      result = {
-        gpa: gpaOf(rows, sc),
-        german: germanOf(rows, sc),
-        subjects: filled.length,
-        tab: tab,
-        scale: G.scales[sc].label
-      };
-      result.uk = ukOf(result.gpa);
-      result.profile = profileOf(result.gpa);
-      renderResult();
-    }
-
-    function renderEmpty() {
-      ui.result.textContent = '';
-      ui.result.appendChild(h('p', { class: 'gpa__hint', text: t('Enter at least one grade to see your estimate.') }));
-      if (ui.lists) ui.lists.textContent = '';
-    }
-
-    function ring(gpa) {
-      var pct = Math.max(0, Math.min(1, gpa / 4));
-      var R = 52, C = 2 * Math.PI * R;
-      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('viewBox', '0 0 120 120');
-      svg.setAttribute('class', 'gpa__ring');
-      svg.setAttribute('aria-hidden', 'true');
-      svg.innerHTML =
-        '<defs><linearGradient id="gpaGold" x1="0" y1="0" x2="1" y2="1">' +
-          '<stop offset="0%" stop-color="#916329"/><stop offset="55%" stop-color="#CC9855"/><stop offset="100%" stop-color="#FBD49E"/>' +
-        '</linearGradient></defs>' +
-        '<circle cx="60" cy="60" r="' + R + '" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="9"/>' +
-        '<circle cx="60" cy="60" r="' + R + '" fill="none" stroke="url(#gpaGold)" stroke-width="9" stroke-linecap="round" ' +
-          'transform="rotate(-90 60 60)" stroke-dasharray="' + C + '" stroke-dashoffset="' + C + '" class="gpa__ring-arc"/>';
-      requestAnimationFrame(function () {
-        var arc = svg.querySelector('.gpa__ring-arc');
-        if (reduceMotion) { arc.style.transition = 'none'; }
-        arc.setAttribute('stroke-dashoffset', String(C * (1 - pct)));
-      });
-      return svg;
-    }
-
-    function countUp(node, to) {
-      if (reduceMotion) { node.textContent = to.toFixed(2); return; }
-      var from = 0, start = null, dur = 700, done = false;
-      function step(ts) {
-        if (start === null) start = ts;
-        var p = Math.min(1, (ts - start) / dur);
-        node.textContent = (from + (to - from) * (1 - Math.pow(1 - p, 3))).toFixed(2);
-        if (p < 1) requestAnimationFrame(step); else done = true;
-      }
-      requestAnimationFrame(step);
-      /* Safety net: if the frame callbacks never arrive, still show the number. */
-      setTimeout(function () { if (!done) node.textContent = to.toFixed(2); }, dur + 80);
-    }
-
-    /* Poses the owner has not supplied yet fall back to the wave pose; if that
-       is missing too the mascot is simply hidden. */
-    function mascot(pose) {
+    function mascotFor(step) {
+      var pose = step === 3 ? (result && result.profile.id === 'strong' ? 'happy' : 'wave') : 'thinking';
       var img = h('img', { class: 'gpa__mascot', alt: '', width: '452', height: '545' });
       img.setPose = function (name) {
         img.dataset.pose = name;
@@ -372,69 +314,601 @@
       return img;
     }
 
-    function renderResult() {
-      var r = result;
-      ui.result.textContent = '';
+    function heading(title, sub) {
+      return h('div', { class: 'gpa__head' },
+        h('h3', { class: 'gpa__title', text: title }),
+        sub ? h('p', { class: 'gpa__sub', text: t(sub) }) : null);
+    }
 
-      var gauge = h('div', { class: 'gpa__gauge' });
-      gauge.appendChild(ring(r.gpa));
-      var num = h('span', { class: 'gpa__gauge-num', text: '0.00' });
-      gauge.appendChild(h('div', { class: 'gpa__gauge-inner' },
-        num,
-        h('span', { class: 'gpa__gauge-of', text: '/ 4.00' })));
-      countUp(num, r.gpa);
+    function field(label, control, note) {
+      return h('div', { class: 'gpa__field' },
+        h('label', { class: 'gpa__label', 'for': control.id || null, text: t(label) }),
+        control,
+        note ? h('p', { class: 'gpa__hint', text: note }) : null);
+    }
+
+    /* A text box that accepts digits only: no spinner, no minus, clamped on
+       blur. A minus sign cannot be typed, so it can never reach a result. */
+    function numberBox(opts) {
+      var input = h('input', {
+        type: 'text', inputmode: 'decimal', class: 'gpa__num ' + (opts.cls || ''),
+        id: opts.id || null, 'aria-label': t(opts.label),
+        placeholder: opts.placeholder || '', autocomplete: 'off'
+      });
+      if (opts.value !== null && opts.value !== undefined) input.value = opts.value;
+
+      function read() {
+        var raw = input.value.replace(/[^0-9.]/g, '');
+        var parts = raw.split('.');
+        if (parts.length > 2) raw = parts[0] + '.' + parts.slice(1).join('');
+        if (raw !== input.value) input.value = raw;
+        return raw === '' ? null : parseFloat(raw);
+      }
+
+      input.addEventListener('input', function () {
+        var v = read();
+        opts.onInput(v === null || isNaN(v) ? null : v);
+      });
+      input.addEventListener('blur', function () {
+        var v = read();
+        if (v === null || isNaN(v)) { input.value = ''; opts.onInput(null); return; }
+        var c = opts.clamp(v);
+        input.value = opts.decimals ? c.toFixed(opts.decimals) : String(c);
+        opts.onInput(c);
+        if (opts.after) opts.after();
+      });
+      return input;
+    }
+
+    /* ---------- Step 1: grades ---------- */
+    function stepGrades() {
+      var box = h('div', { class: 'gpa__step-body' });
+      box.appendChild(heading(t('Your grades'), 'Tell us how your grades are written and where you would like to study.'));
+
+      var modes = h('div', { class: 'gpa__modes', role: 'group', 'aria-label': t('How do you want to enter your grades?') });
+      [['known', 'I know my GPA'], ['subjects', 'By subjects (more accurate)']].forEach(function (m) {
+        var b = h('button', {
+          type: 'button', class: 'gpa__mode' + (state.mode === m[0] ? ' gpa__mode--on' : ''),
+          'aria-pressed': state.mode === m[0] ? 'true' : 'false', text: t(m[1])
+        });
+        b.addEventListener('click', function () { state.mode = m[0]; render(); });
+        modes.appendChild(b);
+      });
+      box.appendChild(modes);
+
+      var sc = scale(state.scaleId);
+      var sel = h('select', { class: 'gpa__select', id: 'gpa-scale', 'aria-label': t('Grading system') });
+      Object.keys(G.scales).forEach(function (id) {
+        var o = h('option', { value: id, text: t(G.scales[id].label) });
+        if (id === state.scaleId) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.addEventListener('change', function () {
+        state.scaleId = sel.value;
+        state.known = null;
+        state.rows.forEach(function (r) { r.value = null; });
+        render();
+      });
+      box.appendChild(field('Grading system', sel, sc.note ? t(sc.note) : null));
+
+      box.appendChild(state.mode === 'known' ? knownInput() : subjectRows());
+
+      var chips = h('div', { class: 'gpa__chips', role: 'group', 'aria-labelledby': 'gpa-dest-label' });
+      G.countries.forEach(function (c) {
+        var on = state.countries.indexOf(c.id) !== -1;
+        var b = h('button', {
+          type: 'button', class: 'gpa__chip' + (on ? ' gpa__chip--on' : ''),
+          'aria-pressed': on ? 'true' : 'false', text: t(c.label)
+        });
+        b.addEventListener('click', function () {
+          var i = state.countries.indexOf(c.id);
+          if (i === -1) state.countries.push(c.id); else state.countries.splice(i, 1);
+          render();
+        });
+        chips.appendChild(b);
+      });
+      box.appendChild(h('div', { class: 'gpa__field' },
+        h('span', { class: 'gpa__label', id: 'gpa-dest-label', text: t('Where do you want to go?') }),
+        chips,
+        h('p', { class: 'gpa__hint', text: t('Choose as many as you like, or none to see everything.') })));
+
+      var err = h('p', { class: 'gpa__error', role: 'alert', hidden: 'hidden' });
+      var next = h('button', { type: 'button', class: 'btn btn--consult--dark gpa__next', text: t('Continue') + ' →' });
+      next.addEventListener('click', function () {
+        var ok = state.mode === 'known'
+          ? state.known !== null
+          : state.rows.some(function (r) { return r.value !== null; });
+        if (!ok) {
+          err.textContent = t(state.mode === 'known'
+            ? 'Enter your average score to continue.'
+            : 'Enter at least one subject grade to continue.');
+          err.hidden = false;
+          return;
+        }
+        err.hidden = true;
+        goto(2);
+      });
+      box.appendChild(err);
+      box.appendChild(next);
+      return box;
+    }
+
+    function knownInput() {
+      var sc = scale(state.scaleId);
+      if (isLetterScale(state.scaleId)) {
+        var sel = h('select', { class: 'gpa__select', id: 'gpa-known', 'aria-label': t('Average grade') });
+        sel.appendChild(h('option', { value: '', text: t('Select your average grade') }));
+        sc.letters.forEach(function (l) {
+          var o = h('option', { value: String(l.points), text: l.grade });
+          if (state.known === l.points) o.selected = true;
+          sel.appendChild(o);
+        });
+        sel.addEventListener('change', function () {
+          state.known = sel.value === '' ? null : parseFloat(sel.value);
+        });
+        return field('Average grade', sel, null);
+      }
+      var box = numberBox({
+        id: 'gpa-known', label: 'Average score', cls: 'gpa__num--wide',
+        value: state.known, placeholder: String(sc.max), decimals: sc.decimals,
+        clamp: function (v) { return clamp(state.scaleId, v); },
+        onInput: function (v) { state.known = v; }
+      });
+      return field('Average score', box, t('Allowed range') + ': ' + Math.max(0, sc.min) + ' – ' + sc.max);
+    }
+
+    function subjectRows() {
+      var wrap = h('div', { class: 'gpa__field' });
+      wrap.appendChild(h('span', { class: 'gpa__label', text: t('Your subjects') }));
+
+      var tpls = h('div', { class: 'gpa__templates' });
+      tpls.appendChild(h('span', { class: 'gpa__templates-label', text: t('Quick start') + ':' }));
+      G.templates[isUniLevel() ? 'university' : 'school'].forEach(function (tpl) {
+        var b = h('button', { type: 'button', class: 'gpa__tpl', text: t(tpl.label) });
+        b.addEventListener('click', function () {
+          state.rows = [];
+          tpl.subjects.forEach(function (s) { addRow(s, s); });
+          render();
+        });
+        tpls.appendChild(b);
+      });
+      wrap.appendChild(tpls);
+
+      var list = h('div', { class: 'gpa__rows' });
+      state.rows.forEach(function (r) { list.appendChild(rowEl(r)); });
+      wrap.appendChild(list);
+
+      var add = h('button', { type: 'button', class: 'gpa__add', text: '+ ' + t('Add subject') });
+      add.addEventListener('click', function () {
+        addRow('', null);
+        list.appendChild(rowEl(state.rows[state.rows.length - 1]));
+        list.lastChild.querySelector('input').focus();
+        updateTotal();
+      });
+      wrap.appendChild(add);
+
+      ui.total = h('p', { class: 'gpa__running', 'aria-live': 'polite' });
+      wrap.appendChild(ui.total);
+      setTimeout(updateTotal, 0);
+      return wrap;
+    }
+
+    function rowEl(r) {
+      var sc = scale(state.scaleId);
+      var row = h('div', { class: 'gpa__row' });
+
+      var name = h('input', {
+        type: 'text', class: 'gpa__name', value: rowName(r),
+        'aria-label': t('Subject name'), placeholder: t('Subject')
+      });
+      name.addEventListener('input', function () { r.name = name.value; r.edited = true; });
+      row.appendChild(name);
+
+      if (isLetterScale(state.scaleId)) {
+        var sel = h('select', { class: 'gpa__select gpa__grade', 'aria-label': t('Grade') });
+        sel.appendChild(h('option', { value: '', text: '—' }));
+        sc.letters.forEach(function (l) {
+          var o = h('option', { value: String(l.points), text: l.grade });
+          if (r.value === l.points) o.selected = true;
+          sel.appendChild(o);
+        });
+        sel.addEventListener('change', function () {
+          r.value = sel.value === '' ? null : parseFloat(sel.value);
+          updateTotal();
+        });
+        row.appendChild(sel);
+      } else {
+        row.appendChild(numberBox({
+          label: 'Grade', cls: 'gpa__grade', value: r.value, decimals: sc.decimals,
+          placeholder: String(sc.max),
+          clamp: function (v) { return clamp(state.scaleId, v); },
+          onInput: function (v) { r.value = v; updateTotal(); },
+          after: updateTotal
+        }));
+      }
+
+      row.appendChild(numberBox({
+        label: 'Credits or hours (optional)', cls: 'gpa__credits', value: r.weight, decimals: 0,
+        placeholder: t('Cr.'),
+        clamp: function (v) { return Math.max(0, Math.min(1000, v)); },
+        onInput: function (v) { r.weight = v; updateTotal(); },
+        after: updateTotal
+      }));
+
+      /* Removing a row is an "x", never a minus. */
+      var del = h('button', {
+        type: 'button', class: 'gpa__del', 'aria-label': t('Remove subject'), html: '&times;'
+      });
+      del.addEventListener('click', function () {
+        state.rows = state.rows.filter(function (x) { return x.id !== r.id; });
+        row.remove();
+        updateTotal();
+      });
+      row.appendChild(del);
+      return row;
+    }
+
+    /* ONE overall figure across every subject — never a per-subject result. */
+    function updateTotal() {
+      if (!ui.total) return;
+      var filled = state.rows.filter(function (r) { return r.value !== null; });
+      if (!filled.length) { ui.total.textContent = ''; return; }
+      var mean = rawMean(state.scaleId, state.rows);
+      var weighted = state.rows.some(function (r) { return r.value !== null && r.weight > 0; });
+      ui.total.textContent = t('Overall average across') + ' ' + filled.length + ' ' +
+        t('subjects') + ': ' + mean.toFixed(2) +
+        (weighted ? ' (' + t('weighted by credits') + ')' : '');
+    }
+
+    /* ---------- Step 2: profile ---------- */
+    function stepProfile() {
+      var box = h('div', { class: 'gpa__step-body' });
+      box.appendChild(heading(t('About you'), 'Two more things, so the result fits your situation.'));
+
+      var name = h('input', {
+        type: 'text', class: 'gpa__text', id: 'gpa-name', maxlength: '40',
+        value: state.firstName, placeholder: t('e.g. Nodira'), 'aria-label': t('First name')
+      });
+      name.addEventListener('input', function () { state.firstName = name.value; });
+      box.appendChild(field('First name', name, t('Used on your result card.')));
+
+      var lvl = h('select', { class: 'gpa__select', id: 'gpa-level', 'aria-label': t('Education level') });
+      G.levels.forEach(function (l) {
+        var o = h('option', { value: l.id, text: t(l.label) });
+        if (l.id === state.level) o.selected = true;
+        lvl.appendChild(o);
+      });
+      lvl.addEventListener('change', function () { state.level = lvl.value; });
+      box.appendChild(field('Education level', lvl));
+
+      var tests = h('div', { class: 'gpa__tests' });
+      G.tests.forEach(function (test) {
+        var on = state.tests.indexOf(test.id) !== -1;
+        var line = h('div', { class: 'gpa__test' + (on ? ' gpa__test--on' : '') });
+        var toggle = h('button', {
+          type: 'button', class: 'gpa__test-toggle',
+          'aria-pressed': on ? 'true' : 'false', text: t(test.label)
+        });
+        toggle.addEventListener('click', function () {
+          var i = state.tests.indexOf(test.id);
+          if (i !== -1) {
+            state.tests.splice(i, 1);
+            delete state.scores[test.id];
+          } else if (test.noScore) {
+            state.tests = [test.id];
+            state.scores = {};
+          } else {
+            state.tests = state.tests.filter(function (x) { return x !== 'none'; });
+            state.tests.push(test.id);
+          }
+          render();
+        });
+        line.appendChild(toggle);
+
+        if (on && !test.noScore) {
+          line.appendChild(numberBox({
+            label: test.label + ' ' + t('score'), cls: 'gpa__score',
+            value: state.scores[test.id], decimals: test.decimals, placeholder: String(test.max),
+            clamp: function (v) { return Math.min(test.max, Math.max(test.min, v)); },
+            onInput: function (v) {
+              if (v === null) delete state.scores[test.id]; else state.scores[test.id] = v;
+            }
+          }));
+          line.appendChild(h('span', { class: 'gpa__test-range', text: t(test.range) }));
+        }
+        tests.appendChild(line);
+      });
+      box.appendChild(h('div', { class: 'gpa__field' },
+        h('span', { class: 'gpa__label', text: t('Language tests') }),
+        tests,
+        h('p', { class: 'gpa__hint', text: t('Pick every test you have taken, then enter the score.') })));
+
+      var nav = h('div', { class: 'gpa__nav' });
+      var back = h('button', { type: 'button', class: 'gpa__back', text: '← ' + t('Back') });
+      back.addEventListener('click', function () { goto(1); });
+      var go = h('button', { type: 'button', class: 'btn btn--consult--dark gpa__next', text: t('Get my result') + ' →' });
+      go.addEventListener('click', function () { compute(); goto(3); });
+      nav.appendChild(back);
+      nav.appendChild(go);
+      box.appendChild(nav);
+      return box;
+    }
+
+    /* ---------- Compute ---------- */
+    function compute() {
+      var rows = state.mode === 'known'
+        ? [{ value: state.known, weight: null }]
+        : state.rows;
+      var sc = scale(state.scaleId);
+      var gpa = gpaOf(state.scaleId, rows);
+      var ratio = ratioOf(state.scaleId, rows);
+      result = {
+        gpa: gpa,
+        german: germanOf(state.scaleId, rows),
+        ratio: ratio,
+        profile: profileOf(ratio === null ? 0 : ratio),
+        scaleLabel: sc.label,
+        subjects: rows.filter(function (r) { return r.value !== null; }).length,
+        mode: state.mode
+      };
+      /* A UK class is a degree classification, so it is only shown for
+         university-level grades. */
+      result.uk = (gpa !== null && G.uk.appliesTo.indexOf(state.level) !== -1) ? ukOf(gpa) : null;
+    }
+
+    /* ---------- Step 3: results ---------- */
+    function stepResults() {
+      var r = result;
+      var box = h('div', { class: 'gpa__step-body' });
+      var who = state.firstName.trim();
+      box.appendChild(heading(who ? t('Your estimate') + ', ' + who : t('Your estimate'), null));
+
+      var head = h('div', { class: 'gpa__result-head' });
+      if (r.gpa !== null) {
+        var gauge = h('div', { class: 'gpa__gauge' });
+        gauge.appendChild(ring(r.gpa));
+        var num = h('span', { class: 'gpa__gauge-num', text: '0.00' });
+        gauge.appendChild(h('div', { class: 'gpa__gauge-inner' },
+          num, h('span', { class: 'gpa__gauge-of', text: '/ 4.00' })));
+        head.appendChild(gauge);
+        countUp(num, r.gpa);
+      } else {
+        head.appendChild(h('div', { class: 'gpa__gauge gpa__gauge--none' },
+          h('p', { class: 'gpa__gauge-note', text: t('No published 4.0 GPA conversion exists for this qualification.') })));
+      }
 
       var stats = h('div', { class: 'gpa__stats' });
       function stat(label, value, note) {
-        var box = h('div', { class: 'gpa__stat' },
+        var b = h('div', { class: 'gpa__stat' },
           h('span', { class: 'gpa__stat-label', text: t(label) }),
           h('span', { class: 'gpa__stat-value', text: value }));
-        if (note) box.appendChild(h('span', { class: 'gpa__stat-note', text: t(note) }));
-        return box;
+        if (note) b.appendChild(h('span', { class: 'gpa__stat-note', text: t(note) }));
+        return b;
       }
       stats.appendChild(stat('German grade (estimate)',
         r.german === null ? '—' : r.german.toFixed(1),
         r.german === null ? 'Below the pass mark for this scale' : '1.0 is the best grade'));
-      stats.appendChild(stat('UK class (estimate)', t(r.uk)));
+      stats.appendChild(r.uk
+        ? stat('UK class (estimate)', t(r.uk))
+        : stat('UK class (estimate)', '—', 'Only applies to university-level grades'));
       stats.appendChild(stat('Profile strength', t(r.profile.label)));
+      head.appendChild(stats);
+      box.appendChild(head);
 
-      /* thinking while the numbers move, happy once a strong result lands */
-      var pose = mascot('thinking');
-      clearTimeout(thinkTimer);
-      thinkTimer = setTimeout(function () {
-        if (result && result.profile.id === 'strong') pose.setPose('happy');
-      }, reduceMotion ? 0 : 750);
-
-      var head = h('div', { class: 'gpa__result-head' }, gauge, stats, pose);
-      ui.result.appendChild(head);
-
-      ui.result.appendChild(h('p', { class: 'gpa__estimate' },
+      box.appendChild(h('p', { class: 'gpa__estimate' },
         h('strong', { text: t('Estimate only.') }), ' ',
-        t('Based on') + ' ' + r.subjects + ' ' + t('subjects') + ' · ' + t(r.scale) + '. ' +
+        (r.mode === 'subjects' ? t('One overall average across') + ' ' + r.subjects + ' ' + t('subjects') + ' · ' : '') +
+        t(r.scaleLabel) + '. ' +
+        t('The German figure uses the modified Bavarian formula') + ': ' + G.german.formula + '. ' +
         t('Universities and credential-evaluation services apply their own rules.')));
 
-      var cta = h('button', {
-        type: 'button', class: 'btn btn--consult--dark gpa__cta',
-        text: t('Get my personal shortlist') + ' →'
-      });
+      var actions = h('div', { class: 'gpa__actions' });
+      var cta = h('button', { type: 'button', class: 'btn btn--consult--dark gpa__cta',
+        text: t('Get my personal shortlist') + ' →' });
       cta.addEventListener('click', function () {
-        var label = r.gpa.toFixed(2) + ' / 4.00 (' + t(r.scale) + ', ' + t(r.tab === 'school' ? 'School' : 'University') + ')'
-          + (r.german === null ? '' : ' · ' + t('German') + ' ' + r.german.toFixed(1))
-          + ' · ' + t(r.uk);
-        if (window.openBooking) window.openBooking({ gpa: label, source: 'gpa-calculator' });
+        if (window.openBooking) window.openBooking({ gpa: summaryLine(), source: 'gpa-calculator' });
       });
-      ui.result.appendChild(cta);
+      var dl = h('button', { type: 'button', class: 'gpa__ghost', text: '↓ ' + t('Download result card') });
+      dl.addEventListener('click', downloadCard);
+      var sh = h('button', { type: 'button', class: 'gpa__ghost', text: '↗ ' + t('Share') });
+      sh.addEventListener('click', shareCard);
+      actions.appendChild(cta);
+      actions.appendChild(dl);
+      actions.appendChild(sh);
+      ui.actions = actions;
+      box.appendChild(actions);
 
-      if (ui.lists) renderLists(r);
+      var back = h('button', { type: 'button', class: 'gpa__back', text: '← ' + t('Back') });
+      back.addEventListener('click', function () { goto(2); });
+      box.appendChild(back);
+      return box;
     }
 
-    function renderLists(r) {
-      ui.lists.textContent = '';
-      if (!UNIS.length) return;
-      var groups = shortlist(r.profile.id);
+    function summaryLine() {
+      var r = result, bits = [];
+      if (r.gpa !== null) bits.push('GPA ' + r.gpa.toFixed(2) + '/4.00');
+      if (r.german !== null) bits.push(t('German') + ' ' + r.german.toFixed(1));
+      if (r.uk) bits.push(t(r.uk));
+      bits.push(t(r.profile.label));
+      bits.push(t(r.scaleLabel));
+      if (state.countries.length) {
+        bits.push(state.countries.map(function (id) { return t(countryById(id).label); }).join(', '));
+      }
+      state.tests.forEach(function (id) {
+        if (id === 'none') { bits.push(t('No test yet')); return; }
+        if (state.scores[id] !== undefined) bits.push(testById(id).label + ' ' + state.scores[id]);
+      });
+      return bits.join(' · ');
+    }
 
-      ui.lists.appendChild(h('h2', { class: 'gpa__lists-heading', text: t('Where this profile sits') }));
-      ui.lists.appendChild(h('p', { class: 'gpa__lists-note', text: t(G.shortlist.note) }));
+    function ring(gpa) {
+      var pct = Math.max(0, Math.min(1, gpa / 4));
+      var R = 52, C = 2 * Math.PI * R;
+      var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 120 120');
+      svg.setAttribute('class', 'gpa__ring');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.innerHTML =
+        '<defs><linearGradient id="gpaGold" x1="0" y1="0" x2="1" y2="1">' +
+          '<stop offset="0%" stop-color="#916329"/><stop offset="55%" stop-color="#CC9855"/>' +
+          '<stop offset="100%" stop-color="#FBD49E"/></linearGradient></defs>' +
+        '<circle cx="60" cy="60" r="' + R + '" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="9"/>' +
+        '<circle cx="60" cy="60" r="' + R + '" fill="none" stroke="url(#gpaGold)" stroke-width="9" ' +
+          'stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="' + C +
+          '" stroke-dashoffset="' + C + '" class="gpa__ring-arc"/>';
+      /* The arc starts empty and transitions to its value. A frame callback is
+         the natural trigger, but it does not fire everywhere (headless
+         rendering, background tabs), so a timer repeats the set. */
+      function fill() {
+        var arc = svg.querySelector('.gpa__ring-arc');
+        if (!arc) return;
+        if (reduceMotion) arc.style.transition = 'none';
+        arc.setAttribute('stroke-dashoffset', String(C * (1 - pct)));
+      }
+      requestAnimationFrame(fill);
+      setTimeout(fill, 60);
+      return svg;
+    }
+
+    function countUp(node, to) {
+      if (reduceMotion) { node.textContent = to.toFixed(2); return; }
+      var start = null, dur = 750, done = false;
+      function step(ts) {
+        if (start === null) start = ts;
+        var p = Math.min(1, (ts - start) / dur);
+        node.textContent = Math.max(0, to * (1 - Math.pow(1 - p, 3))).toFixed(2);
+        if (p < 1) requestAnimationFrame(step); else done = true;
+      }
+      requestAnimationFrame(step);
+      setTimeout(function () { if (!done) node.textContent = to.toFixed(2); }, dur + 80);
+    }
+
+    /* ---------- Result card ---------- */
+    function drawCard() {
+      var W = 1000, H = 560;
+      var c = document.createElement('canvas');
+      c.width = W; c.height = H;
+      var x = c.getContext('2d');
+
+      var bg = x.createLinearGradient(0, 0, W, H);
+      bg.addColorStop(0, '#021F47'); bg.addColorStop(1, '#07336D');
+      x.fillStyle = bg; x.fillRect(0, 0, W, H);
+
+      var gold = x.createLinearGradient(60, 0, 300, 0);
+      gold.addColorStop(0, '#916329'); gold.addColorStop(0.55, '#CC9855'); gold.addColorStop(1, '#FBD49E');
+
+      x.fillStyle = '#E8BB7D';
+      x.font = '600 15px Inter, Helvetica, sans-serif';
+      x.fillText('STUDY HOUSE · ' + t('GPA Calculator').toUpperCase(), 60, 52);
+      x.fillStyle = gold; x.fillRect(60, 68, 120, 4);
+
+      var who = state.firstName.trim();
+      x.fillStyle = '#FFFFFF';
+      x.font = '700 40px Georgia, serif';
+      x.fillText(who ? t('Your estimate') + ', ' + who : t('Your estimate'), 60, 132);
+
+      var r = result;
+      if (r.gpa !== null) {
+        x.fillStyle = gold;
+        x.font = '700 110px Georgia, serif';
+        var g = r.gpa.toFixed(2);
+        x.fillText(g, 60, 256);
+        x.fillStyle = 'rgba(255,255,255,0.55)';
+        x.font = '500 24px Inter, Helvetica, sans-serif';
+        x.fillText('/ 4.00', 60 + x.measureText(g).width + 190, 256);
+      } else {
+        x.fillStyle = 'rgba(255,255,255,0.85)';
+        x.font = '500 22px Inter, Helvetica, sans-serif';
+        x.fillText(t('No published 4.0 GPA conversion exists for this qualification.'), 60, 220);
+      }
+
+      var rows = [];
+      if (r.german !== null) rows.push([t('German grade (estimate)'), r.german.toFixed(1)]);
+      if (r.uk) rows.push([t('UK class (estimate)'), t(r.uk)]);
+      rows.push([t('Profile strength'), t(r.profile.label)]);
+      rows.push([t('Grading system'), t(r.scaleLabel)]);
+
+      var y = 330, col = 60;
+      rows.forEach(function (row, i) {
+        if (i === 2) { col = 540; y = 330; }
+        x.fillStyle = '#E8BB7D';
+        x.font = '600 12px Inter, Helvetica, sans-serif';
+        x.fillText(String(row[0]).toUpperCase(), col, y);
+        x.fillStyle = '#FFFFFF';
+        x.font = '600 22px Inter, Helvetica, sans-serif';
+        x.fillText(String(row[1]), col, y + 30);
+        y += 78;
+      });
+
+      x.fillStyle = 'rgba(255,255,255,0.5)';
+      x.font = '400 13px Inter, Helvetica, sans-serif';
+      x.fillText(t('Estimate only.') + ' ' + t('Universities and credential-evaluation services apply their own rules.'), 60, H - 32);
+      return c;
+    }
+
+    function cardFileName() {
+      var n = state.firstName.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      return 'study-house-gpa' + (n ? '-' + n : '') + '.png';
+    }
+
+    function withBlob(fn) {
+      var c = drawCard();
+      if (c.toBlob) c.toBlob(fn, 'image/png');
+      else fn(null);
+    }
+
+    function downloadCard() {
+      withBlob(function (blob) {
+        if (!blob) return;
+        var url = URL.createObjectURL(blob);
+        var a = h('a', { href: url, download: cardFileName() });
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      });
+    }
+
+    function shareCard() {
+      var text = (state.firstName.trim() ? state.firstName.trim() + ' — ' : '') +
+        summaryLine() + ' · ' + t('Estimate only.');
+      withBlob(function (blob) {
+        var file = blob && window.File ? new File([blob], cardFileName(), { type: 'image/png' }) : null;
+        if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+          navigator.share({ files: [file], text: text, title: 'Study House' }).catch(function () {});
+        } else if (navigator.share) {
+          navigator.share({ text: text, url: location.href }).catch(function () {});
+        } else if (navigator.clipboard) {
+          navigator.clipboard.writeText(text + ' — ' + location.href)
+            .then(function () { flash(t('Copied to clipboard')); }, downloadCard);
+        } else {
+          downloadCard();
+        }
+      });
+    }
+
+    function flash(msg) {
+      if (!ui.actions) return;
+      var n = h('p', { class: 'gpa__flash', role: 'status', text: msg });
+      ui.actions.appendChild(n);
+      setTimeout(function () { n.remove(); }, 2600);
+    }
+
+    /* ---------- Ambitious / Realistic / Safe ---------- */
+    function listsSection() {
+      var wrap = h('div', { class: 'gpa__lists' });
+      var groups = shortlist(state, result);
+
+      wrap.appendChild(h('h2', { class: 'gpa__lists-heading', text: t('Where this profile sits') }));
+      wrap.appendChild(h('p', { class: 'gpa__lists-note', text: t(G.shortlist.note) }));
+
+      var missing = countriesWithoutData(state);
+      if (missing.length) {
+        wrap.appendChild(h('p', { class: 'gpa__lists-missing' },
+          t('We do not have a side-by-side university list for') + ' ' +
+          missing.map(function (m) { return t(m); }).join(', ') + ' ' +
+          t('yet, so nothing for it is shown below. Ask us in a consultation rather than guessing.')));
+      }
 
       var grid = h('div', { class: 'gpa__groups' });
       [
@@ -450,25 +924,30 @@
           box.appendChild(h('p', { class: 'gpa__group-empty', text: t('Nothing in our current country lists falls into this group for this profile. That is a reason to talk to an advisor, not a dead end.') }));
         } else {
           var ul = h('ul', { class: 'gpa__group-list' });
-          list.forEach(function (u) {
-            ul.appendChild(h('li', {},
+          list.forEach(function (row) {
+            var u = row.u;
+            var li = h('li', {},
               h('a', { href: root + 'destinations/' + u.countryId + '/index.html', class: 'gpa__uni' },
                 h('span', { class: 'gpa__uni-name', text: u.name }),
-                h('span', { class: 'gpa__uni-meta', text: 'QS ' + (String(u.qs).charAt(0) === '=' ? u.qs : '#' + u.qs) + ' · ' + t(u.countryLabel) }))));
+                h('span', { class: 'gpa__uni-meta',
+                  text: 'QS ' + (String(u.qs).charAt(0) === '=' ? u.qs : '#' + u.qs) + ' · ' + t(u.countryLabel) })));
+            if (row.note) li.appendChild(h('span', { class: 'gpa__uni-note', text: row.note }));
+            ul.appendChild(li);
           });
           box.appendChild(ul);
         }
         grid.appendChild(box);
       });
-      ui.lists.appendChild(grid);
+      wrap.appendChild(grid);
+      return wrap;
     }
 
-    seed();
-    build();
-    document.addEventListener('shlangchange', build);
+    fresh();
+    render();
+    document.addEventListener('shlangchange', render);
   }
 
-  /* ---------- Load the data, then mount ---------- */
+  /* ---------- Load, then mount ---------- */
   var LABELS = { usa: 'USA', australia: 'Australia', china: 'China' };
 
   function fail(err) {
@@ -490,17 +969,20 @@
     json('data/grades.json')
       .then(function (g) {
         G = g;
-        /* The country files are a nice-to-have: without them the calculator
-           still works, it just cannot show the shortlist. */
-        return Promise.all(COUNTRIES.map(function (c) {
-          return json('data/' + c + '.json').catch(function () { return null; });
+        var ids = G.countries.filter(function (c) { return c.data; }).map(function (c) { return c.data; });
+        return Promise.all(ids.map(function (id) {
+          return json('data/' + id + '.json')
+            .then(function (f) { return [id, f]; })
+            .catch(function () { return [id, null]; });
         }));
       })
       .then(function (files) {
-        files.forEach(function (f, i) {
+        files.forEach(function (pair) {
+          var id = pair[0], f = pair[1];
           if (!f) return;
+          LOADED[id] = true;
           f.universities.forEach(function (u) {
-            UNIS.push(Object.assign({}, u, { countryId: COUNTRIES[i], countryLabel: LABELS[COUNTRIES[i]] }));
+            UNIS.push(Object.assign({}, u, { countryId: id, countryLabel: LABELS[id] || id }));
           });
         });
         mounts.forEach(function (el) { Calculator(el); });
@@ -509,7 +991,6 @@
       .catch(fail);
   }
 
-  /* The conversion sources belong on the page, next to the "Last updated" date. */
   function renderSources() {
     var box = document.getElementById('gpa-sources');
     if (!box || !G.sources) return;

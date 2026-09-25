@@ -1,13 +1,12 @@
 {
-  "updated": "2026-09-25",
+  "updated": "2026-09-26",
   "note": "Every output of the calculator is an estimate. Universities and credential-evaluation services apply their own rules, and the German formula below is described by the German universities that publish it as non-binding orientation only.",
 
+  "_scales": "Nmax is the best achievable grade and Nmin the lowest passing grade; both feed the modified Bavarian formula. 'gpa' says how a 4.0 GPA is derived: 'bands' uses the letter bands below, 'direct' means the input already is a 4.0 GPA, 'letters' uses the letter map, and null means no published conversion exists, so the calculator shows no GPA for that scale.",
   "scales": {
     "uz5": {
-      "label": "Uzbek 5-point scale",
-      "max": 5,
-      "pass": 3,
-      "step": 1,
+      "label": "5-point (Uzbekistan school / lyceum)",
+      "min": 2, "max": 5, "pass": 3, "step": 1, "decimals": 0, "gpa": "bands",
       "bands": [
         { "min": 5, "letter": "A", "name": "Excellent (A'lo)", "gpa": 4 },
         { "min": 4, "letter": "B", "name": "Good (Yaxshi)", "gpa": 3 },
@@ -15,11 +14,14 @@
         { "min": 0, "letter": "F", "name": "Unsatisfactory (Qoniqarsiz)", "gpa": 0 }
       ]
     },
+    "gpa4": {
+      "label": "4-point scale (GPA)",
+      "min": 0, "max": 4, "pass": 1, "step": 0.01, "decimals": 2, "gpa": "direct",
+      "note": "On a 4.0 scale the lowest passing grade is a D, which is 1.0. Some German universities use 2.0 instead; the German figure shifts if yours does."
+    },
     "uz100": {
-      "label": "Uzbek 100-point scale",
-      "max": 100,
-      "pass": 55,
-      "step": 1,
+      "label": "100-point (university transcript)",
+      "min": 0, "max": 100, "pass": 55, "step": 1, "decimals": 0, "gpa": "bands",
       "bands": [
         { "min": 86, "letter": "A", "name": "Excellent (A'lo)", "gpa": 4 },
         { "min": 71, "letter": "B", "name": "Good (Yaxshi)", "gpa": 3 },
@@ -27,11 +29,45 @@
         { "min": 0, "letter": "F", "name": "Unsatisfactory (Qoniqarsiz)", "gpa": 0 }
       ],
       "caution": "Scholaro puts the pass mark at 55. WES has described 51% as passing for Uzbek undergraduate study, and individual universities set their own mark, so check your own transcript."
+    },
+    "percent": {
+      "label": "Percentage (%)",
+      "sameAs": "uz100",
+      "note": "Treated exactly like the 100-point transcript scale, which is how Uzbek universities report percentages."
+    },
+    "letter": {
+      "label": "Letter grades (A / B / C)",
+      "kind": "letter", "min": 0, "max": 4, "pass": 1, "gpa": "letters",
+      "letters": [
+        { "grade": "A", "points": 4 },
+        { "grade": "B", "points": 3 },
+        { "grade": "C", "points": 2 },
+        { "grade": "D", "points": 1 },
+        { "grade": "F", "points": 0 }
+      ]
+    },
+    "ib": {
+      "label": "International Baccalaureate (Diploma total)",
+      "min": 0, "max": 45, "pass": 24, "step": 1, "decimals": 0, "gpa": null,
+      "note": "24 is the minimum total for the IB Diploma and 45 the maximum. There is no official IB-to-GPA conversion, so the calculator shows the German grade and your profile strength but no 4.0 GPA."
+    },
+    "alevel": {
+      "label": "A-Level (average grade)",
+      "kind": "letter", "min": 1, "max": 6, "pass": 1, "gpa": null,
+      "letters": [
+        { "grade": "A*", "points": 6 },
+        { "grade": "A", "points": 5 },
+        { "grade": "B", "points": 4 },
+        { "grade": "C", "points": 3 },
+        { "grade": "D", "points": 2 },
+        { "grade": "E", "points": 1 }
+      ],
+      "note": "E is the lowest passing A-Level grade. There is no official A-Level-to-GPA conversion, so no 4.0 GPA is shown."
     }
   },
 
   "german": {
-    "formula": "1 + 3 * (Nmax - Nd) / (Nmax - Nmin)",
+    "formula": "1 + 3 × (Nmax − Nd) ÷ (Nmax − Nmin)",
     "name": "Modified Bavarian formula",
     "best": 1.0,
     "passLimit": 4.0,
@@ -45,17 +81,58 @@
       { "min": 2.8, "label": "Lower second (2:2)" },
       { "min": 0, "label": "Below a UK 2:2" }
     ],
-    "basis": "These are the GPA ranges the University of Southampton publishes as equivalent to a UK degree classification. Other UK universities set slightly different ranges."
+    "basis": "These are the GPA ranges the University of Southampton publishes as equivalent to a UK degree classification. Other UK universities set slightly different ranges.",
+    "appliesTo": ["university-student", "university-graduate"],
+    "note": "A UK class is a degree classification, so it is only shown for university-level grades."
   },
 
   "profile": [
-    { "id": "strong", "minGpa": 3.6, "label": "Strong" },
-    { "id": "medium", "minGpa": 2.8, "label": "Medium" },
-    { "id": "developing", "minGpa": 0, "label": "Needs strengthening" }
+    { "id": "strong", "minRatio": 0.8, "label": "Strong" },
+    { "id": "medium", "minRatio": 0.55, "label": "Medium" },
+    { "id": "developing", "minRatio": 0, "label": "Needs strengthening" }
+  ],
+  "_profile": "minRatio is the position on your own grading scale, (Nd − Nmin) ÷ (Nmax − Nmin), so it works for every scale including IB and A-Level.",
+
+  "levels": [
+    { "id": "school-11", "label": "School (11 years)" },
+    { "id": "lyceum", "label": "Lyceum" },
+    { "id": "college", "label": "Technical college" },
+    { "id": "international", "label": "International school (IB / A-Level)" },
+    { "id": "university-student", "label": "University student (1+ years)" },
+    { "id": "university-graduate", "label": "University graduate" }
+  ],
+
+  "countries": [
+    { "id": "italy", "label": "Italy", "page": "destinations/europe/italy/index.html" },
+    { "id": "germany", "label": "Germany", "page": "destinations/europe/germany/index.html" },
+    { "id": "united-kingdom", "label": "United Kingdom", "page": null },
+    { "id": "latvia", "label": "Latvia", "page": "destinations/europe/latvia/index.html" },
+    { "id": "australia", "label": "Australia", "page": "destinations/australia/index.html", "data": "australia" },
+    { "id": "usa", "label": "USA", "page": "destinations/usa/index.html", "data": "usa" },
+    { "id": "china", "label": "China", "page": "destinations/china/index.html", "data": "china" }
+  ],
+  "_countries": "`data` names the file in /data holding a comparable university list. Countries without one are offered in the form, but the shortlist says plainly that we do not have a comparison list for them yet rather than inventing universities.",
+
+  "tests": [
+    { "id": "none", "label": "No test yet", "noScore": true },
+    { "id": "ielts", "label": "IELTS", "min": 0, "max": 9, "step": 0.5, "decimals": 1,
+      "range": "0–9 in half bands" },
+    { "id": "toefl", "label": "TOEFL iBT", "min": 0, "max": 120, "step": 1, "decimals": 0,
+      "range": "0–120",
+      "note": "TOEFL iBT moved to a new 1–6 scale on 21 January 2026. Check which scale the university you are applying to is using." },
+    { "id": "duolingo", "label": "Duolingo English Test", "min": 10, "max": 160, "step": 5, "decimals": 0,
+      "range": "10–160 in 5-point steps" },
+    { "id": "cambridge-b2", "label": "Cambridge B2 First", "min": 140, "max": 190, "step": 1, "decimals": 0,
+      "range": "140–190 on the Cambridge English Scale" },
+    { "id": "cambridge-c1", "label": "Cambridge C1 Advanced", "min": 160, "max": 210, "step": 1, "decimals": 0,
+      "range": "160–210 on the Cambridge English Scale" },
+    { "id": "testdaf", "label": "TestDaF / Goethe", "min": 3, "max": 5, "step": 1, "decimals": 0,
+      "range": "TestDaF TDN 3–5",
+      "note": "Goethe certificates report a CEFR level rather than a score; if you hold one, tell us the level in the consultation." }
   ],
 
   "shortlist": {
-    "note": "The grouping below uses only the QS rank held in the country data files and each university's published selectivity. It is not a prediction of whether you will be admitted — nobody can give you that.",
+    "note": "The grouping below uses only the QS rank held in the country data files, each university's published selectivity and, where a university publishes a minimum English score, how your score compares with it. It is not a prediction of whether you will be admitted — nobody can give you that.",
     "bands": {
       "strong": { "ambitious": 30, "realistic": 120 },
       "medium": { "ambitious": 60, "realistic": 170 },
@@ -67,7 +144,10 @@
     ["Scholaro — Grading system in Uzbekistan", "https://www.scholaro.com/db/Countries/Uzbekistan/Grading-System"],
     ["TU Darmstadt — Notenumrechnung (modified Bavarian formula, KMK)", "https://www.tu-darmstadt.de/studieren/studieninteressierte/internationale_studieninteressierte/bewerbung_und_zulassung_international/notenumrechnung.de.jsp"],
     ["KU Eichstätt-Ingolstadt — Modifizierte bayerische Formel", "https://www.ku.de/studium/anerkennung-und-anrechnung/anrechnungsprozess-antrag-folgen-lehramt-praktika-bafoeg/notenuebernahme-und-umrechnung/modifizierte-bayerische-formel"],
-    ["University of Southampton — Entry qualification equivalencies, United States", "https://www.southampton.ac.uk/international/entry-qualification-equivalencies/united-states"]
+    ["University of Southampton — Entry qualification equivalencies, United States", "https://www.southampton.ac.uk/international/entry-qualification-equivalencies/united-states"],
+    ["Duolingo English Test — Understand scoring (10–160, 5-point steps)", "https://englishtest.duolingo.com/scores"],
+    ["Cambridge English — B2 First results (140–190)", "https://www.cambridgeenglish.org/exams-and-tests/first/results/"],
+    ["Cambridge English — C1 Advanced results (160–210)", "https://www.cambridgeenglish.org/exams-and-tests/advanced/results/"]
   ],
 
   "templates": {
