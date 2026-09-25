@@ -1,0 +1,83 @@
+{
+  "updated": "2026-09-25",
+  "note": "Every output of the calculator is an estimate. Universities and credential-evaluation services apply their own rules, and the German formula below is described by the German universities that publish it as non-binding orientation only.",
+
+  "scales": {
+    "uz5": {
+      "label": "Uzbek 5-point scale",
+      "max": 5,
+      "pass": 3,
+      "step": 1,
+      "bands": [
+        { "min": 5, "letter": "A", "name": "Excellent (A'lo)", "gpa": 4 },
+        { "min": 4, "letter": "B", "name": "Good (Yaxshi)", "gpa": 3 },
+        { "min": 3, "letter": "C", "name": "Satisfactory (Qoniqarli)", "gpa": 2 },
+        { "min": 0, "letter": "F", "name": "Unsatisfactory (Qoniqarsiz)", "gpa": 0 }
+      ]
+    },
+    "uz100": {
+      "label": "Uzbek 100-point scale",
+      "max": 100,
+      "pass": 55,
+      "step": 1,
+      "bands": [
+        { "min": 86, "letter": "A", "name": "Excellent (A'lo)", "gpa": 4 },
+        { "min": 71, "letter": "B", "name": "Good (Yaxshi)", "gpa": 3 },
+        { "min": 55, "letter": "C", "name": "Satisfactory (Qoniqarli)", "gpa": 2 },
+        { "min": 0, "letter": "F", "name": "Unsatisfactory (Qoniqarsiz)", "gpa": 0 }
+      ],
+      "caution": "Scholaro puts the pass mark at 55. WES has described 51% as passing for Uzbek undergraduate study, and individual universities set their own mark, so check your own transcript."
+    }
+  },
+
+  "german": {
+    "formula": "1 + 3 * (Nmax - Nd) / (Nmax - Nmin)",
+    "name": "Modified Bavarian formula",
+    "best": 1.0,
+    "passLimit": 4.0,
+    "disclaimer": "German universities that publish this formula state that the result is non-binding and serves only as a first orientation."
+  },
+
+  "uk": {
+    "bands": [
+      { "min": 3.6, "label": "First class" },
+      { "min": 3.2, "label": "Upper second (2:1)" },
+      { "min": 2.8, "label": "Lower second (2:2)" },
+      { "min": 0, "label": "Below a UK 2:2" }
+    ],
+    "basis": "These are the GPA ranges the University of Southampton publishes as equivalent to a UK degree classification. Other UK universities set slightly different ranges."
+  },
+
+  "profile": [
+    { "id": "strong", "minGpa": 3.6, "label": "Strong" },
+    { "id": "medium", "minGpa": 2.8, "label": "Medium" },
+    { "id": "developing", "minGpa": 0, "label": "Needs strengthening" }
+  ],
+
+  "shortlist": {
+    "note": "The grouping below uses only the QS rank held in the country data files and each university's published selectivity. It is not a prediction of whether you will be admitted — nobody can give you that.",
+    "bands": {
+      "strong": { "ambitious": 30, "realistic": 120 },
+      "medium": { "ambitious": 60, "realistic": 170 },
+      "developing": { "ambitious": 120, "realistic": 200 }
+    }
+  },
+
+  "sources": [
+    ["Scholaro — Grading system in Uzbekistan", "https://www.scholaro.com/db/Countries/Uzbekistan/Grading-System"],
+    ["TU Darmstadt — Notenumrechnung (modified Bavarian formula, KMK)", "https://www.tu-darmstadt.de/studieren/studieninteressierte/internationale_studieninteressierte/bewerbung_und_zulassung_international/notenumrechnung.de.jsp"],
+    ["KU Eichstätt-Ingolstadt — Modifizierte bayerische Formel", "https://www.ku.de/studium/anerkennung-und-anrechnung/anrechnungsprozess-antrag-folgen-lehramt-praktika-bafoeg/notenuebernahme-und-umrechnung/modifizierte-bayerische-formel"],
+    ["University of Southampton — Entry qualification equivalencies, United States", "https://www.southampton.ac.uk/international/entry-qualification-equivalencies/united-states"]
+  ],
+
+  "templates": {
+    "school": [
+      { "id": "core", "label": "Core school subjects", "subjects": ["Mother tongue and literature", "Mathematics", "English", "Physics", "Chemistry", "Biology", "History"] },
+      { "id": "stem", "label": "STEM focus", "subjects": ["Mathematics", "Physics", "Chemistry", "Informatics", "English"] }
+    ],
+    "university": [
+      { "id": "semester", "label": "One semester", "subjects": ["Subject 1", "Subject 2", "Subject 3", "Subject 4", "Subject 5"] },
+      { "id": "year", "label": "Full year", "subjects": ["Subject 1", "Subject 2", "Subject 3", "Subject 4", "Subject 5", "Subject 6", "Subject 7", "Subject 8"] }
+    ]
+  }
+}
