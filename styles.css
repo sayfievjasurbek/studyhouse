@@ -3235,3 +3235,8 @@ h3 em {
     font-size: 13px;
   }
 }
+
+/* Social icons stay hidden until the owner adds real profile URLs (remove `hidden`, set href) */
+.footer__social-icon[hidden] {
+  display: none;
+}

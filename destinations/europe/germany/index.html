@@ -21,12 +21,12 @@
         <img src="../../../images/logo-text.png" alt="Study House — International Education Agency" class="navbar__logo-text-img">
       </a>
       <ul class="navbar__links" id="nav-links">
-        <li><a href="../../../index.html" class="navbar__link">Home</a></li>
-        <li><a href="../../../index.html#universities-section" class="navbar__link">Universities</a></li>
-        <li><a href="../../../index.html#destinations-section" class="navbar__link navbar__link--active">Destinations</a></li>
-        <li><a href="../../../index.html#how-section" class="navbar__link">Services</a></li>
-        <li><a href="../../../index.html#why-section" class="navbar__link">About</a></li>
-        <li><a href="../../../index.html#footer" class="navbar__link">Contact</a></li>
+        <li><a href="../../../index.html" class="navbar__link" id="nav-home">Home</a></li>
+        <li><a href="../../../index.html#universities-section" class="navbar__link" id="nav-universities">Universities</a></li>
+        <li><a href="../../../index.html#destinations-section" class="navbar__link navbar__link--active" id="nav-destinations">Destinations</a></li>
+        <li><a href="../../../index.html#how-section" class="navbar__link" id="nav-services">Services</a></li>
+        <li><a href="../../../expertise/" class="navbar__link" id="nav-expertise">Our Expertise</a></li>
+        <li><a href="../../../index.html#footer" class="navbar__link" id="nav-contact">Contact</a></li>
       </ul>
       <div class="navbar__cta">
         <a href="#book-a-consultation" data-booking class="btn btn--primary" id="nav-cta">Book a Consultation →</a>
@@ -182,7 +182,7 @@
         <div class="eyebrow">GERMANY Institutional Database</div>
         <h2 class="inst-database__heading">Partner Universities in Germany</h2>
         <p class="inst-database__text">Our network of partner institutions in Germany spans top-ranked public and private universities. Below is a preview.</p>
-        <a href="#" class="btn btn--outline">View Germany University Directory →</a>
+        <a href="#book-a-consultation" data-booking data-booking-country="germany" class="btn btn--outline">Request the Germany University List →</a>
       </div>
       <div class="inst-database__grid">
         <div class="inst-card reveal reveal-delay-1">
@@ -219,18 +219,18 @@
           <img src="../../../images/logo-text.png" alt="Study House — International Education Agency" class="footer__logo-text-img">
         </a>
         <ul class="footer__links">
-          <li><a href="../../../index.html" class="footer__link">Home</a></li>
-          <li><a href="../../../index.html#universities-section" class="footer__link">Universities</a></li>
-          <li><a href="../../../index.html#destinations-section" class="footer__link">Destinations</a></li>
-          <li><a href="../../../index.html#how-section" class="footer__link">Services</a></li>
-          <li><a href="../../../index.html#why-section" class="footer__link">About</a></li>
-          <li><a href="../../../index.html#footer" class="footer__link">Contact</a></li>
+          <li><a href="../../../index.html" class="footer__link" id="footer-home">Home</a></li>
+          <li><a href="../../../index.html#universities-section" class="footer__link" id="footer-universities">Universities</a></li>
+          <li><a href="../../../index.html#destinations-section" class="footer__link" id="footer-destinations">Destinations</a></li>
+          <li><a href="../../../index.html#how-section" class="footer__link" id="footer-services">Services</a></li>
+          <li><a href="../../../expertise/" class="footer__link" id="footer-expertise">Our Expertise</a></li>
+          <li><a href="../../../index.html#footer" class="footer__link" id="footer-contact">Contact</a></li>
         </ul>
         <div class="footer__social">
-          <a href="#" class="footer__social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
-          <a href="#" class="footer__social-icon" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="#" class="footer__social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-          <a href="#" class="footer__social-icon" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" stroke="currentColor" stroke-width="1.5"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="currentColor"/></svg></a>
+          <a class="footer__social-icon" data-social="instagram" aria-label="Instagram" hidden><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor"/></svg></a>
+          <a class="footer__social-icon" data-social="telegram" aria-label="Telegram" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="footer__social-icon" data-social="linkedin" aria-label="LinkedIn" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="footer__social-icon" data-social="youtube" aria-label="YouTube" hidden><svg viewBox="0 0 24 24" fill="none"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z" stroke="currentColor" stroke-width="1.5"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="currentColor"/></svg></a>
         </div>
       </div>
       <div class="footer__bottom">

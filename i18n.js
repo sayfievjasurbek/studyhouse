@@ -74,6 +74,13 @@
     "Our network of partner institutions in Spain spans top-ranked public and private universities. Below is a preview.": ["Ispaniyadagi hamkor muassasalarimiz tarmogʻi yuqori reytingli davlat va xususiy universitetlarni qamrab oladi. Quyida qisqacha koʻrinish keltirilgan.", "Наша сеть партнёрских учреждений в Испании включает ведущие государственные и частные университеты. Ниже — краткий обзор."],
     "Book a free diagnostic consultation. We'll assess your profile, identify your best-fit institutions, and map your complete application timeline.": ["Bepul diagnostik konsultatsiyaga yoziling. Profilingizni baholaymiz, sizga eng mos muassasalarni aniqlaymiz va hujjat topshirishning toʻliq jadvalini tuzamiz.", "Запишитесь на бесплатную диагностическую консультацию. Мы оценим ваш профиль, подберём наиболее подходящие вузы и составим полный график подачи документов."],
 
+    "Request the Finland University List →": ["Finlandiya universitetlari roʻyxatini soʻrash →", "Запросить список университетов Финляндии →"],
+    "Request the France University List →": ["Fransiya universitetlari roʻyxatini soʻrash →", "Запросить список университетов Франции →"],
+    "Request the Germany University List →": ["Germaniya universitetlari roʻyxatini soʻrash →", "Запросить список университетов Германии →"],
+    "Request the Italy University List →": ["Italiya universitetlari roʻyxatini soʻrash →", "Запросить список университетов Италии →"],
+    "Request the Latvia University List →": ["Latviya universitetlari roʻyxatini soʻrash →", "Запросить список университетов Латвии →"],
+    "Request the Spain University List →": ["Ispaniya universitetlari roʻyxatini soʻrash →", "Запросить список университетов Испании →"],
+
     /* ---------- Cities & universities ---------- */
     "Helsinki": ["Xelsinki", "Хельсинки"],
     "Espoo": ["Espoo", "Эспоо"],
@@ -305,7 +312,6 @@
     "24-month jobseeker permit": ["24 oylik ish izlash ruxsatnomasi", "24-месячный вид на жительство для поиска работы"],
     "FINLAND Institutional Database": ["FINLANDIYA muassasalar bazasi", "БАЗА УЧРЕЖДЕНИЙ ФИНЛЯНДИИ"],
     "Partner Universities in Finland": ["Finlandiyadagi hamkor universitetlar", "Университеты-партнёры в Финляндии"],
-    "View Finland University Directory →": ["Finlandiya universitetlari roʻyxatini koʻrish →", "Каталог университетов Финляндии →"],
     "Your Finland Application Starts With One Question: Are You Eligible?": ["Finlandiyaga arizangiz bitta savoldan boshlanadi: Siz mos kelasizmi?", "Ваша заявка в Финляндию начинается с одного вопроса: подходите ли вы?"],
     "Apply for Finland Diagnostic →": ["Finlandiya boʻyicha diagnostikaga yozilish →", "Записаться на диагностику по Финляндии →"],
 
@@ -345,7 +351,6 @@
     "12-month APS job-search permit": ["12 oylik APS ish izlash ruxsatnomasi", "12-месячное разрешение APS для поиска работы"],
     "FRANCE Institutional Database": ["FRANSIYA muassasalar bazasi", "БАЗА УЧРЕЖДЕНИЙ ФРАНЦИИ"],
     "Partner Universities in France": ["Fransiyadagi hamkor universitetlar", "Университеты-партнёры во Франции"],
-    "View France University Directory →": ["Fransiya universitetlari roʻyxatini koʻrish →", "Каталог университетов Франции →"],
     "Your France Application Starts With One Question: Are You Eligible?": ["Fransiyaga arizangiz bitta savoldan boshlanadi: Siz mos kelasizmi?", "Ваша заявка во Францию начинается с одного вопроса: подходите ли вы?"],
     "Apply for France Diagnostic →": ["Fransiya boʻyicha diagnostikaga yozilish →", "Записаться на диагностику по Франции →"],
 
@@ -387,7 +392,6 @@
     "18-month Job Seeker Visa": ["18 oylik ish izlash vizasi", "18-месячная виза для поиска работы"],
     "GERMANY Institutional Database": ["GERMANIYA muassasalar bazasi", "БАЗА УЧРЕЖДЕНИЙ ГЕРМАНИИ"],
     "Partner Universities in Germany": ["Germaniyadagi hamkor universitetlar", "Университеты-партнёры в Германии"],
-    "View Germany University Directory →": ["Germaniya universitetlari roʻyxatini koʻrish →", "Каталог университетов Германии →"],
     "Your Germany Application Starts With One Question: Are You Eligible?": ["Germaniyaga arizangiz bitta savoldan boshlanadi: Siz mos kelasizmi?", "Ваша заявка в Германию начинается с одного вопроса: подходите ли вы?"],
     "Apply for Germany Diagnostic →": ["Germaniya boʻyicha diagnostikaga yozilish →", "Записаться на диагностику по Германии →"],
 
@@ -426,7 +430,6 @@
     "12-month job-seeking permit": ["12 oylik ish izlash ruxsatnomasi", "12-месячное разрешение для поиска работы"],
     "ITALY Institutional Database": ["ITALIYA muassasalar bazasi", "БАЗА УЧРЕЖДЕНИЙ ИТАЛИИ"],
     "Partner Universities in Italy": ["Italiyadagi hamkor universitetlar", "Университеты-партнёры в Италии"],
-    "View Italy University Directory →": ["Italiya universitetlari roʻyxatini koʻrish →", "Каталог университетов Италии →"],
     "Your Italy Application Starts With One Question: Are You Eligible?": ["Italiyaga arizangiz bitta savoldan boshlanadi: Siz mos kelasizmi?", "Ваша заявка в Италию начинается с одного вопроса: подходите ли вы?"],
     "Apply for Italy Diagnostic →": ["Italiya boʻyicha diagnostikaga yozilish →", "Записаться на диагностику по Италии →"],
 
@@ -466,7 +469,6 @@
     "€500–€600/month (Latvian State)": ["Oyiga €500–€600 (Latviya davlati)", "€500–€600/месяц (государство Латвия)"],
     "LATVIA Institutional Database": ["LATVIYA muassasalar bazasi", "БАЗА УЧРЕЖДЕНИЙ ЛАТВИИ"],
     "Partner Universities in Latvia": ["Latviyadagi hamkor universitetlar", "Университеты-партнёры в Латвии"],
-    "View Latvia University Directory →": ["Latviya universitetlari roʻyxatini koʻrish →", "Каталог университетов Латвии →"],
     "Your Latvia Application Starts With One Question: Are You Eligible?": ["Latviyaga arizangiz bitta savoldan boshlanadi: Siz mos kelasizmi?", "Ваша заявка в Латвию начинается с одного вопроса: подходите ли вы?"],
     "Apply for Latvia Diagnostic →": ["Latviya boʻyicha diagnostikaga yozilish →", "Записаться на диагностику по Латвии →"],
 
@@ -502,7 +504,6 @@
     "12-month work-permit modification": ["12 oylik ish ruxsatnomasiga oʻtish", "12-месячное изменение статуса на разрешение на работу"],
     "SPAIN Institutional Database": ["ISPANIYA muassasalar bazasi", "БАЗА УЧРЕЖДЕНИЙ ИСПАНИИ"],
     "Partner Universities in Spain": ["Ispaniyadagi hamkor universitetlar", "Университеты-партнёры в Испании"],
-    "View Spain University Directory →": ["Ispaniya universitetlari roʻyxatini koʻrish →", "Каталог университетов Испании →"],
     "Your Spain Application Starts With One Question: Are You Eligible?": ["Ispaniyaga arizangiz bitta savoldan boshlanadi: Siz mos kelasizmi?", "Ваша заявка в Испанию начинается с одного вопроса: подходите ли вы?"],
     "Apply for Spain Diagnostic →": ["Ispaniya boʻyicha diagnostikaga yozilish →", "Записаться на диагностику по Испании →"],
 
