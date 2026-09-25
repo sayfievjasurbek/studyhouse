@@ -30,7 +30,25 @@ on a language switch.
 ## Booking form
 
 Any element with `data-booking` opens the modal (`<a href="#book-a-consultation" data-booking>`).
-Add `data-booking-country="usa"` to pre-select a country.
+Optional attributes on the trigger:
+
+| Attribute | Example | Effect |
+|---|---|---|
+| `data-booking-country` | `usa` | pre-selects that country |
+| `data-booking-programme` | `chevening` | pre-selects that programme |
+| `data-booking-gpa` | `3.4 / 4.0` | shown in the form and sent with the request |
+| `data-booking-source` | `gpa-calculator` | sent with the request so you know where it came from |
+
+Scripts can do the same thing directly:
+
+```js
+openBooking({ programme: 'uwc' });
+openBooking({ country: 'australia' });
+openBooking({ gpa: '3.4 / 4.0 (university scale)', source: 'gpa-calculator' });
+```
+
+The list of countries and programmes is the `INTERESTS` array at the top of `booking.js` —
+edit it there and the `<select>`, the validation and the payload all follow.
 
 There is **no backend in this repo**. `booking.js` POSTs JSON to the single constant
 `BOOKING_ENDPOINT` at the top of the file. Until you set it, submitting shows the failure message
@@ -40,9 +58,15 @@ Payload:
 
 ```json
 { "firstName": "…", "surname": "…", "phone": "+998901234567", "telegram": "@name or empty",
-  "country": "Germany", "consent": true, "language": "uz", "page": "/index.html",
-  "submittedAt": "2026-01-01T12:00:00.000Z" }
+  "interest": "Chevening", "interestType": "programme",
+  "consent": true, "language": "uz", "page": "/index.html",
+  "submittedAt": "2026-01-01T12:00:00.000Z",
+  "gpa": "3.4 / 4.0 (university scale)", "source": "gpa-calculator" }
 ```
+
+`interest` is always the English label even when the visitor is reading the site in Uzbek or
+Russian. `interestType` is `country`, `programme` or `other`. `gpa` and `source` appear only when
+the form was opened with them.
 
 **Never put a Telegram bot token (or any secret) in front-end code** — everything in this repo is
 public. Keep it in a serverless function's environment variables.
@@ -78,9 +102,10 @@ export default {
       `Name: ${d.firstName} ${d.surname}`,
       `Phone: ${d.phone}`,
       `Telegram: ${d.telegram || '-'}`,
-      `Country: ${d.country}`,
+      `Interest: ${d.interest} (${d.interestType})`,
+      d.gpa ? `GPA estimate: ${d.gpa}` : null,
       `Language: ${d.language} · Page: ${d.page}`
-    ].join('\n');
+    ].filter(Boolean).join('\n');
 
     const r = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: 'POST',
@@ -115,9 +140,10 @@ Study House emblem is shown):
 | `mascot-wave.png` | Welcome (winking) |
 | `mascot-curious.png` | Typing first name / surname |
 | `mascot-phone.png` | Phone / Telegram fields |
-| `mascot-globe.png` | Country select |
+| `mascot-globe.png` | Country / programme select |
 | `mascot-happy.png` | Success (arms up) |
 | `mascot-worried.png` | Error (friendly) |
+| `mascot-thinking.png` | GPA calculator, while it works out a result |
 
 Use transparent PNGs, roughly 450×545 px (portrait, same framing for every pose so the swap does
 not jump). The current `mascot-wave.png` is cropped from the character sheet and still has the grey

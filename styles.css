@@ -2740,6 +2740,17 @@ h3 em {
   accent-color: var(--color-navy);
 }
 
+.booking__prefill {
+  margin: -4px 0 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(204, 152, 85, 0.12);
+  border: 1px solid rgba(204, 152, 85, 0.35);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-navy);
+}
+
 .booking__privacy {
   margin: 4px 0 18px;
   font-size: 0.8rem;

@@ -24,6 +24,13 @@
     "Contact": ["Aloqa", "Контакты"],
     "Our Expertise": ["Tajribamiz", "Наш опыт"],
     "GPA Calculator": ["GPA kalkulyatori", "Калькулятор GPA"],
+    "Countries": ["Davlatlar", "Страны"],
+    "Programmes": ["Dasturlar", "Программы"],
+    "Country or programme of interest": ["Qiziqtirgan davlat yoki dastur", "Интересующая страна или программа"],
+    "Select a country or programme": ["Davlat yoki dasturni tanlang", "Выберите страну или программу"],
+    "Please choose a country or programme.": ["Iltimos, davlat yoki dasturni tanlang.", "Пожалуйста, выберите страну или программу."],
+    "We will send your GPA estimate with this request:": ["Ushbu ariza bilan GPA bahoingizni ham yuboramiz:", "Вместе с этой заявкой мы отправим вашу оценку GPA:"],
+    "Let me look at those grades…": ["Keling, baholaringizni koʻrib chiqaman…", "Давайте посмотрю на ваши оценки…"],
     "Universities we help you apply to": ["Biz ariza topshirishda yordam beradigan universitetlar", "Университеты, с поступлением в которые мы помогаем"],
     "See Where Your Grades": ["Baholaringiz sizni qayerga", "Узнайте, куда вас могут"],
     "Can Take You.": ["olib borishi mumkinligini koʻring.", "привести ваши оценки."],
@@ -610,7 +617,7 @@
 
   /* ---------- Helpers ---------- */
   var SKIP_TAGS = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, TEXTAREA: 1 };
-  var ATTRS = ['alt', 'aria-label', 'title', 'placeholder'];
+  var ATTRS = ['alt', 'aria-label', 'title', 'placeholder', 'label'];   // `label` is the <optgroup> attribute
 
   function norm(s) { return s.replace(/\s+/g, ' ').trim(); }
 

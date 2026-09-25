@@ -29,21 +29,37 @@
     phone:   { file: 'mascot-phone.png',   say: 'How can we reach you?' },
     globe:   { file: 'mascot-globe.png',   say: 'Where would you like to study?' },
     happy:   { file: 'mascot-happy.png',   say: 'Yay! We got your request.' },
-    worried: { file: 'mascot-worried.png', say: "Oops, let's fix that together." }
+    worried: { file: 'mascot-worried.png', say: "Oops, let's fix that together." },
+    thinking: { file: 'mascot-thinking.png', say: 'Let me look at those grades…' }
   };
 
-  var COUNTRIES = [
-    ['germany', 'Germany'], ['italy', 'Italy'], ['latvia', 'Latvia'], ['france', 'France'],
-    ['spain', 'Spain'], ['finland', 'Finland'], ['united-kingdom', 'United Kingdom'],
-    ['australia', 'Australia'], ['usa', 'USA'], ['china', 'China'], ['other', 'Other / not sure yet']
+  /* One list of everything a visitor can be interested in. `kind` decides
+     whether the submitted request carries a country or a programme. */
+  var INTERESTS = [
+    { group: 'Countries', kind: 'country', items: [
+      ['germany', 'Germany'], ['italy', 'Italy'], ['latvia', 'Latvia'], ['france', 'France'],
+      ['spain', 'Spain'], ['finland', 'Finland'], ['united-kingdom', 'United Kingdom'],
+      ['australia', 'Australia'], ['usa', 'USA'], ['china', 'China']
+    ] },
+    { group: 'Programmes', kind: 'programme', items: [
+      ['uwc', 'UWC'], ['work-and-travel', 'Work and Travel'], ['flex', 'FLEX'],
+      ['erasmus-plus', 'Erasmus+'], ['chevening', 'Chevening']
+    ] },
+    { group: '', kind: 'other', items: [['other', 'Other / not sure yet']] }
   ];
+
+  /* Flat lookup: value -> { label, kind } */
+  var INTEREST_BY_VALUE = {};
+  INTERESTS.forEach(function (g) {
+    g.items.forEach(function (it) { INTEREST_BY_VALUE[it[0]] = { label: it[1], kind: g.kind }; });
+  });
 
   var MESSAGES = {
     first: 'Please enter your first name.',
     surname: 'Please enter your surname.',
     phone: 'Enter a valid Uzbek mobile number: +998 followed by 9 digits.',
     telegram: 'Telegram username must be 5–32 characters: letters, numbers and underscores, starting with a letter.',
-    country: 'Please choose a country.',
+    country: 'Please choose a country or programme.',
     consent: 'Please tick the box to agree.',
     fixFields: 'Please check the highlighted fields.',
     failed: 'Sorry, we could not send your request. Please try again in a moment.'
@@ -61,8 +77,11 @@
   }
 
   function buildModal() {
-    var options = '<option value="">Select a country</option>' + COUNTRIES.map(function (c) {
-      return '<option value="' + c[0] + '">' + c[1] + '</option>';
+    var options = '<option value="">Select a country or programme</option>' + INTERESTS.map(function (g) {
+      var opts = g.items.map(function (c) {
+        return '<option value="' + c[0] + '">' + c[1] + '</option>';
+      }).join('');
+      return g.group ? '<optgroup label="' + g.group + '">' + opts + '</optgroup>' : opts;
     }).join('');
 
     var el = document.createElement('div');
@@ -87,7 +106,8 @@
               '</div>' +
               field('phone', 'phone', 'Mobile phone', '<input id="bk-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+998 90 123 45 67" required aria-describedby="bk-phone-err">') +
               field('telegram', 'telegram', 'Telegram username (optional)', '<input id="bk-telegram" name="telegram" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="@username" aria-describedby="bk-telegram-err">') +
-              field('country', 'country', 'Country of interest', '<select id="bk-country" name="country" required aria-describedby="bk-country-err">' + options + '</select>') +
+              field('country', 'country', 'Country or programme of interest', '<select id="bk-country" name="country" required aria-describedby="bk-country-err">' + options + '</select>') +
+              '<p class="booking__prefill" id="bk-prefill" hidden></p>' +
               '<div class="booking__hp" aria-hidden="true"><label>Company<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>' +
               '<div class="field field--check" data-field="consent">' +
                 '<label class="check"><input id="bk-consent" name="consent" type="checkbox" required aria-describedby="bk-consent-err">' +
@@ -119,6 +139,7 @@
   var submitBtn = modal.querySelector('#bk-submit');
   var img = modal.querySelector('.booking__mascot-img');
   var bubble = modal.querySelector('#bk-bubble');
+  var prefillNote = modal.querySelector('#bk-prefill');
   var el = {
     first: form.elements.firstName, surname: form.elements.surname, phone: form.elements.phone,
     telegram: form.elements.telegram, country: form.elements.country, consent: form.elements.consent
@@ -263,9 +284,15 @@
     }
   }
 
+  /* Extra context sent with the request but not typed by the visitor:
+     { gpa: '3.4 / 4.0 (university scale)', source: 'gpa-calculator' } */
+  var context = {};
+
   function resetForm() {
     form.reset();
     ORDER.forEach(function (name) { showError(name, ''); delete el[name].dataset.touched; });
+    context = {};
+    prefillNote.hidden = true;
     statusEl.hidden = true;
     submitBtn.disabled = false;
     submitBtn.classList.remove('is-loading');
@@ -274,13 +301,44 @@
     success.hidden = true;
   }
 
-  function open(trigger) {
+  /* open() takes either the element that was clicked or an options object:
+       openBooking({ country: 'usa' })
+       openBooking({ programme: 'chevening' })
+       openBooking({ gpa: '3.4 / 4.0 (university scale)', source: 'gpa-calculator' })
+     Both forms end up here. */
+  function open(arg) {
     if (isOpen) return;
     isOpen = true;
+
+    var opts = {};
+    var trigger = null;
+    if (arg && arg.nodeType === 1) {
+      trigger = arg;
+      opts.country = trigger.getAttribute('data-booking-country') || '';
+      opts.programme = trigger.getAttribute('data-booking-programme') || '';
+      opts.gpa = trigger.getAttribute('data-booking-gpa') || '';
+      opts.source = trigger.getAttribute('data-booking-source') || '';
+    } else if (arg && typeof arg === 'object') {
+      opts = arg;
+    }
+
     lastTrigger = trigger || document.activeElement;
     resetForm();
-    var country = trigger && trigger.getAttribute && trigger.getAttribute('data-booking-country');
-    if (country) el.country.value = country;
+
+    var choice = opts.programme || opts.country || opts.interest || '';
+    if (choice && INTEREST_BY_VALUE[choice]) el.country.value = choice;
+
+    if (opts.gpa) context.gpa = String(opts.gpa);
+    if (opts.source) context.source = String(opts.source);
+    if (context.gpa) {
+      prefillNote.textContent = '';
+      var lead = document.createElement('span');
+      prefillNote.appendChild(lead);
+      setText(lead, 'We will send your GPA estimate with this request:');
+      prefillNote.appendChild(document.createTextNode(' ' + context.gpa));
+      prefillNote.hidden = false;
+    }
+
     pose = null;
     setPose('wave', true);
     preloadPoses();
@@ -383,12 +441,15 @@
       surname: el.surname.value.trim(),
       phone: '+998' + phoneDigits(el.phone.value),
       telegram: el.telegram.value.trim() ? '@' + el.telegram.value.trim().replace(/^@/, '') : '',
-      country: COUNTRIES.filter(function (c) { return c[0] === el.country.value; })[0][1],   // English name, not the translated label
+      interest: INTEREST_BY_VALUE[el.country.value].label,        // English label, not the translated one
+      interestType: INTEREST_BY_VALUE[el.country.value].kind,     // 'country' | 'programme' | 'other'
       consent: true,
       language: i18n() ? i18n().lang() : document.documentElement.lang,
       page: location.pathname,
       submittedAt: new Date().toISOString()
     };
+    if (context.gpa) payload.gpa = context.gpa;
+    if (context.source) payload.source = context.source;
 
     if (!BOOKING_ENDPOINT) {
       console.warn('[booking] BOOKING_ENDPOINT is not configured in booking.js, so nothing was sent. See README.md.');
@@ -414,5 +475,8 @@
     }).then(function () { if (timer) clearTimeout(timer); });
   });
 
-  window.shBooking = { open: open, close: close };
+  /* Public API. openBooking({...}) is the documented way for other scripts
+     (the GPA calculator, the programme pages) to open a prefilled form. */
+  window.openBooking = open;
+  window.shBooking = { open: open, close: close, poses: POSES };
 })();
