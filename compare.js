@@ -12,9 +12,10 @@
 (function () {
   'use strict';
 
-  var cfg = window.SH_COMPARE;
   var root = document.getElementById('compare-root');
-  if (!cfg || !root) return;
+  if (!root) return;
+
+  var cfg = null;
 
   var MAX = 3;
   var ROWS = [
@@ -35,7 +36,7 @@
     ['scholarships', 'Best for scholarships', 'Largest published award for international students in this list']
   ];
 
-  var selected = (cfg.defaults || cfg.universities.slice(0, 2).map(function (u) { return u.id; })).slice(0, MAX);
+  var selected = [];
   var lastFocusId = null;
 
   function t(s) { return window.shI18n ? window.shI18n.t(s) : s; }
@@ -158,11 +159,21 @@
   }
 
   /* ---------- Footer: date, ranking, sources, CTA ---------- */
+  /* Chrome has no month names for the "uz" locale and falls back to "2026 M09 25",
+     so Uzbek dates are written out here in the usual "2026-yil 25-sentabr" form. */
+  var UZ_MONTHS = ['yanvar', 'fevral', 'mart', 'aprel', 'may', 'iyun',
+                   'iyul', 'avgust', 'sentabr', 'oktabr', 'noyabr', 'dekabr'];
+
   function formatDate(iso) {
     var lang = window.shI18n ? window.shI18n.lang() : 'en';
-    var locale = lang === 'uz' ? 'uz' : lang === 'ru' ? 'ru' : 'en-GB';
+    var d = new Date(iso + 'T00:00:00');
+    if (isNaN(d)) return iso;
+    if (lang === 'uz') {
+      return d.getFullYear() + '-yil ' + d.getDate() + '-' + UZ_MONTHS[d.getMonth()];
+    }
     try {
-      return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso + 'T00:00:00'));
+      return new Intl.DateTimeFormat(lang === 'ru' ? 'ru' : 'en-GB',
+        { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
     } catch (e) { return iso; }
   }
 
@@ -218,10 +229,33 @@
 
   /* A card/table is built after i18n has initialised (scripts run before DOMContentLoaded) */
   function start() {
+    selected = (cfg.defaults || cfg.universities.slice(0, 2).map(function (u) { return u.id; })).slice(0, MAX);
     render();
     document.addEventListener('shlangchange', function () { lastFocusId = null; render(); });
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-  else start();
+  function fail(err) {
+    console.error('[compare] could not load the university data:', err);
+    root.textContent = '';
+    root.appendChild(h('p', { class: 'cmp-empty', text: t('The comparison table could not be loaded. Please refresh the page.') }));
+  }
+
+  /* The university data is one JSON file per country (see data/usa.json), so the
+     same file feeds this table and the GPA calculator. It is fetched, which means
+     the site has to be served over http(s) — opening index.html from the file
+     system will not work. */
+  function load() {
+    var src = root.getAttribute('data-src');
+    if (!src) { fail('no data-src on #compare-root'); return; }
+    fetch(src, { cache: 'no-cache' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.json();
+      })
+      .then(function (json) { cfg = json; start(); })
+      .catch(fail);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
+  else load();
 })();

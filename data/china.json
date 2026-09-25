@@ -1,0 +1,210 @@
+{
+  "country": "china",
+  "updated": "2026-09-25",
+  "qsEdition": "QS World University Rankings 2027",
+  "qsYear": 2027,
+  "qsUrl": "https://www.topuniversities.com/world-university-rankings",
+  "defaults": [
+    "zju",
+    "hit"
+  ],
+  "tags": {
+    "prestige": "fudan",
+    "value": "hit",
+    "scholarships": "ustc"
+  },
+  "universities": [
+    {
+      "id": "fudan",
+      "name": "Fudan University",
+      "city": "Shanghai",
+      "type": "Public",
+      "qs": "26",
+      "tuition": {
+        "todo": true
+      },
+      "living": {
+        "todo": true
+      },
+      "english": "Only two English-taught undergraduate programs: MBBS and Economics (UIPE); other programs are taught in Chinese",
+      "fields": "Politics (QS subject rank 20, 2025), medical sciences, chemistry, materials science",
+      "scholarships": "Chinese Government Scholarship, Shanghai Government Scholarship, Fudan fellowships",
+      "deadline": {
+        "todo": true
+      },
+      "selective": "Not published; degree application fee RMB 800",
+      "sources": [
+        [
+          "Undergraduate programs",
+          "https://iso.fudan.edu.cn/isoenglish/16217/list.htm"
+        ],
+        [
+          "Scholarships",
+          "https://www.fudan.edu.cn/en/Scholarships/list.htm"
+        ],
+        [
+          "UIPE tuition and expenses",
+          "https://econ.fudan.edu.cn/uipe/Prospective_Students1/Tuition_and_Expenses.htm"
+        ]
+      ]
+    },
+    {
+      "id": "zju",
+      "name": "Zhejiang University",
+      "city": "Hangzhou",
+      "type": "Public",
+      "qs": "47",
+      "tuition": "RMB 19,800–29,800 a year by discipline (RMB 42,800 for MBBS); ZJU-UIUC Institute RMB 160,000",
+      "living": {
+        "todo": true
+      },
+      "english": "Some English-taught undergraduate programs (see the 2026 catalog); many programs are taught in Chinese",
+      "fields": "Engineering, science, agriculture, medicine (13 disciplines)",
+      "scholarships": "Chinese Government Scholarship; scholarships for selected English-taught programs",
+      "deadline": {
+        "todo": true
+      },
+      "selective": "Not published; application fee RMB 800",
+      "sources": [
+        [
+          "Fees",
+          "https://iczu.zju.edu.cn/admissionsen/weeswwwwankwwccountwwnfo/list.htm"
+        ],
+        [
+          "Application guide 2026 (undergraduate)",
+          "https://iczu.zju.edu.cn/admissionsen/2024/1030/c68988a2981659/page.htm"
+        ],
+        [
+          "Bachelor’s degree programs",
+          "https://iczu.zju.edu.cn/admissionsen/wachelorwswwegreewwrograms/list.htm"
+        ]
+      ]
+    },
+    {
+      "id": "ustc",
+      "name": "University of Science and Technology of China (USTC)",
+      "city": "Hefei",
+      "type": "Public",
+      "qs": "=134",
+      "tuition": "RMB 26,000 a year",
+      "living": "Dormitory RMB 500–1,000 a month; insurance RMB 800 a year",
+      "english": "Chinese-taught: HSK 5 with 60+ in each part; China Scholastic Competency Assessment (CSCA) required",
+      "fields": "Physics, chemistry, materials science, computer science",
+      "scholarships": "USTC Fellowship A: tuition, insurance, RMB 2,500 monthly stipend and housing subsidy; Level B: tuition; Chinese Government Scholarship",
+      "deadline": {
+        "todo": true
+      },
+      "selective": "Not published",
+      "sources": [
+        [
+          "Admissions (International College)",
+          "https://ic.ustc.edu.cn/en/admission.php"
+        ],
+        [
+          "Tuition and fees (graduate rates on this page)",
+          "https://en.ustc.edu.cn/info/1058/1129.htm"
+        ],
+        [
+          "USTC Fellowship for undergraduate programs",
+          "https://ic.ustc.edu.cn/en/v7info.php?Nav_x=17"
+        ]
+      ]
+    },
+    {
+      "id": "whu",
+      "name": "Wuhan University",
+      "city": "Wuhan",
+      "type": "Public",
+      "qs": "165",
+      "tuition": "RMB 20,000 (arts) / 24,000 (science and engineering) / 30,000 (medicine); English-medium RMB 23,000 / 28,000 / 40,000",
+      "living": "RMB 1,000–2,000 a month (Wuhan University estimate); insurance RMB 1,000 a year",
+      "english": "Most undergraduate programs are taught in Chinese, a few in English; applicants must be 18–25",
+      "fields": "Philosophy (QS subject rank 23, 2025), surveying and remote sensing",
+      "scholarships": "Chinese Government Scholarship and other awards — see the university’s scholarship attachments",
+      "deadline": {
+        "todo": true
+      },
+      "selective": {
+        "todo": true
+      },
+      "sources": [
+        [
+          "Fees",
+          "https://admission.whu.edu.cn/FRESHMEN_RELATED/FEES.htm"
+        ],
+        [
+          "Undergraduate admissions guide for international applicants",
+          "https://admission.whu.edu.cn/info/1121/5502.htm"
+        ],
+        [
+          "QS subject ranking: philosophy",
+          "https://en.whu.edu.cn/info/4551/53451.htm"
+        ]
+      ]
+    },
+    {
+      "id": "hit",
+      "name": "Harbin Institute of Technology (HIT)",
+      "city": "Harbin",
+      "type": "Public",
+      "qs": "190",
+      "tuition": "RMB 20,000 a year (Chinese-taught); RMB 26,000 (English-taught)",
+      "living": "Dormitory RMB 800–1,000 a month per bed",
+      "english": "English-taught: Civil Engineering; Chemical Engineering and Technology (IELTS above 6.0, no band below 5.5, or TOEFL above 80). Chinese-taught: HSK 4 (210+). CSCA required",
+      "fields": "Aerospace, robotics, mechanical engineering, computer science",
+      "scholarships": "HIT International Students Scholarship; Chinese Government Scholarship",
+      "deadline": "July 15, 2026 for the September 2026 intake",
+      "selective": "Not published; application fee RMB 400 (self-financed)",
+      "sources": [
+        [
+          "Bachelor programs (costs, deadline, language)",
+          "https://studyathit.hit.edu.cn/18358/list.htm"
+        ],
+        [
+          "International students scholarship",
+          "https://studyathit.hit.edu.cn/18367/list.htm"
+        ],
+        [
+          "QS 2027 result",
+          "https://en.hit.edu.cn/2026/0618/c11955a242644/page.htm"
+        ]
+      ]
+    },
+    {
+      "id": "bit",
+      "name": "Beijing Institute of Technology (BIT)",
+      "city": "Beijing",
+      "type": "Public",
+      "qs": "243",
+      "tuition": {
+        "todo": true
+      },
+      "living": {
+        "todo": true
+      },
+      "english": "English-taught programs: IELTS 6.0, TOEFL 85 or Duolingo 110",
+      "fields": "Engineering, computer science, materials, chemistry; defense-related research",
+      "scholarships": "Chinese Government Scholarship (Type A); Beijing Government Scholarship (A, B and C classes)",
+      "deadline": {
+        "todo": true
+      },
+      "selective": {
+        "todo": true
+      },
+      "sources": [
+        [
+          "Undergraduate admissions",
+          "https://isc.bit.edu.cn/admissionsaid/undergraduatate/index.htm"
+        ],
+        [
+          "Tuition and fees for undergraduates",
+          "https://isc.bit.edu.cn/admissionsaid/financialaid/tuitionfee/b112916.htm"
+        ],
+        [
+          "Why BIT",
+          "https://english.bit.edu.cn/2024-10/18/c_934917.htm"
+        ]
+      ]
+    }
+  ]
+}

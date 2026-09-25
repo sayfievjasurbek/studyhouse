@@ -1,0 +1,246 @@
+{
+  "country": "australia",
+  "updated": "2026-09-25",
+  "qsEdition": "QS World University Rankings 2027",
+  "qsYear": 2027,
+  "qsUrl": "https://www.topuniversities.com/world-university-rankings",
+  "defaults": [
+    "unsw",
+    "rmit"
+  ],
+  "tags": {
+    "prestige": "unsw",
+    "value": "rmit",
+    "scholarships": "curtin"
+  },
+  "universities": [
+    {
+      "id": "unsw",
+      "name": "UNSW Sydney",
+      "city": "Sydney, New South Wales",
+      "type": "Public",
+      "qs": "19",
+      "tuition": "A$56,500 first year (Bachelor of Commerce (International), 2026)",
+      "living": "Visa minimum A$29,710 a year; UNSW says Sydney costs run from under A$30,000 to over A$70,000 depending on lifestyle",
+      "english": "Taught in English · IELTS 6.5 overall, no sub-score below 6.0",
+      "fields": "Engineering, business, law, built environment",
+      "scholarships": "20% tuition contribution for eligible countries; Scientia awards (full tuition or A$20,000 a year)",
+      "deadline": "Term 1 2027 scholarship round closes September 30, 2026",
+      "selective": "Acceptance rate not published; offers are made in grouped rounds",
+      "sources": [
+        [
+          "Bachelor of Commerce (International) fees",
+          "https://www.unsw.edu.au/study/undergraduate/bachelor-of-commerce-international"
+        ],
+        [
+          "Cost of studying and living",
+          "https://www.unsw.edu.au/study/your-future/cost-of-studying-in-Australia"
+        ],
+        [
+          "English language requirements",
+          "https://www.unsw.edu.au/study/how-to-apply/english-language-requirements"
+        ],
+        [
+          "International scholarships (Term 1 2027)",
+          "https://www.scholarships.unsw.edu.au/scholarships/id/1988"
+        ],
+        [
+          "QS subject strengths",
+          "https://www.unsw.edu.au/newsroom/news/2026/03/39-unsw-subjects-in-global-top-100"
+        ]
+      ]
+    },
+    {
+      "id": "melbourne",
+      "name": "University of Melbourne",
+      "city": "Melbourne, Victoria",
+      "type": "Public",
+      "qs": "=22",
+      "tuition": "Set per course — see the official 2026 fee tables; a deposit of A$17,000 is paid when accepting an undergraduate offer",
+      "living": "Visa minimum A$29,710 a year (see Melbourne’s cost-of-living page for detail)",
+      "english": {
+        "todo": true
+      },
+      "fields": "Life sciences and medicine, arts and humanities, social sciences and management",
+      "scholarships": "Melbourne International Undergraduate Scholarship: 20% fee sponsorship from 2027 (25% before) for citizens of countries with GDP per capita of US$10,000 or less",
+      "deadline": "February (Semester 1) and July (Semester 2) intakes — see the official dates",
+      "selective": "Acceptance rate not published",
+      "sources": [
+        [
+          "Undergraduate fees and payments",
+          "https://study.unimelb.edu.au/how-to-apply/undergraduate-study/international-applications/fees-and-payments"
+        ],
+        [
+          "International undergraduate scholarship",
+          "https://scholarships.unimelb.edu.au/awards/melbourne-international-undergraduate-scholarship"
+        ],
+        [
+          "QS subject rankings 2026",
+          "https://www.unimelb.edu.au/newsroom/news/2026/march/university-of-melbourne-remains-in-global-top-50-across-all-five-qs-subject-rankings"
+        ]
+      ]
+    },
+    {
+      "id": "uq",
+      "name": "University of Queensland",
+      "city": "Brisbane, Queensland",
+      "type": "Public",
+      "qs": "40",
+      "tuition": "A$56,800 a year (Bachelor of Commerce, 2027)",
+      "living": "Rent from A$170 a week (large share house) to A$564 a week (1-bedroom); books about A$1,212 a year",
+      "english": "Taught in English · IELTS 6.5 overall, 6.0 in each band",
+      "fields": "Mining engineering, agriculture, veterinary science, environmental science",
+      "scholarships": {
+        "todo": true
+      },
+      "deadline": "Semester 1: November 30 of the previous year; Semester 2: May 31",
+      "selective": "Acceptance rate not published",
+      "sources": [
+        [
+          "Bachelor of Commerce (fees, IELTS, deadlines)",
+          "https://study.uq.edu.au/study-options/programs/bachelor-commerce-2336"
+        ],
+        [
+          "Cost of living in Brisbane",
+          "https://study.uq.edu.au/university-life/living-in-queensland/cost-living"
+        ],
+        [
+          "QS subject rankings 2026",
+          "https://news.uq.edu.au/2026-03-uq-subjects-rank-top-10-globally"
+        ]
+      ]
+    },
+    {
+      "id": "rmit",
+      "name": "RMIT University",
+      "city": "Melbourne, Victoria",
+      "type": "Public",
+      "qs": "119",
+      "tuition": "A$45,120 a year (Bachelor of Business, 2026)",
+      "living": "About A$45,000 a year (RMIT cost-of-living calculator)",
+      "english": "Taught in English · IELTS set per course — see RMIT’s English requirements",
+      "fields": "Architecture, art and design, computer science, engineering",
+      "scholarships": "Scholarships for commencing international students (RMIT awards more than 2,000 scholarships a year)",
+      "deadline": "Semester 1 2027 applications opened August 3, 2026; accepted until places are filled",
+      "selective": "Acceptance rate not published",
+      "sources": [
+        [
+          "Cost of studying in Australia",
+          "https://www.rmit.edu.au/study-with-us/international-students/study/cost-of-studying-in-australia"
+        ],
+        [
+          "Bachelor of Business",
+          "https://www.rmit.edu.au/study-with-us/levels-of-study/undergraduate-study/bachelor-degrees/bachelor-of-business-bp343"
+        ],
+        [
+          "Scholarships for international students",
+          "https://www.rmit.edu.au/study-with-us/international-students/apply-to-rmit-international-students/fees-and-scholarships/scholarships"
+        ],
+        [
+          "Global rankings 2026",
+          "https://www.rmit.edu.au/news/all-news/2026/mar/global-rankings-rmit"
+        ]
+      ]
+    },
+    {
+      "id": "macquarie",
+      "name": "Macquarie University",
+      "city": "Sydney, New South Wales",
+      "type": "Public",
+      "qs": "126",
+      "tuition": "Commencement fee A$16,000–23,500 (deducted from first-session fees); use the fee calculator for your course",
+      "living": "Course expenses A$850–1,000 a year; visa minimum A$29,710",
+      "english": "Taught in English · IELTS 6.5 overall for most courses (higher for law, medicine, education)",
+      "fields": "Linguistics, philosophy, classics, data science and AI",
+      "scholarships": "Vice-Chancellor’s International Scholarship: up to A$10,000 (undergraduate ATAR-equivalent of 85+)",
+      "deadline": "Applications open year-round or until places are filled",
+      "selective": "Acceptance rate not published",
+      "sources": [
+        [
+          "International fees",
+          "https://www.mq.edu.au/study/admissions-and-entry/fees-and-costs/international"
+        ],
+        [
+          "English language requirements",
+          "https://www.mq.edu.au/study/admissions-and-entry/apply/international/english-language-requirements"
+        ],
+        [
+          "Vice-Chancellor’s International Scholarship",
+          "https://www.mq.edu.au/study/admissions-and-entry/scholarships/international/vice-chancellor-s-international-scholarship"
+        ],
+        [
+          "QS subject rankings 2026",
+          "https://lighthouse.mq.edu.au/media-releases/2026/march-2026/macquarie-surges-in-global-rankings-with-record-number-of-top-subjects"
+        ]
+      ]
+    },
+    {
+      "id": "curtin",
+      "name": "Curtin University",
+      "city": "Perth, Western Australia",
+      "type": "Public",
+      "qs": "189",
+      "tuition": "Indicative fee not listed for the Bachelor of Commerce — use Curtin’s fee calculator",
+      "living": "Budget at least A$475 a week for a single student in Perth",
+      "english": "Taught in English · IELTS 6.0 overall and in each band (Bachelor of Commerce)",
+      "fields": "Mineral and mining engineering, geology, earth and marine sciences",
+      "scholarships": "John Curtin Global Excellence: 40% off tuition; a 20% tuition scholarship; Curtin International Scholarship: A$10,000 credit",
+      "deadline": "Semester 1 2027: January 18, 2027 (general deadline)",
+      "selective": "Acceptance rate not published",
+      "sources": [
+        [
+          "Bachelor of Commerce (English, fees)",
+          "https://www.curtin.edu.au/study/offering/course-ug-bachelor-of-commerce--b-comrce/"
+        ],
+        [
+          "International scholarships",
+          "https://www.curtin.edu.au/study/scholarships/international-scholarships/"
+        ],
+        [
+          "Application deadlines",
+          "https://www.curtin.edu.au/study/applying/application-deadlines/"
+        ],
+        [
+          "Budget planning",
+          "https://www.curtin.edu.au/study/international-students/living-australia/budget-planning/"
+        ],
+        [
+          "QS subject rankings",
+          "https://www.curtin.edu.au/news/media-release/curtin-shines-bright-in-global-rankings/"
+        ]
+      ]
+    },
+    {
+      "id": "griffith",
+      "name": "Griffith University",
+      "city": "Brisbane and Gold Coast, Queensland",
+      "type": "Public",
+      "qs": "230",
+      "tuition": "Indicative annual fee is shown in Griffith’s degree finder — see the official page",
+      "living": "Visa minimum A$29,710 a year; Griffith says South East Queensland is more affordable than other major cities",
+      "english": "Taught in English · IELTS 6.5 overall, no band below 6.0",
+      "fields": "Hospitality and tourism, nursing, sports-related subjects",
+      "scholarships": "20% off tuition for eligible international students; Academic Excellence scholarship: 25% off, applied automatically",
+      "deadline": "Applications open year-round for most programs",
+      "selective": "Acceptance rate not published",
+      "sources": [
+        [
+          "QS World University Rankings 2027 result",
+          "https://news.griffith.edu.au/2026/06/18/griffith-leaps-38-places-in-qs-world-university-rankings/"
+        ],
+        [
+          "International entry requirements",
+          "https://www.griffith.edu.au/apply/international/understanding-entry-requirements"
+        ],
+        [
+          "International scholarships",
+          "https://www.griffith.edu.au/international/scholarships-finance"
+        ],
+        [
+          "QS subject rankings 2026",
+          "https://news.griffith.edu.au/2026/03/26/griffith-leaps-in-2026-qs-subject-rankings/"
+        ]
+      ]
+    }
+  ]
+}

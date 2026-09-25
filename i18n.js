@@ -24,6 +24,7 @@
     "Contact": ["Aloqa", "Контакты"],
     "Our Expertise": ["Tajribamiz", "Наш опыт"],
     "GPA Calculator": ["GPA kalkulyatori", "Калькулятор GPA"],
+    "The comparison table could not be loaded. Please refresh the page.": ["Solishtirish jadvalini yuklab boʻlmadi. Sahifani yangilang.", "Не удалось загрузить таблицу сравнения. Обновите страницу."],
     "Countries": ["Davlatlar", "Страны"],
     "Programmes": ["Dasturlar", "Программы"],
     "Country or programme of interest": ["Qiziqtirgan davlat yoki dastur", "Интересующая страна или программа"],

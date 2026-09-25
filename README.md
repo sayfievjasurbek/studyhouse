@@ -186,16 +186,58 @@ are deliberately left untranslated.
 
 ## Country pages with the compare tool (USA, Australia, China)
 
-`destinations/<country>/data.js` holds `window.SH_COMPARE` (universities, one cell per table row, a
-`sources` list per university, the "last updated" date) and `window.SH_EXTRA_DICT` (Uzbek/Russian
-translations of that page's copy). `compare.js` renders it.
+The university data for each country is **one JSON file**:
 
-- A cell is a string, or `{"todo": true}` for a figure that is **not verified yet** — it shows as a marked
-  placeholder ("Not verified yet — see the official site"). Never fill a cell without an official source.
-- Every fee, deadline and rank needs a year and a link in `sources`. Update `updated` when you re-check.
-- Ranks are QS World University Rankings 2027 (`qsYear`, `qsEdition`).
-- The "Most prestigious / Best value / Best for scholarships" tags are set in `tags` and must follow the
-  figures shown in the table.
+```
+data/usa.json
+data/australia.json
+data/china.json
+```
+
+The country page points at it with `data-src`:
+
+```html
+<div id="compare-root" data-src="../../data/usa.json"></div>
+```
+
+`compare.js` renders the table from that file, and `gpa.js` reads the same three files for the
+university shortlist — so a figure only ever has to be corrected in one place.
+
+Shape of the file:
+
+```json
+{
+  "country": "usa",
+  "updated": "2026-09-25",
+  "qsEdition": "QS World University Rankings 2027",
+  "qsYear": 2027,
+  "qsUrl": "https://www.topuniversities.com/world-university-rankings",
+  "defaults": ["berkeley", "purdue"],
+  "tags": { "prestige": "berkeley", "value": "purdue", "scholarships": "msu" },
+  "universities": [
+    {
+      "id": "berkeley", "name": "UC Berkeley",
+      "city": "…", "type": "Public", "qs": "=20",
+      "tuition": "…", "living": "…", "english": "…", "fields": "…",
+      "scholarships": "…", "deadline": "…", "selective": "…",
+      "sources": [["Cost of attendance", "https://…"]]
+    }
+  ]
+}
+```
+
+- A value you have not verified goes in as `{ "todo": true }`. It renders as
+  "Not verified yet — see the official site" — never invent a number to fill the cell.
+- `qs` keeps QS's own notation, so a joint rank stays `"=20"`.
+- `tags` picks which university gets each "Best for" badge. The badges describe only the figures
+  in the table, which the page says in a line under it.
+- When you change a figure, change `updated` and the `sources` entry with it.
+
+**Because the data is fetched, the site must be served over http(s).** Opening `index.html`
+straight from the file system will leave the table and the calculator empty. Any static host works;
+locally, `python3 -m http.server` in the project root is enough.
+
+The Uzbek and Russian for each page lives beside it in `destinations/<country>/strings.js`.
 
 ## Footer social icons
 
