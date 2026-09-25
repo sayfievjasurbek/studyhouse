@@ -43,14 +43,18 @@
 
   /* ---------- The menu, in one place ---------- */
   var NAV = [
-    { label: 'Home',           href: 'index.html',                        key: 'home' },
-    { label: 'Universities',   href: 'index.html#universities-section',   key: 'universities' },
-    { label: 'Destinations',   href: 'destinations/index.html',           key: 'destinations' },
-    { label: 'Services',       href: 'services/index.html',               key: 'services' },
-    { label: 'Our Expertise',  href: 'expertise/index.html',              key: 'expertise' },
-    { label: 'GPA Calculator', href: 'gpa-calculator/index.html',         key: 'gpa' },
-    { label: 'Contact',        href: '#contact',                          key: 'contact' }
+    { label: 'Home',           href: 'index.html',                key: 'home' },
+    { label: 'Destinations',   href: 'destinations/index.html',   key: 'destinations' },
+    { label: 'Services',       href: 'services/index.html',       key: 'services' },
+    { label: 'Our Expertise',  href: 'expertise/index.html',      key: 'expertise' },
+    { label: 'GPA Calculator', href: 'gpa-calculator/index.html', key: 'gpa' },
+    { label: 'Contact',        href: '#contact',                  key: 'contact' }
   ];
+
+  /* Not in the header any more — universities are reached from the homepage
+     section and the Universities card on the Services page — but the footer
+     still links to it. */
+  var UNIVERSITIES = { label: 'Universities', href: 'index.html#universities-section', key: 'universities' };
 
   /* Footer link columns, built from the same list so they can never drift apart */
   var FOOTER_COLS = [
@@ -81,7 +85,7 @@
 
   function item(key) {
     for (var i = 0; i < NAV.length; i++) if (NAV[i].key === key) return NAV[i];
-    return null;
+    return key === UNIVERSITIES.key ? UNIVERSITIES : null;
   }
 
   /* ---------- Header ---------- */

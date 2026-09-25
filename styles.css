@@ -265,13 +265,16 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 40px;                 /* never lets the logo touch the first menu item */
   height: 80px;
 }
 
 .navbar__logo {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 20px;                 /* emblem and wordmark stay clearly apart */
+  margin-left: -10px;        /* nudges the whole group left, off the gutter */
+  padding-right: 8px;
   text-decoration: none;
   flex-shrink: 0;
   background: transparent;
@@ -303,6 +306,8 @@ button {
   align-items: center;
   gap: 36px;
   list-style: none;
+  flex-wrap: nowrap;
+  white-space: nowrap;
 }
 
 .navbar__link {
@@ -370,32 +375,6 @@ button {
 .navbar__cta .btn {
   padding: 11px 18px;
   font-size: 12px;
-}
-
-@media (max-width: 1440px) {
-  html:not([lang="en"]) .navbar__cta {
-    display: none;
-  }
-}
-
-@media (max-width: 1360px) {
-  .navbar__cta {
-    display: none;
-  }
-}
-
-@media (max-width: 1280px) {
-  .navbar__links {
-    display: none;
-  }
-
-  .navbar__hamburger {
-    display: flex;
-  }
-
-  .mobile-nav {
-    display: flex;
-  }
 }
 
 .lang-switch {
@@ -467,6 +446,53 @@ button {
 
 .navbar__hamburger.active span:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* --- Navbar breakpoints ---
+   These sit after the base .navbar__hamburger / .mobile-nav rules on purpose:
+   they have the same specificity, so the later block has to win. */
+@media (max-width: 1300px) {
+  html:not([lang="en"]) .navbar__cta {
+    display: none;
+  }
+}
+
+@media (max-width: 1220px) {
+  .navbar__cta {
+    display: none;
+  }
+}
+
+/* Between the widest layout and the hamburger, tighten the row rather than
+   letting it wrap or overflow. Spacing stays even. */
+@media (max-width: 1200px) {
+  .navbar__inner {
+    gap: 24px;
+  }
+
+  .navbar__links {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 1100px) {
+  /* With the menu collapsed the logo needs no reserved gap beside it.
+     The menu / hamburger / mobile-nav switch itself lives further down, after
+     the .mobile-nav base rule, so that it wins the cascade. */
+  .navbar__inner {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .navbar__inner {
+    gap: 10px;
+  }
+
+  .navbar__logo {
+    margin-left: -6px;
+    padding-right: 0;
+  }
 }
 
 /* ============================================
@@ -1299,6 +1325,12 @@ button {
     max-width: 170px;
   }
 
+}
+
+/* Collapse to the hamburger well before the row could wrap.
+   This sits after the .navbar__hamburger and .mobile-nav base rules so that it
+   overrides their `display: none`. */
+@media (max-width: 1100px) {
   .navbar__links {
     display: none;
   }
@@ -1354,7 +1386,7 @@ button {
   }
 
   .navbar__logo {
-    gap: 8px;
+    gap: 12px;
   }
 
   .navbar__logo-mark-img {
