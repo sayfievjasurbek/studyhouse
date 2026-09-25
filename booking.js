@@ -19,7 +19,7 @@
 
   var scriptSrc = document.currentScript ? document.currentScript.src : location.href;
   var MASCOT_BASE = new URL('images/mascot/', scriptSrc).href;
-  var LOGO_URL = new URL('images/logo-mark.png', scriptSrc).href;
+  var LOGO_URL = new URL('images/logo-mark.webp', scriptSrc).href;
 
   /* Mascot poses (files in /images/mascot/). Missing poses fall back to the
      wave pose, and a missing wave pose falls back to the Study House emblem. */
