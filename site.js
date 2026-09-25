@@ -180,9 +180,6 @@
         '<div class="container">' +
           '<div class="footer__grid">' +
             '<div class="footer__brand">' +
-              '<a href="' + esc(url('index.html')) + '" class="footer__logo" aria-label="Study House - International Education Agency">' +
-                '<img src="' + esc(root) + 'images/logo-mark.webp" alt="Study House Emblem" class="footer__logo-mark-img" loading="lazy" decoding="async" width="256" height="246">' +
-              '</a>' +
               '<p class="footer__tagline">Your Global Education Partner</p>' +
               '<p class="footer__blurb">Study House is an independent education consultancy. We prepare your application; we do not decide admissions or visas.</p>' +
               socialHTML() +

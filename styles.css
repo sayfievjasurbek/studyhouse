@@ -1065,22 +1065,7 @@ button {
   max-width: 320px;
 }
 
-.footer__logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  background: transparent;
-}
-
-.footer__logo-mark-img {
-  height: 52px;
-  width: auto;
-  object-fit: contain;
-  display: block;
-}
-
 .footer__tagline {
-  margin-top: 14px;
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 500;
@@ -1397,10 +1382,6 @@ button {
 
   .navbar__logo-text-img {
     height: 26px;
-  }
-
-  .footer__logo-mark-img {
-    height: 40px;
   }
 
 }
