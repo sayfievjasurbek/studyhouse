@@ -2729,3 +2729,509 @@ h3 em {
     padding: 24px 20px 32px;
   }
 }
+
+/* ============================================
+   COUNTRY PAGES: USA / AUSTRALIA / CHINA
+   (key facts, compare universities, FAQ)
+   ============================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.section-intro {
+  max-width: 720px;
+  margin-top: 16px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-gray);
+}
+
+/* --- Key facts --- */
+.facts {
+  padding: var(--section-padding);
+  background: var(--color-bg);
+}
+
+.facts__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.fact-card {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.fact-card__label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.fact-card__value {
+  margin: 10px 0 12px;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-navy);
+}
+
+.fact-card__note {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--color-gray);
+}
+
+.fact-card__src {
+  margin-top: auto;
+  padding-top: 16px;
+  font-size: 12.5px;
+  color: var(--color-gray-light);
+}
+
+.fact-card__src a,
+.cmp-foot a:not(.btn),
+.cmp-sources a,
+.source-line a {
+  color: var(--color-navy);
+  text-decoration: underline;
+  text-decoration-color: rgba(176, 141, 87, 0.6);
+  text-underline-offset: 3px;
+}
+
+.fact-card__src a:hover,
+.cmp-foot a:not(.btn):hover,
+.cmp-sources a:hover,
+.source-line a:hover {
+  color: var(--color-gold);
+}
+
+.source-line {
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--color-gray-light);
+}
+
+/* --- Compare universities --- */
+.compare {
+  padding: var(--section-padding);
+  background: var(--color-white);
+}
+
+.cmp-picker {
+  margin-top: 40px;
+}
+
+.cmp-picker__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.cmp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.cmp-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 16px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-navy);
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.cmp-chip__qs {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-gray-light);
+}
+
+.cmp-chip:hover {
+  border-color: var(--color-navy);
+}
+
+.cmp-chip--on {
+  color: var(--color-white);
+  background: var(--color-navy);
+  border-color: var(--color-navy);
+}
+
+.cmp-chip--on .cmp-chip__qs {
+  color: var(--color-gold);
+}
+
+.cmp-chip--off {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.cmp-chip:focus-visible,
+.cmp-sources summary:focus-visible,
+.faq-item summary:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+.cmp-status {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--color-gray);
+}
+
+.cmp-output {
+  margin-top: 28px;
+}
+
+.cmp-empty {
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--color-gray);
+  background: var(--color-bg);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.cmp-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.cmp-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.cmp-table th,
+.cmp-table td {
+  padding: 16px 20px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.cmp-table tbody tr:last-child th,
+.cmp-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.cmp-table tbody th {
+  width: 190px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-gray);
+  background: var(--color-bg);
+}
+
+.cmp-table tbody td {
+  color: var(--color-navy);
+  border-left: 1px solid var(--color-border);
+}
+
+.cmp-table__corner {
+  width: 190px;
+  background: var(--color-navy);
+}
+
+.cmp-table__uni {
+  background: var(--color-navy);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: none;
+}
+
+.cmp-table__name {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-white);
+}
+
+.cmp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.cmp-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--color-navy);
+  background: #E9D9B7;
+  border-radius: var(--radius-pill);
+}
+
+.cmp-qs {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.cmp-qs small {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-gray);
+}
+
+.cmp-todo {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 13px;
+  font-style: italic;
+  color: #8A5A00;
+  background: #FFF4DD;
+  border: 1px dashed #D9A441;
+  border-radius: var(--radius-sm);
+}
+
+.cmp-cards {
+  display: none;
+}
+
+.cmp-card {
+  padding: 22px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.cmp-card + .cmp-card {
+  margin-top: 16px;
+}
+
+.cmp-card__name {
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-navy);
+}
+
+.cmp-card__list dt {
+  margin-top: 16px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-gray-light);
+}
+
+.cmp-card__list dd {
+  margin-top: 2px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--color-navy);
+}
+
+.cmp-foot {
+  margin-top: 28px;
+}
+
+.cmp-foot__meta,
+.cmp-foot__note {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--color-gray);
+}
+
+.cmp-foot__note {
+  margin-top: 6px;
+  color: var(--color-gray-light);
+}
+
+.cmp-sources {
+  margin-top: 16px;
+  font-size: 13.5px;
+  color: var(--color-gray);
+}
+
+.cmp-sources summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.cmp-sources__list {
+  margin-top: 12px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.cmp-sources__list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border);
+  line-height: 1.7;
+}
+
+.cmp-sources__list strong {
+  display: block;
+  color: var(--color-navy);
+}
+
+.cmp-cta {
+  margin-top: 28px;
+}
+
+/* --- FAQ --- */
+.faq {
+  padding: var(--section-padding);
+  background: var(--color-bg);
+}
+
+.faq__list {
+  max-width: 860px;
+  margin-top: 40px;
+}
+
+.faq-item {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.faq-item + .faq-item {
+  margin-top: 12px;
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-navy);
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::after {
+  content: '+';
+  flex-shrink: 0;
+  font-family: var(--font-sans);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-gold);
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item p {
+  padding: 0 24px 22px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--color-gray);
+}
+
+.visa-spec__note a {
+  color: var(--color-gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.visa-spec__note {
+  margin-top: 16px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--color-gray-light);
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .facts__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .facts__grid {
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .fact-card {
+    padding: 22px;
+  }
+
+  .cmp-scroll {
+    display: none;
+  }
+
+  .cmp-cards {
+    display: block;
+  }
+
+  .faq-item summary {
+    padding: 18px 20px;
+    font-size: 16.5px;
+  }
+
+  .faq-item p {
+    padding: 0 20px 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .facts__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cmp-chip {
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+}

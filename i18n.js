@@ -149,6 +149,52 @@
     "Yay! We got your request.": ["Ura! Soʻrovingiz bizga yetib keldi.", "Ура! Мы получили вашу заявку."],
     "Oops, let's fix that together.": ["Voy, buni birga tuzatamiz.", "Ой, давайте исправим это вместе."],
 
+    /* ---------- Compare component & country page labels ---------- */
+    "Compare universities": ["Universitetlarni solishtirish", "Сравнение университетов"],
+    "Choose 2 or 3 universities to compare side by side": ["Yonma-yon solishtirish uchun 2 yoki 3 ta universitetni tanlang", "Выберите 2 или 3 университета для сравнения"],
+    "Selected": ["Tanlangan", "Выбрано"],
+    "You can compare up to 3 universities. Remove one to add another.": ["Koʻpi bilan 3 ta universitetni solishtirish mumkin. Yangisini qoʻshish uchun birini olib tashlang.", "Можно сравнивать не более 3 университетов. Уберите один, чтобы добавить другой."],
+    "Select at least 2 universities to see the comparison.": ["Solishtirishni koʻrish uchun kamida 2 ta universitetni tanlang.", "Выберите минимум 2 университета, чтобы увидеть сравнение."],
+    "University comparison table": ["Universitetlarni solishtirish jadvali", "Таблица сравнения университетов"],
+    "City": ["Shahar", "Город"],
+    "Public or private": ["Davlat yoki xususiy", "Государственный или частный"],
+    "Public": ["Davlat", "Государственный"],
+    "QS World University Rank": ["QS jahon universitetlari reytingi", "Рейтинг QS World University"],
+    "Tuition per year": ["Yillik oʻqish narxi", "Стоимость обучения в год"],
+    "Living cost": ["Yashash xarajati", "Стоимость проживания"],
+    "English-taught programs & language test": ["Ingliz tilidagi dasturlar va til testi", "Программы на английском и языковой тест"],
+    "Strongest fields": ["Eng kuchli yoʻnalishlar", "Сильнейшие направления"],
+    "Scholarships for international students": ["Xalqaro talabalar uchun stipendiyalar", "Стипендии для иностранных студентов"],
+    "Main application deadline": ["Asosiy ariza topshirish muddati", "Основной срок подачи документов"],
+    "How selective": ["Tanlov qatʼiyligi", "Селективность"],
+    "Most prestigious": ["Eng nufuzli", "Самый престижный"],
+    "Best value": ["Eng qulay narx", "Лучшее соотношение цены"],
+    "Best for scholarships": ["Stipendiya uchun eng yaxshi", "Лучший для стипендий"],
+    "Highest QS rank in this list": ["Ushbu roʻyxatdagi eng yuqori QS oʻrni", "Самое высокое место QS в этом списке"],
+    "Lowest cost among the figures shown in this table": ["Jadvalda koʻrsatilgan raqamlar ichida eng past xarajat", "Самая низкая стоимость среди цифр в этой таблице"],
+    "Largest published award for international students in this list": ["Ushbu roʻyxatda xalqaro talabalar uchun eʼlon qilingan eng katta mukofot", "Самая крупная опубликованная награда для иностранных студентов в этом списке"],
+    "Tags are based only on the figures shown in this table. Fees change every year — always confirm on the official page.": ["Teglar faqat ushbu jadvaldagi raqamlarga asoslangan. Narxlar har yili oʻzgaradi — doim rasmiy sahifada tasdiqlang.", "Метки основаны только на цифрах из этой таблицы. Цены меняются каждый год — всегда сверяйтесь с официальной страницей."],
+    "Not verified yet — see the official site": ["Hali tasdiqlanmagan — rasmiy saytga qarang", "Пока не подтверждено — смотрите официальный сайт"],
+    "Get my personal shortlist": ["Shaxsiy roʻyxatimni olish", "Получить личный список"],
+    "Last updated": ["Oxirgi yangilanish", "Последнее обновление"],
+    "Sources": ["Manbalar", "Источники"],
+    "Sources for each university": ["Har bir universitet manbalari", "Источники по каждому университету"],
+    "Ranking": ["Reyting", "Рейтинг"],
+    "Key facts & real yearly cost": ["Asosiy faktlar va haqiqiy yillik xarajat", "Ключевые факты и реальная стоимость в год"],
+    "Yearly tuition": ["Yillik oʻqish narxi", "Обучение в год"],
+    "Living costs": ["Yashash xarajatlari", "Расходы на проживание"],
+    "Work rights": ["Ishlash huquqi", "Право на работу"],
+    "After graduation": ["Bitirgandan keyin", "После выпуска"],
+    "Scholarship routes": ["Stipendiya yoʻllari", "Пути к стипендиям"],
+    "Visa path": ["Viza yoʻli", "Визовый путь"],
+    "Official fee": ["Rasmiy yigʻim", "Официальный сбор"],
+    "Processing time": ["Koʻrib chiqish muddati", "Срок рассмотрения"],
+    "Questions parents ask": ["Ota-onalar beradigan savollar", "Вопросы, которые задают родители"],
+    "Honest answers — including what Study House cannot promise.": ["Halol javoblar — Study House nimani vaʼda qila olmasligi ham.", "Честные ответы — в том числе о том, что Study House обещать не может."],
+    "Yes": ["Ha", "Да"],
+    "Get my personal shortlist →": ["Shaxsiy roʻyxatimni olish →", "Получить личный список →"],
+    "Language tests": ["Til testlari", "Языковые тесты"],
+
     /* ---------- Home page ---------- */
     "Study House — International Education Agency | Universities in Europe, Australia, China & USA": ["Study House — xalqaro taʼlim agentligi | Yevropa, Avstraliya, Xitoy va AQShdagi universitetlar", "Study House — международное образовательное агентство | Университеты Европы, Австралии, Китая и США"],
     "Study House helps ambitious students get into world-class universities in Europe, Australia, China and the USA. Expert guidance from consultation to arrival.": ["Study House intiluvchan talabalarga Yevropa, Avstraliya, Xitoy va AQShdagi jahon darajasidagi universitetlarga kirishda yordam beradi. Konsultatsiyadan yetib borishgacha mutaxassis yoʻl-yoʻrigʻi.", "Study House помогает целеустремлённым студентам поступить в университеты мирового уровня в Европе, Австралии, Китае и США. Экспертное сопровождение от консультации до прибытия."],
@@ -513,6 +559,12 @@
     "A welcome briefing covering your university's international office, health insurance, and local essentials.": ["Universitetning xalqaro boʻlimi, sogʻliqni saqlash sugʻurtasi va mahalliy zarur maʼlumotlarni oʻz ichiga olgan kutib olish yigʻilishi.", "Приветственный брифинг о международном отделе университета, медицинской страховке и местных мелочах."],
     "A local contact point for your first weeks, so questions get answered same-day, not next semester.": ["Dastlabki haftalar uchun mahalliy aloqa nuqtasi — savollarga keyingi semestrda emas, oʻsha kuni javob beriladi.", "Местный контакт на первые недели — на вопросы отвечают в тот же день, а не в следующем семестре."]
   };
+
+  /* Pages with their own copy (e.g. the USA / Australia / China pages) load a data file that sets
+     window.SH_EXTRA_DICT = { "English": [uz, ru], ... } before this script runs. */
+  if (window.SH_EXTRA_DICT) {
+    Object.keys(window.SH_EXTRA_DICT).forEach(function (k) { D[k] = window.SH_EXTRA_DICT[k]; });
+  }
 
   /* ---------- Helpers ---------- */
   var SKIP_TAGS = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, TEXTAREA: 1 };
