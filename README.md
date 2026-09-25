@@ -149,6 +149,41 @@ Use transparent PNGs, roughly 450×545 px (portrait, same framing for every pose
 not jump). The current `mascot-wave.png` is cropped from the character sheet and still has the grey
 studio backdrop — the booking panel uses the matching grey (`#A8A6A7`) until transparent versions exist.
 
+## Services and programme pages
+
+`/services/` lists six cards; five of them link to their own page under `/services/<slug>/`.
+
+| Page | Slug |
+| --- | --- |
+| Universities (the featured card — its button opens the booking form) | — |
+| United World Colleges | `uwc` |
+| J-1 Summer Work Travel | `work-and-travel` |
+| Future Leaders Exchange | `flex` |
+| Erasmus+ | `erasmus-plus` |
+| Chevening Scholarship | `chevening` |
+
+**Editing the content.** Every requirement, date and fee on these pages was read from the official
+source listed at the bottom of that page. Anything that could not be read renders as
+"Not verified yet — see the official site" rather than a guess. When you update a figure, update
+the "Last updated" line and the source link with it.
+
+**Logos.** Each card and hero shows a light badge. Put the programme's official logo, downloaded
+unmodified from its own site, at `images/programmes/logos/<slug>.png` (transparent PNG, about
+400×160). Until the file exists the badge shows the programme name in type — `programmes.js` does
+this swap, so no logo is ever invented or redrawn. Do not use a government seal or the EU flag: on
+these pages they would read as an endorsement.
+
+**Photos.** `images/programmes/<slug>-card.webp` (800×1000) and `<slug>-hero.webp` (1600×760).
+The current photos are from Pexels, which permits commercial use without attribution.
+
+**Filters.** The buttons above the grid filter on the `data-tags` attribute of each card
+(`school`, `university`, `masters`, `scholarship`, `free`). Add a tag to the attribute and the
+filter picks it up; no other change is needed.
+
+**Strings.** All visible text for these six pages is in `services-strings.js` as
+`"English": [Uzbek, Russian]`. Programme names and the titles of the official English source pages
+are deliberately left untranslated.
+
 ## Country pages with the compare tool (USA, Australia, China)
 
 `destinations/<country>/data.js` holds `window.SH_COMPARE` (universities, one cell per table row, a

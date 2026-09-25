@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Services — Study House | Universities, UWC, Work and Travel, FLEX, Erasmus+, Chevening</title>
-  <meta name="description" content="Study House prepares applications for university admission and for the UWC, Work and Travel, FLEX, Erasmus+ and Chevening programmes.">
+  <meta name="description" content="Study House prepares applications for university admission and for the UWC, Work and Travel, FLEX, Erasmus+ and Chevening programmes. Official requirements, real deadlines, no guarantees.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap">
@@ -12,7 +12,6 @@
   <link rel="icon" type="image/png" href="../images/favicon-64.png">
 </head>
 <body>
-
   <div class="breadcrumb">
     <div class="container">
       <nav class="breadcrumb__nav" aria-label="Breadcrumb">
@@ -28,21 +27,100 @@
       <div class="page-header__content reveal">
         <div class="eyebrow">What We Do</div>
         <h1 class="page-header__heading">Programmes We <em>Prepare You For.</em></h1>
-        <p class="page-header__text">University admission plus the exchange and scholarship programmes Uzbek students ask about most.</p>
+        <p class="page-header__text">University admission is our main service. Alongside it we prepare applications for five
+          exchange and scholarship programmes. Every requirement and date on these pages comes from the programme's own
+          official site, with the source listed at the bottom of each page.</p>
       </div>
     </div>
   </header>
+
+  <section class="programmes">
+    <div class="container">
+      <div class="prog-filters" role="group" aria-label="Filter programmes"><button type="button" class="pill prog-filter pill--active" data-filter="all" aria-pressed="true">All</button><button type="button" class="pill prog-filter" data-filter="school" aria-pressed="false">School</button><button type="button" class="pill prog-filter" data-filter="university" aria-pressed="false">University</button><button type="button" class="pill prog-filter" data-filter="masters" aria-pressed="false">Master&#x27;s</button><button type="button" class="pill prog-filter" data-filter="scholarship" aria-pressed="false">Scholarships</button></div>
+      <p class="prog-count" role="status" aria-live="polite"></p>
+      <div class="prog-grid" id="prog-grid">
+        <article class="prog-card prog-card--featured" data-tags="university masters">
+          <img src="../images/programmes/universities-card.webp" alt="" class="prog-card__img" loading="lazy" decoding="async" width="800" height="1000">
+          <div class="prog-card__overlay"></div>
+          <div class="prog-card__body">
+            <span class="prog-badge"><img src="../images/programmes/logos/universities.png" alt="Universities logo" class="prog-badge__img" data-logo-fallback="Universities" width="200" height="80"></span>
+            <h3 class="prog-card__title">University admission</h3>
+            <p class="prog-card__blurb">Bachelor’s and master’s admission in Europe, the USA, Australia and China — our main service.</p>
+            <div class="prog-card__chips"><span class="prog-chip">University students</span><span class="prog-chip">Master&#x27;s</span></div>
+            <button type="button" class="btn btn--gold prog-card__btn" data-booking data-booking-source="services">Learn more</button>
+          </div>
+        </article>
+        <article class="prog-card" data-tags="school scholarship">
+          <img src="../images/programmes/uwc-card.webp" alt="" class="prog-card__img" loading="lazy" decoding="async" width="800" height="1000">
+          <div class="prog-card__overlay"></div>
+          <div class="prog-card__body">
+            <span class="prog-badge"><img src="../images/programmes/logos/uwc.png" alt="UWC logo" class="prog-badge__img" data-logo-fallback="UWC" width="200" height="80"></span>
+            <h3 class="prog-card__title">United World Colleges</h3>
+            <p class="prog-card__blurb">A two-year IB Diploma at one of the UWC schools, selected through the UWC Uzbekistan national committee.</p>
+            <div class="prog-card__chips"><span class="prog-chip">For school students</span><span class="prog-chip">Scholarship</span></div>
+            <a href="uwc/index.html" class="btn btn--gold prog-card__btn">Learn more</a>
+          </div>
+        </article>
+        <article class="prog-card" data-tags="university">
+          <img src="../images/programmes/work-and-travel-card.webp" alt="" class="prog-card__img" loading="lazy" decoding="async" width="800" height="1000">
+          <div class="prog-card__overlay"></div>
+          <div class="prog-card__body">
+            <span class="prog-badge"><img src="../images/programmes/logos/work-and-travel.png" alt="Work and Travel logo" class="prog-badge__img" data-logo-fallback="Work and Travel" width="200" height="80"></span>
+            <h3 class="prog-card__title">J-1 Summer Work Travel</h3>
+            <p class="prog-card__blurb">The US Department of State’s Summer Work Travel programme, run through designated sponsors.</p>
+            <div class="prog-card__chips"><span class="prog-chip">University students</span></div>
+            <a href="work-and-travel/index.html" class="btn btn--gold prog-card__btn">Learn more</a>
+          </div>
+        </article>
+        <article class="prog-card" data-tags="school free">
+          <img src="../images/programmes/flex-card.webp" alt="" class="prog-card__img" loading="lazy" decoding="async" width="800" height="1000">
+          <div class="prog-card__overlay"></div>
+          <div class="prog-card__body">
+            <span class="prog-badge"><img src="../images/programmes/logos/flex.png" alt="FLEX logo" class="prog-badge__img" data-logo-fallback="FLEX" width="200" height="80"></span>
+            <h3 class="prog-card__title">Future Leaders Exchange</h3>
+            <p class="prog-card__blurb">A fully funded academic year at a US high school, sponsored by the U.S. Department of State.</p>
+            <div class="prog-card__chips"><span class="prog-chip">For school students</span><span class="prog-chip">Free programme</span></div>
+            <a href="flex/index.html" class="btn btn--gold prog-card__btn">Learn more</a>
+          </div>
+        </article>
+        <article class="prog-card" data-tags="university masters scholarship">
+          <img src="../images/programmes/erasmus-plus-card.webp" alt="" class="prog-card__img" loading="lazy" decoding="async" width="800" height="1000">
+          <div class="prog-card__overlay"></div>
+          <div class="prog-card__body">
+            <span class="prog-badge"><img src="../images/programmes/logos/erasmus-plus.png" alt="Erasmus+ logo" class="prog-badge__img" data-logo-fallback="Erasmus+" width="200" height="80"></span>
+            <h3 class="prog-card__title">Erasmus+</h3>
+            <p class="prog-card__blurb">Two EU routes: an Erasmus Mundus Joint Master, or an exchange arranged through your own university.</p>
+            <div class="prog-card__chips"><span class="prog-chip">University students</span><span class="prog-chip">Master&#x27;s</span><span class="prog-chip">Scholarship</span></div>
+            <a href="erasmus-plus/index.html" class="btn btn--gold prog-card__btn">Learn more</a>
+          </div>
+        </article>
+        <article class="prog-card" data-tags="masters scholarship">
+          <img src="../images/programmes/chevening-card.webp" alt="" class="prog-card__img" loading="lazy" decoding="async" width="800" height="1000">
+          <div class="prog-card__overlay"></div>
+          <div class="prog-card__body">
+            <span class="prog-badge"><img src="../images/programmes/logos/chevening.png" alt="Chevening logo" class="prog-badge__img" data-logo-fallback="Chevening" width="200" height="80"></span>
+            <h3 class="prog-card__title">Chevening Scholarship</h3>
+            <p class="prog-card__blurb">The UK government’s fully funded scholarship for a one-year master’s, for people with work experience.</p>
+            <div class="prog-card__chips"><span class="prog-chip">Master&#x27;s</span><span class="prog-chip">Scholarship</span></div>
+            <a href="chevening/index.html" class="btn btn--gold prog-card__btn">Learn more</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
   <section class="closing-cta">
     <div class="container reveal">
       <h2 class="closing-cta__heading">Which Programme <em>Fits You?</em></h2>
       <p class="closing-cta__text">Book a free diagnostic consultation. We'll assess your profile, identify your best-fit institutions, and map your complete application timeline.</p>
-      <a href="#book-a-consultation" data-booking class="btn btn--gold">Book a Consultation →</a>
+      <a href="#book-a-consultation" data-booking data-booking-source="services" class="btn btn--gold">Book a Consultation →</a>
     </div>
   </section>
 
   <script src="../site.js"></script>
   <script src="../script.js"></script>
+  <script src="../services-strings.js"></script>
+  <script src="../programmes.js"></script>
   <script src="../booking.js"></script>
   <script src="../i18n.js"></script>
 </body>
