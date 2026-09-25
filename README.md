@@ -22,8 +22,8 @@ python3 -m http.server 8000     # then open http://localhost:8000/
 | `carousel.js` | Home-page university logo strip (the `LOGOS` array is at the top) |
 | `compare.js` | "Compare universities" component on the USA / Australia / China pages |
 | `gpa.js` | GPA calculator, mounted into any `[data-gpa]` element |
-| `programmes.js` | Services page filters and the programme logo badges |
-| `data/*.json` | University data per country, and `grades.json` for the calculator |
+| `services.js` | Services page: builds the six cards and the programme modals |
+| `data/*.json` | University data per country, `grades.json` for the calculator, `programmes.json` for the Services page |
 | `services-strings.js`, `destinations/*/strings.js` | Uzbek and Russian for those pages |
 | `tools/seo.py` | Regenerates canonical/OG tags, `sitemap.xml` and `robots.txt` |
 | `images/mascot/` | Polar-bear mascot images used by the booking form and calculator |
@@ -167,40 +167,55 @@ Use transparent PNGs, roughly 450×545 px (portrait, same framing for every pose
 not jump). The current `mascot-wave.png` is cropped from the character sheet and still has the grey
 studio backdrop — the booking panel uses the matching grey (`#A8A6A7`) until transparent versions exist.
 
-## Services and programme pages
+## Services page
 
-`/services/` lists six cards; five of them link to their own page under `/services/<slug>/`.
+`/services/` is one grid of six cards, built by `services.js` from
+`data/programmes.json`. There are no filters and no tag chips.
 
-| Page | Slug |
+| Card | What "Learn more" does |
 | --- | --- |
-| Universities (the featured card — its button opens the booking form) | — |
-| United World Colleges | `uwc` |
-| J-1 Summer Work Travel | `work-and-travel` |
-| Future Leaders Exchange | `flex` |
-| Erasmus+ | `erasmus-plus` |
-| Chevening Scholarship | `chevening` |
+| Universities | opens the booking form directly |
+| UWC, Work and Travel, FLEX, Erasmus+, Chevening | opens that programme's modal on the same page |
 
-**Editing the content.** Every requirement, date and fee on these pages was read from the official
-source listed at the bottom of that page. Anything that could not be read renders as
-"Not verified yet — see the official site" rather than a guess. When you update a figure, update
-the "Last updated" line and the source link with it.
+**Editing the content.** Everything is in `data/programmes.json`. A value of `null` renders as
+"Not verified yet — see the official site" rather than a guess, so leave it null until you have
+read the figure on an official page. When you fill one in, update the `sources` entry with it.
 
-**Logos.** Each card and hero shows a light badge. Put the programme's official logo, downloaded
-unmodified from its own site, at `images/programmes/logos/<slug>.png` (transparent PNG, about
-400×160). Until the file exists the badge shows the programme name in type — `programmes.js` does
-this swap, so no logo is ever invented or redrawn. Do not use a government seal or the EU flag: on
-these pages they would read as an endorsement.
+**Work and Travel is Germany**, per the Youth Affairs Agency announcement on gov.uz: a programme
+for students to work, gain experience and travel in Germany from May 2026, organised with Youth
+Globe XBA, Edu Action and Bildung & Beruf. Age, exact dates and cost are not published there and
+are left as placeholders. The page states that Study House is an independent preparation service,
+not an organiser — change that only if the owner is actually an authorised organiser.
 
-**Photos.** `images/programmes/<slug>-card.webp` (800×1000) and `<slug>-hero.webp` (1600×760).
-The current photos are from Pexels, which permits commercial use without attribution.
+**Logos.** Put each programme's official logo, downloaded unmodified from its own site, at
+`images/programmes/logos/<id>.png` (transparent PNG, about 400×160). Until the file exists the
+badge shows the programme name in type, so no mark is ever invented. Do not use a government seal
+or the EU flag — on these pages they would read as an endorsement.
 
-**Filters.** The buttons above the grid filter on the `data-tags` attribute of each card
-(`school`, `university`, `masters`, `scholarship`, `free`). Add a tag to the attribute and the
-filter picks it up; no other change is needed.
+**Photos.** `images/programmes/<id>-card.webp` (800×1000) and `<id>-hero.webp` (1600×760), from
+Pexels, which permits commercial use without attribution.
 
-**Strings.** All visible text for these six pages is in `services-strings.js` as
-`"English": [Uzbek, Russian]`. Programme names and the titles of the official English source pages
-are deliberately left untranslated.
+**Strings** for this page are in `services-strings.js` as `"English": [Uzbek, Russian]`.
+
+## GPA calculator
+
+Three steps — Grades, Profile, Results — built by `gpa.js` into any `[data-gpa]` element
+(`data-gpa="full"` also shows the Ambitious / Realistic / Safe lists).
+
+Every scale, score range, threshold and formula is in `data/grades.json` with its source and year.
+To add a grading system, add an entry to `scales`: `max`, `pass` and `gpa` (`"bands"`, `"direct"`,
+`"letters"` or `null` when no published conversion exists). `pass` is the lowest passing grade and
+feeds the modified Bavarian formula.
+
+Rules the calculator holds to, and that any change should preserve:
+
+- no minus or decrement control; grade and score fields accept digits only, so a negative can
+  never be typed or displayed
+- every field is clamped to its published range
+- "By subjects" produces **one** overall average across all subjects, weighted by credits or hours
+  when given — never a per-subject result
+- a row is removed with a small "x"
+- every figure is labelled an estimate, and there are no percentile or earnings claims
 
 ## Country pages with the compare tool (USA, Australia, China)
 
