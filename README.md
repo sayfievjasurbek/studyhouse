@@ -10,14 +10,32 @@ python3 -m http.server 8000     # then open http://localhost:8000/
 
 | Path | What it is |
 | --- | --- |
-| `index.html`, `expertise/`, `destinations/` | Pages |
-| `styles.css` | All styles (design tokens are at the top, in `:root`) |
-| `script.js` | Home-page behaviour (reveal, navbar, smooth scroll) |
-| `i18n.js` | Uzbek / Russian / English switcher — Uzbek is the default |
-| `booking.js` | Shared "Book a Consultation" modal |
-| `compare.js` | "Compare universities" component used by the USA / Australia / China pages |
-| `destinations/{usa,australia,china}/data.js` | Each page's university data, sources and translations |
-| `images/mascot/` | Polar-bear mascot images used by the booking form |
+| `index.html` | Home page |
+| `destinations/` | Destinations hub, the three country pages and the six European ones |
+| `services/` | Services page and the five programme pages |
+| `expertise/`, `gpa-calculator/` | Expertise page, GPA calculator |
+| `styles.css` | All styles. The design tokens are at the top, in `:root` |
+| **`site.js`** | **Navbar, mobile menu and footer for every page, plus the `CONTACT` and `SOCIAL` config** |
+| `script.js` | Shared behaviour: reveal on scroll, navbar, mobile menu, smooth scroll |
+| `i18n.js` | Uzbek / Russian / English switcher and the main dictionary — Uzbek is the default |
+| `booking.js` | Shared "Book a Consultation" modal and `openBooking()` |
+| `carousel.js` | Home-page university logo strip (the `LOGOS` array is at the top) |
+| `compare.js` | "Compare universities" component on the USA / Australia / China pages |
+| `gpa.js` | GPA calculator, mounted into any `[data-gpa]` element |
+| `programmes.js` | Services page filters and the programme logo badges |
+| `data/*.json` | University data per country, and `grades.json` for the calculator |
+| `services-strings.js`, `destinations/*/strings.js` | Uzbek and Russian for those pages |
+| `tools/seo.py` | Regenerates canonical/OG tags, `sitemap.xml` and `robots.txt` |
+| `images/mascot/` | Polar-bear mascot images used by the booking form and calculator |
+
+Every page declares two things and gets the rest from `site.js`:
+
+```html
+<html lang="en" data-root="../../" data-page="services">
+```
+
+`data-root` is the relative path back to the site root; `data-page` is the menu item to mark as
+current (`home`, `universities`, `destinations`, `services`, `expertise`, `gpa`, `contact`).
 
 ## Languages
 
@@ -239,12 +257,43 @@ locally, `python3 -m http.server` in the project root is enough.
 
 The Uzbek and Russian for each page lives beside it in `destinations/<country>/strings.js`.
 
-## Footer social icons
+## Contact details and social profiles
 
-The four social icons in the footer are `hidden` until real profile URLs exist. To turn one on, set its
-`href` and delete the `hidden` attribute (in every page's footer).
+Both live in one place, at the top of `site.js`:
+
+```js
+var CONTACT = { phone: '', telegram: '', email: '', address: '' };
+var SOCIAL  = { instagram: '', telegram: '', linkedin: '', youtube: '' };
+```
+
+An entry left empty is simply not shown — the site never displays an invented phone number or a
+dead social link. While every `CONTACT` field is empty the footer's contact column offers the
+booking form instead. Fill a value in and it appears on every page.
+
+The same contact details should also go into the JSON-LD block in `index.html` (see **SEO**).
+
+## SEO
+
+`tools/seo.py` owns the canonical link, the Open Graph and Twitter tags, `sitemap.xml` and
+`robots.txt`. Social scrapers do not run JavaScript, so these have to be real HTML rather than
+something `site.js` injects.
+
+```bash
+python3 tools/seo.py        # run from the project root
+```
+
+Change `BASE_URL` at the top of that file when the domain changes and run it again; it rewrites
+only the block between the `<!-- SEO -->` markers, so it is safe to run repeatedly and leaves the
+rest of each `<head>` alone. The default is the GitHub Pages address for this repository.
+
+The social preview image is `images/og-card.jpg` (1200×630).
+
+Organization structured data lives in `index.html` as a single JSON-LD block. Contact details are
+left out of it on purpose — the comment directly above shows exactly what to paste in once the
+owner has them. Put the same details into `CONTACT` in `site.js`, which builds the footer.
 
 ## Images
 
-Photos and logos are WebP. Keep new photos at most 1600px wide (heroes) or ~800px (cards), 80–250 KB, and
-add `loading="lazy"` to anything below the fold (hero images use `fetchpriority="high"`).
+- Cards are about 800 px wide, heroes about 1600 px, all WebP and under 250 KB.
+- Above-the-fold images carry `fetchpriority="high"`; everything below it carries `loading="lazy"`.
+- Programme photos are from Pexels (commercial use, no attribution required).
