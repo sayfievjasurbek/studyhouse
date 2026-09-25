@@ -460,6 +460,8 @@ button {
   border: none;
 }
 
+/* The only flat navy left on the site: a gradient across a 2px bar would not
+   render. Every panel, section, button and the footer use --gradient-navy. */
 .navbar__hamburger span {
   display: block;
   width: 24px;
