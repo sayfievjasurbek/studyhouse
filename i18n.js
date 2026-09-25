@@ -24,6 +24,7 @@
     "Contact": ["Aloqa", "Контакты"],
     "Our Expertise": ["Tajribamiz", "Наш опыт"],
     "GPA Calculator": ["GPA kalkulyatori", "Калькулятор GPA"],
+    "See all destinations": ["Barcha yoʻnalishlarni koʻrish", "Все направления"],
     /* Subject names used by the calculator templates (data/grades.json) */
     "Mother tongue and literature": ["Ona tili va adabiyot", "Родной язык и литература"],
     "Mathematics": ["Matematika", "Математика"],
