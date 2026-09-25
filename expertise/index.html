@@ -63,41 +63,43 @@
       <div class="expertise-hero__inner">
         <div class="expertise-hero__left">
           <div class="eyebrow eyebrow--gold">What Goes Wrong, and What We Do About It</div>
-          <h1 class="expertise-hero__heading">Studying Abroad Has Four&nbsp;Stages. Families Lose Time and Money at Every&nbsp;One.</h1>
+          <h1 class="expertise-hero__heading">From Application to Arrival: Four Stages, One Advisor</h1>
         </div>
         <div class="expertise-hero__right">
-          <p class="expertise-hero__subtext">What happens without support, and what your dedicated Study House advisor does at each stage.</p>
+          <p class="expertise-hero__subtext">Here is what each stage involves and how Study House supports you through it.</p>
         </div>
       </div>
 
       <!-- ============================================
-           TAB BAR
+           STAGE OVERVIEW (static, information only)
            ============================================ -->
-      <div class="expertise-tabs" id="expertise-tabs">
-        <button class="expertise-tabs__tab expertise-tabs__tab--active" data-tab="0" id="tab-btn-0">
-          <span class="expertise-tabs__num">01</span>
-          <span class="expertise-tabs__label">University Application</span>
-        </button>
-        <button class="expertise-tabs__tab" data-tab="1" id="tab-btn-1">
-          <span class="expertise-tabs__num">02</span>
-          <span class="expertise-tabs__label">Scholarship & Funding</span>
-        </button>
-        <button class="expertise-tabs__tab" data-tab="2" id="tab-btn-2">
-          <span class="expertise-tabs__num">03</span>
-          <span class="expertise-tabs__label">Student Visa</span>
-        </button>
-        <button class="expertise-tabs__tab" data-tab="3" id="tab-btn-3">
-          <span class="expertise-tabs__num">04</span>
-          <span class="expertise-tabs__label">Relocation & First Weeks</span>
-        </button>
-      </div>
+      <ol class="stage-row" aria-label="The four stages of studying abroad">
+        <li class="stage-card">
+          <span class="stage-card__num">01</span>
+          <span class="stage-card__label">University Application</span>
+        </li>
+        <li class="stage-card">
+          <span class="stage-card__num">02</span>
+          <span class="stage-card__label">Scholarship &amp; Funding</span>
+        </li>
+        <li class="stage-card">
+          <span class="stage-card__num">03</span>
+          <span class="stage-card__label">Student Visa</span>
+        </li>
+        <li class="stage-card">
+          <span class="stage-card__num">04</span>
+          <span class="stage-card__label">Relocation &amp; First Weeks</span>
+        </li>
+      </ol>
 
       <!-- ============================================
-           COMPARISON PANELS
+           STAGE DETAILS — all four stacked, read top to bottom
            ============================================ -->
 
-      <!-- TAB 0: University Application -->
-      <div class="expertise-panel expertise-panel--active" data-panel="0" id="panel-0">
+      <!-- Stage 1: University Application -->
+      <section class="stage-block" id="stage-1" aria-labelledby="stage-title-1">
+        <h2 class="stage-block__title" id="stage-title-1"><span class="stage-block__num">01</span> University Application</h2>
+        <div class="expertise-panel">
         <div class="expertise-panel__col expertise-panel__col--without">
           <div class="expertise-panel__col-header">
             <span class="expertise-panel__dot expertise-panel__dot--red"></span>
@@ -155,9 +157,12 @@
           </ul>
         </div>
       </div>
+      </section>
 
-      <!-- TAB 1: Scholarship & Funding -->
-      <div class="expertise-panel" data-panel="1" id="panel-1">
+      <!-- Stage 2: Scholarship &amp; Funding -->
+      <section class="stage-block" id="stage-2" aria-labelledby="stage-title-2">
+        <h2 class="stage-block__title" id="stage-title-2"><span class="stage-block__num">02</span> Scholarship &amp; Funding</h2>
+        <div class="expertise-panel">
         <div class="expertise-panel__col expertise-panel__col--without">
           <div class="expertise-panel__col-header">
             <span class="expertise-panel__dot expertise-panel__dot--red"></span>
@@ -215,9 +220,12 @@
           </ul>
         </div>
       </div>
+      </section>
 
-      <!-- TAB 2: Student Visa -->
-      <div class="expertise-panel" data-panel="2" id="panel-2">
+      <!-- Stage 3: Student Visa -->
+      <section class="stage-block" id="stage-3" aria-labelledby="stage-title-3">
+        <h2 class="stage-block__title" id="stage-title-3"><span class="stage-block__num">03</span> Student Visa</h2>
+        <div class="expertise-panel">
         <div class="expertise-panel__col expertise-panel__col--without">
           <div class="expertise-panel__col-header">
             <span class="expertise-panel__dot expertise-panel__dot--red"></span>
@@ -275,9 +283,12 @@
           </ul>
         </div>
       </div>
+      </section>
 
-      <!-- TAB 3: Relocation & First Weeks -->
-      <div class="expertise-panel" data-panel="3" id="panel-3">
+      <!-- Stage 4: Relocation &amp; First Weeks -->
+      <section class="stage-block" id="stage-4" aria-labelledby="stage-title-4">
+        <h2 class="stage-block__title" id="stage-title-4"><span class="stage-block__num">04</span> Relocation &amp; First Weeks</h2>
+        <div class="expertise-panel">
         <div class="expertise-panel__col expertise-panel__col--without">
           <div class="expertise-panel__col-header">
             <span class="expertise-panel__dot expertise-panel__dot--red"></span>
@@ -335,6 +346,7 @@
           </ul>
         </div>
       </div>
+      </section>
 
     </div>
   </section>
@@ -407,40 +419,6 @@
         hamburgerBtn.classList.remove('active');
         mobileNav.classList.remove('open');
         document.body.style.overflow = '';
-      });
-    });
-
-    // --- Expertise Tab Switching ---
-    const tabButtons = document.querySelectorAll('.expertise-tabs__tab');
-    const panels = document.querySelectorAll('.expertise-panel');
-
-    tabButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const tabIndex = btn.dataset.tab;
-
-        // Deactivate all tabs
-        tabButtons.forEach(t => t.classList.remove('expertise-tabs__tab--active'));
-        btn.classList.add('expertise-tabs__tab--active');
-
-        // Fade out current, fade in target
-        panels.forEach(p => {
-          if (p.classList.contains('expertise-panel--active')) {
-            p.style.opacity = '0';
-            p.style.transform = 'translateY(12px)';
-            setTimeout(() => {
-              p.classList.remove('expertise-panel--active');
-              p.style.opacity = '';
-              p.style.transform = '';
-
-              const target = document.querySelector(`[data-panel="${tabIndex}"]`);
-              target.classList.add('expertise-panel--active');
-              // Trigger reflow for animation
-              void target.offsetWidth;
-              target.style.opacity = '1';
-              target.style.transform = 'translateY(0)';
-            }, 250);
-          }
-        });
       });
     });
 

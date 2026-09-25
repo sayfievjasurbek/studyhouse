@@ -57,6 +57,8 @@ body {
   font-size: 16px;
   line-height: 1.7;
   overflow-x: hidden;
+  /* Playfair Display defaults to old-style figures ("01" looks like "o1"); use lining figures */
+  font-variant-numeric: lining-nums;
 }
 
 img {
@@ -2070,113 +2072,106 @@ button {
   padding: 160px 0 100px 0;
 }
 
-.expertise-tabs {
+.expertise-hero__inner {
   display: flex;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 56px;
-  overflow-x: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 64px;
 }
 
-.expertise-tabs::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+.expertise-hero__left {
+  flex: 1 1 60%;
+  max-width: 760px;
 }
 
-.expertise-tabs__tab {
-  flex: 1 1 0;
-  min-width: 200px;
-  background: none;
-  border: none;
-  border-bottom: 3px solid transparent;
-  padding: 22px 20px 20px;
-  cursor: pointer;
-  text-align: left;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  position: relative;
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+.expertise-hero__right {
+  flex: 0 1 380px;
+  padding-bottom: 6px;
 }
 
-.expertise-tabs__tab::after {
-  content: '';
-  position: absolute;
-  bottom: -3px;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: var(--color-gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.expertise-tabs__tab:hover::after {
-  transform: scaleX(0.5);
-}
-
-.expertise-tabs__tab--active {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.expertise-tabs__tab--active::after {
-  transform: scaleX(1) !important;
-}
-
-.expertise-tabs__tab + .expertise-tabs__tab {
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.expertise-tabs__num {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.3);
-  transition: color 0.3s ease;
-}
-
-.expertise-tabs__tab--active .expertise-tabs__num,
-.expertise-tabs__tab:hover .expertise-tabs__num {
+.expertise-hero .eyebrow {
   color: var(--color-gold);
 }
 
-.expertise-tabs__label {
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
+.expertise-hero__heading {
+  margin-top: 16px;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
   font-weight: 600;
-  letter-spacing: 0.03em;
-  color: rgba(255, 255, 255, 0.45);
-  transition: color 0.3s ease;
-  white-space: nowrap;
-}
-
-/* Uzbek / Russian tab labels are longer — let them wrap instead of scrolling off */
-html:not([lang="en"]) .expertise-tabs__label {
-  white-space: normal;
-}
-
-.expertise-tabs__tab--active .expertise-tabs__label,
-.expertise-tabs__tab:hover .expertise-tabs__label {
+  line-height: 1.15;
   color: var(--color-white);
 }
 
-/* --- Comparison Panels --- */
-.expertise-panel {
-  display: none;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  box-shadow: var(--shadow-lg);
+.expertise-hero__subtext {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
 }
 
-.expertise-panel--active {
+/* --- Stage overview row: static, information only (no hover / click state) --- */
+.stage-row {
+  list-style: none;
   display: grid;
-  opacity: 1;
-  transform: translateY(0);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 56px 0 72px;
+  padding: 0;
+}
+
+.stage-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 22px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+}
+
+.stage-card__num {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-gold);
+}
+
+.stage-card__label {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-white);
+}
+
+/* --- Stacked stage blocks --- */
+.stage-block + .stage-block {
+  margin-top: 72px;
+}
+
+.stage-block__title {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 28px;
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-white);
+}
+
+.stage-block__num {
+  color: var(--color-gold);
+}
+
+
+/* --- Comparison Panels --- */
+.expertise-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  box-shadow: var(--shadow-lg);
 }
 
 .expertise-panel__col {
@@ -2185,14 +2180,14 @@ html:not([lang="en"]) .expertise-tabs__label {
 
 .expertise-panel__col--without {
   background-color: #122D4A;
-  border-radius: 0 0 0 var(--radius-lg);
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-right: none;
 }
 
 .expertise-panel__col--with {
   background-color: #0A2139;
-  border-radius: 0 0 var(--radius-lg) 0;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
   border: 1px solid rgba(176, 141, 87, 0.15);
   border-left: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -2293,29 +2288,28 @@ html:not([lang="en"]) .expertise-tabs__label {
 @media (max-width: 1024px) {
   .expertise-hero__inner {
     flex-direction: column;
+    align-items: flex-start;
     gap: 24px;
   }
 
   .expertise-hero__right {
-    padding-top: 0;
-  }
-
-  .expertise-tabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 4px;
-  }
-
-  .expertise-tabs__tab {
-    flex: 0 0 auto;
-    min-width: 180px;
+    flex: none;
+    padding-bottom: 0;
   }
 }
 
 @media (max-width: 768px) {
   .expertise-hero {
     padding: 120px 0 60px 0;
+  }
+
+  .stage-row {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 40px 0 56px;
+  }
+
+  .stage-block + .stage-block {
+    margin-top: 56px;
   }
 
   .expertise-panel {
@@ -2327,7 +2321,7 @@ html:not([lang="en"]) .expertise-tabs__label {
   }
 
   .expertise-panel__col--without {
-    border-radius: 0;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
     border-right: 1px solid rgba(255, 255, 255, 0.05);
     border-bottom: none;
   }
@@ -2336,25 +2330,20 @@ html:not([lang="en"]) .expertise-tabs__label {
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     border-left: 1px solid rgba(176, 141, 87, 0.15);
   }
-
-  .expertise-tabs__tab {
-    padding: 16px 14px;
-    min-width: 160px;
-    gap: 10px;
-  }
-
-  .expertise-tabs__num {
-    font-size: 1rem;
-  }
-
-  .expertise-tabs__label {
-    font-size: 0.78rem;
-  }
 }
 
 @media (max-width: 480px) {
   .expertise-hero {
     padding: 100px 0 48px 0;
+  }
+
+  .stage-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .stage-card {
+    padding: 16px 18px;
   }
 
   .expertise-hero__heading {
