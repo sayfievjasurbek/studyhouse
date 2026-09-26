@@ -579,15 +579,6 @@ button {
   flex-wrap: wrap;
 }
 
-.hero__regions {
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--color-gray-light);
-}
-
 .hero__image-wrapper {
   position: relative;
 }
@@ -1287,10 +1278,6 @@ button {
 
   .hero__buttons {
     justify-content: center;
-  }
-
-  .hero__regions {
-    text-align: center;
   }
 
   .hero__image-wrapper {
