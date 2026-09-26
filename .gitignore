@@ -3,3 +3,9 @@
 
 # local test harnesses (see the report; not part of the site)
 _*.html
+
+# Playwright/Lighthouse output
+tools/test/node_modules/
+tools/test/shots/
+tools/test/reports/
+tools/test/reports-baseline-*.txt

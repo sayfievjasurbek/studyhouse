@@ -1,0 +1,13 @@
+{
+  "name": "studyhouse-tests",
+  "private": true,
+  "description": "Responsive and Lighthouse checks for the Study House site. Run: npm install, then npm run responsive",
+  "scripts": {
+    "responsive": "node responsive.mjs",
+    "lighthouse": "node lighthouse.mjs"
+  },
+  "devDependencies": {
+    "lighthouse": "^12.0.0",
+    "playwright-core": "^1.48.0"
+  }
+}
