@@ -29,11 +29,12 @@ from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WIDTHS = [480, 640, 800, 1200]
+VARIANT_QUALITY = 72        # the resized copies; the originals are left as they are
 
 # How wide each kind of image is displayed, by the class on the <img>.
 SIZES = {
     "hero__image": "(max-width: 1024px) 92vw, 560px",
-    "dest-card__image": "(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 300px",
+    "dest-card__image": "(max-width: 640px) 78vw, (max-width: 1024px) 40vw, 300px",   # shown cropped to a landscape strip, so a smaller file is enough
     "why__image": "300px",
     "country-hero__image": "100vw",
     "country-overview__image": "(max-width: 1024px) 92vw, 600px",
@@ -86,7 +87,7 @@ def make_variants(path):
         if not os.path.exists(out) or os.path.getmtime(path) > os.path.getmtime(out):
             h = round(im.height * w / im.width)
             im.convert("RGBA" if im.mode in ("RGBA", "LA") else "RGB").resize((w, h), Image.LANCZOS).save(
-                out, "WEBP", quality=80, method=6)
+                out, "WEBP", quality=VARIANT_QUALITY, method=6)
         made[w] = out
     made[im.width] = path
     return made

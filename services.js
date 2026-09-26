@@ -83,7 +83,7 @@
 
     var body = h('div', { class: 'prog-card__body' });
     body.appendChild(badge(p));
-    body.appendChild(h('h3', { class: 'prog-card__title', text: t(p.title) }));
+    body.appendChild(h('h2', { class: 'prog-card__title', text: t(p.title) }));
     body.appendChild(h('p', { class: 'prog-card__blurb', text: t(p.line) }));
 
     var btn;

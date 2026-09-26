@@ -5414,3 +5414,26 @@ html.i18n-pending body {
     visibility: visible;
   }
 }
+
+/* ============================================
+   SERVICES GRID: RESERVE ITS SPACE (no layout shift)
+   ============================================ */
+/* The six cards are built by services.js once data/programmes.json has loaded.
+   Until then the grid is empty; it reserves the height the cards will take (six
+   cards at 460px in two rows of three, three rows of two on a tablet, one column of
+   six on a phone) so the footer below does not jump down when they appear. */
+.prog-grid:empty {
+  min-height: 944px;
+}
+
+@media (max-width: 1024px) {
+  .prog-grid:empty {
+    min-height: 1428px;          /* 3 rows of 2 */
+  }
+}
+
+@media (max-width: 640px) {
+  .prog-grid:empty {
+    min-height: 2400px;          /* 6 cards of 380px and the gaps */
+  }
+}

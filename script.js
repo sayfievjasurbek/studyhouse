@@ -8,6 +8,17 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // --- Scroll reveal ---
+  /* Anything already on screen is shown at once, without the fade. This runs before
+     the page is made visible (see .i18n-pending), so first-screen content is never
+     waiting for an animation, which is what held back the largest paint on slow phones. */
+  document.querySelectorAll('.reveal').forEach((el) => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight && r.bottom > 0) {
+      el.style.transition = 'none';
+      el.classList.add('visible');
+    }
+  });
+
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
