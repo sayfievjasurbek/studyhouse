@@ -35,6 +35,7 @@ VARIANT_QUALITY = 72        # the resized copies; the originals are left as they
 SIZES = {
     "hero__image": "(max-width: 1024px) 92vw, 560px",
     "dest-card__image": "(max-width: 640px) 78vw, (max-width: 1024px) 40vw, 300px",   # shown cropped to a landscape strip, so a smaller file is enough
+    "inst-card__image": "(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 380px",
     "why__image": "300px",
     "country-hero__image": "100vw",
     "country-overview__image": "(max-width: 1024px) 92vw, 600px",
@@ -50,6 +51,7 @@ PHOTOS = (
      "images/dest-china.webp", "images/why-building.webp", "images/hero-mascot.webp"]
     + sorted(glob.glob(os.path.join(ROOT, "destinations/europe/*/hero.webp")))
     + sorted(glob.glob(os.path.join(ROOT, "destinations/europe/images/*.webp")))
+    + sorted(glob.glob(os.path.join(ROOT, "destinations/europe/images/unis/*.webp")))
     + sorted(glob.glob(os.path.join(ROOT, "images/programmes/*-card.webp")))
     + sorted(glob.glob(os.path.join(ROOT, "images/programmes/*-hero.webp")))
 )

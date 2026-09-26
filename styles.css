@@ -2294,20 +2294,18 @@ button {
   }
 }
 
-.inst-card__placeholder {
+.inst-card__photo {
   width: 100%;
   height: 180px;
-  background: linear-gradient(135deg, #E8E4DC 0%, #D8D3CA 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-gray-light);
+  background: linear-gradient(135deg, #E8E4DC 0%, #D8D3CA 100%);   /* shows while the photo loads */
+  overflow: hidden;
 }
 
-.inst-card__placeholder svg {
-  width: 40px;
-  height: 40px;
-  opacity: 0.4;
+.inst-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .inst-card__info {
