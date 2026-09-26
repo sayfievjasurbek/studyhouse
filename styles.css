@@ -1230,10 +1230,26 @@ button {
   max-width: 460px;
 }
 
+/* The thinking bear fills the empty space under the text while the calculator sits beside it.
+   Once the columns stack there is no empty space, so it goes. */
+.gpa-home__mascot {
+  display: block;
+  height: clamp(220px, 20vw, 290px);
+  width: auto;
+  aspect-ratio: 297 / 640;
+  margin-top: 32px;
+  pointer-events: none;
+  user-select: none;
+}
+
 @media (max-width: 1024px) {
   .gpa-home__inner {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+
+  .gpa-home__mascot {
+    display: none;
   }
 }
 
