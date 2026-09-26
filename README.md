@@ -277,9 +277,11 @@ Shape of the file:
   in the table, which the page says in a line under it.
 - When you change a figure, change `updated` and the `sources` entry with it.
 
-**Because the data is fetched, the site must be served over http(s).** Opening `index.html`
-straight from the file system will leave the table and the calculator empty. Any static host works;
-locally, `python3 -m http.server` in the project root is enough.
+The pages read this data with `fetch()`. Browsers refuse that for a page opened straight from a
+folder, so `site.js` falls back to `data/bundle.js` there (and only there). That file is generated
+from the JSON by `tools/bundle_data.py`, which `tools/stamp.py` runs for you — after editing any
+`data/*.json`, run `python3 tools/stamp.py`. Fonts are still blocked from a folder, so the text uses
+a fallback font there; for the real look use a server: `python3 -m http.server` in the project root.
 
 The Uzbek and Russian for each page lives beside it in `destinations/<country>/strings.js`.
 

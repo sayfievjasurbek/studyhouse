@@ -255,17 +255,12 @@
   }
 
   /* The university data is one JSON file per country (see data/usa.json), so the
-     same file feeds this table and the GPA calculator. It is fetched, which means
-     the site has to be served over http(s) — opening index.html from the file
-     system will not work. */
+     same file feeds this table and the GPA calculator. It is loaded with shData()
+     (site.js), which also works when a page is opened from a folder. */
   function load() {
     var src = root.getAttribute('data-src');
     if (!src) { fail('no data-src on #compare-root'); return; }
-    fetch(src, { cache: 'no-cache' })
-      .then(function (res) {
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        return res.json();
-      })
+    window.shData(src)
       .then(function (json) { cfg = json; start(); })
       .catch(fail);
   }

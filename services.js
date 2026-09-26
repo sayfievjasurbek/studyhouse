@@ -298,11 +298,7 @@
     if (window.shI18n) window.shI18n.refresh(grid);
   }
 
-  fetch(root + 'data/programmes.json', { cache: 'no-cache' })
-    .then(function (res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.json();
-    })
+  window.shData(root + 'data/programmes.json')
     .then(function (json) {
       DATA = json;
       modal = buildModal();

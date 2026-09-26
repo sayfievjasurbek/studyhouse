@@ -18,6 +18,9 @@ It is safe to run repeatedly, and it leaves external URLs (Google Fonts) alone.
 import hashlib
 import os
 import re
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -64,6 +67,8 @@ def stamp(page):
 
 
 if __name__ == "__main__":
+    import bundle_data          # keep data/bundle.js in step with data/*.json
+    bundle_data.build()
     total = 0
     files = list(pages())
     for page in files:

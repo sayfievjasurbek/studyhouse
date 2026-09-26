@@ -816,10 +816,7 @@
   }
 
   function json(path) {
-    return fetch(root + path, { cache: 'no-cache' }).then(function (res) {
-      if (!res.ok) throw new Error(path + ': HTTP ' + res.status);
-      return res.json();
-    });
+    return window.shData(root + path);
   }
 
   function start() {

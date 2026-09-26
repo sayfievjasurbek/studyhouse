@@ -198,6 +198,39 @@
       '</footer>';
   }
 
+  /* ---------- Data loader ----------
+     shData('data/usa.json') fetches a JSON file. Browsers refuse fetch() for a page
+     opened straight from a folder (file://), so there — and only there — it falls back
+     to data/bundle.js, which tools/bundle_data.py builds from the same files. */
+  var bundlePromise = null;
+  function offlineBundle() {
+    if (!bundlePromise) {
+      bundlePromise = new Promise(function (resolve, reject) {
+        if (window.SH_DATA_BUNDLE) { resolve(window.SH_DATA_BUNDLE); return; }
+        var s = document.createElement('script');
+        s.src = root + 'data/bundle.js';
+        s.onload = function () { window.SH_DATA_BUNDLE ? resolve(window.SH_DATA_BUNDLE) : reject(new Error('empty bundle')); };
+        s.onerror = function () { reject(new Error('data/bundle.js not found')); };
+        document.head.appendChild(s);
+      });
+    }
+    return bundlePromise;
+  }
+
+  window.shData = function (path) {
+    return fetch(path, { cache: 'no-cache' }).then(function (res) {
+      if (!res.ok) throw new Error(path + ': HTTP ' + res.status);
+      return res.json();
+    }).catch(function (err) {
+      if (location.protocol !== 'file:') throw err;
+      var name = path.split('?')[0].split('/').pop();
+      return offlineBundle().then(function (all) {
+        if (!all[name]) throw err;
+        return all[name];
+      });
+    });
+  };
+
   /* ---------- Inject ---------- */
   function mount(slotAttr, html, where) {
     var slot = document.querySelector('[' + slotAttr + ']');
