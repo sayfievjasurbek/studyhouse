@@ -5107,3 +5107,96 @@ textarea:focus-visible,
     padding-right: max(20px, env(safe-area-inset-right));
   }
 }
+
+
+/* ============================================
+   COMPARISON TABLE: SCROLL CUE AND STICKY COLUMN
+   ============================================ */
+.cmp-tablewrap {
+  position: relative;
+}
+
+/* The row labels stay put while the universities scroll past them, so you never
+   lose which row you are reading. The backgrounds are opaque so nothing shows
+   through. */
+.cmp-table tbody th,
+.cmp-table__corner {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+.cmp-table tbody th {
+  box-shadow: 1px 0 0 var(--color-border);
+}
+
+/* A soft shadow on the right edge says "there is more this way"; it goes away
+   at the end of the scroll. */
+.cmp-tablewrap::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 34px;
+  width: 36px;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  background: linear-gradient(to left, rgba(2, 31, 71, 0.16), rgba(2, 31, 71, 0));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.cmp-tablewrap.is-scrollable:not(.at-end)::after {
+  opacity: 1;
+}
+
+.cmp-hint {
+  display: none;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-gray);
+}
+
+.cmp-tablewrap.is-scrollable .cmp-hint {
+  display: block;
+}
+
+.cmp-scroll:focus-visible {
+  outline: 3px solid var(--navy-light);
+  outline-offset: 2px;
+}
+
+
+/* ============================================
+   CALCULATOR: RESERVE ITS SPACE (no layout shift)
+   ============================================ */
+/* The calculator is built by JavaScript after the page loads. Until then its
+   mount point is empty, which used to let the sections below it jump down by
+   the calculator's full height when it appeared. The empty mount reserves about
+   that height and shows a faint card, and stops reserving once it has content. */
+[data-gpa]:empty {
+  min-height: 820px;
+  border-radius: var(--radius-xl);
+  background: var(--gradient-navy);
+  opacity: 0.06;
+}
+
+@media (min-width: 401px) {
+  [data-gpa]:empty {
+    min-height: 700px;
+  }
+}
+
+@media (min-width: 641px) {
+  [data-gpa]:empty {
+    min-height: 670px;
+  }
+}
+
+@media (min-width: 1025px) {
+  [data-gpa]:empty {
+    min-height: 640px;
+  }
+}

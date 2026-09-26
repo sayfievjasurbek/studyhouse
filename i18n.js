@@ -49,6 +49,7 @@
     "Select your average grade": ["Oʻrtacha bahoyingizni tanlang", "Выберите свою среднюю оценку"],
     "Decimals are fine": ["Kasr sonlar mumkin", "Десятичные допустимы"],
     "e.g.": ["masalan", "например"],
+    "Swipe sideways to see more": ["Koʻproq koʻrish uchun yon tomonga suring", "Проведите вбок, чтобы увидеть больше"],
     "Allowed range": ["Ruxsat etilgan oraliq", "Допустимый диапазон"],
     "weighted by credits": ["kreditlar boʻyicha vaznlangan", "с весом по кредитам"],
     "Where do you want to go?": ["Qayerga bormoqchisiz?", "Куда вы хотите поехать?"],

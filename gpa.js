@@ -277,9 +277,14 @@
       return wrap;
     }
 
+    /* The step title is an h3 inside a page section that already has an h2, and an
+       h2 on the calculator page itself (whose only heading above it is the h1);
+       data-heading on the mount point says which, so the outline has no gap. */
+    var titleTag = el.getAttribute('data-heading') || 'h3';
+
     function heading(title, sub) {
       return h('div', { class: 'gpa__head' },
-        h('h3', { class: 'gpa__title', text: title }),
+        h(titleTag, { class: 'gpa__title', text: title }),
         sub ? h('p', { class: 'gpa__sub', text: t(sub) }) : null);
     }
 

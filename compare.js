@@ -136,7 +136,21 @@
       body.appendChild(tr);
     });
     table.appendChild(body);
-    return h('div', { class: 'cmp-scroll' }, table);
+    /* The table scrolls sideways inside its own box on mid-size screens (narrower
+       ones get stacked cards instead). The box is keyboard-focusable, and a hint
+       appears whenever there is more to scroll to and disappears at the end. */
+    var scroll = h('div', { class: 'cmp-scroll', tabindex: '0', role: 'region', 'aria-label': t('University comparison table') }, table);
+    var hint = h('p', { class: 'cmp-hint', 'aria-hidden': 'true', text: '← ' + t('Swipe sideways to see more') + ' →' });
+    var box = h('div', { class: 'cmp-tablewrap' }, scroll, hint);
+    function sync() {
+      box.classList.toggle('is-scrollable', scroll.scrollWidth > scroll.clientWidth + 1);
+      box.classList.toggle('at-start', scroll.scrollLeft <= 2);
+      box.classList.toggle('at-end', scroll.scrollLeft + scroll.clientWidth >= scroll.scrollWidth - 2);
+    }
+    scroll.addEventListener('scroll', sync, { passive: true });
+    if (window.ResizeObserver) new ResizeObserver(sync).observe(scroll); else window.addEventListener('resize', sync);
+    setTimeout(sync, 0);
+    return box;
   }
 
   /* ---------- Cards (phones) ---------- */
