@@ -290,8 +290,11 @@
         note ? h('p', { class: 'gpa__hint', text: note }) : null);
     }
 
-    /* A text box that accepts digits only: no spinner, no minus, clamped on
-       blur. A minus sign cannot be typed, so it can never reach a result. */
+    /* A text box for numbers: no spinner and no minus, so a negative can never be
+       typed. A comma counts as a decimal point (many people write 3,8), the number
+       of decimal places is capped at opts.decimals, and the value is clamped to its
+       range on blur. What the visitor typed is kept as they typed it: 3.8 stays 3.8
+       and 3.80 stays 3.80. */
     function numberBox(opts) {
       var input = h('input', {
         type: 'text', inputmode: 'decimal', class: 'gpa__num ' + (opts.cls || ''),
@@ -300,12 +303,15 @@
       });
       if (opts.value !== null && opts.value !== undefined) input.value = opts.value;
 
+      var places = opts.decimals || 0;
+
       function read() {
-        var raw = input.value.replace(/[^0-9.]/g, '');
+        var raw = input.value.replace(/,/g, '.').replace(/[^0-9.]/g, '');
         var parts = raw.split('.');
-        if (parts.length > 2) raw = parts[0] + '.' + parts.slice(1).join('');
+        raw = parts[0];
+        if (places > 0 && parts.length > 1) raw += '.' + parts.slice(1).join('').slice(0, places);
         if (raw !== input.value) input.value = raw;
-        return raw === '' ? null : parseFloat(raw);
+        return raw === '' || raw === '.' ? null : parseFloat(raw);
       }
 
       input.addEventListener('input', function () {
@@ -316,7 +322,11 @@
         var v = read();
         if (v === null || isNaN(v)) { input.value = ''; opts.onInput(null); return; }
         var c = opts.clamp(v);
-        input.value = opts.decimals ? c.toFixed(opts.decimals) : String(c);
+        if (c !== v) {
+          input.value = String(parseFloat(c.toFixed(places)));       // out of range: show the nearest allowed value
+        } else {
+          input.value = input.value.replace(/\.$/, '');               // "3." -> "3", otherwise leave it as typed
+        }
         opts.onInput(c);
         if (opts.after) opts.after();
       });
@@ -396,11 +406,13 @@
       }
       var box = numberBox({
         id: 'gpa-known', label: 'Average score', cls: 'gpa__num--wide',
-        value: state.known, placeholder: String(sc.max), decimals: sc.decimals,
+        value: state.known, placeholder: sc.placeholder || String(sc.max), decimals: sc.decimals,
         clamp: function (v) { return clamp(state.scaleId, v); },
         onInput: function (v) { state.known = v; }
       });
-      return field('Average score', box, t('Allowed range') + ': ' + Math.max(0, sc.min) + ' – ' + sc.max);
+      var hint = t('Allowed range') + ': ' + Math.max(0, sc.min) + ' – ' + sc.max;
+      if (sc.decimals > 0 && sc.example) hint += ' · ' + t('Decimals are fine') + ', ' + t('e.g.') + ' ' + sc.example;
+      return field('Average score', box, hint);
     }
 
     /* ---------- Step 2: profile ---------- */

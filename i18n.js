@@ -47,6 +47,8 @@
     "Average score": ["Oʻrtacha ball", "Средний балл"],
     "Average grade": ["Oʻrtacha baho", "Средняя оценка"],
     "Select your average grade": ["Oʻrtacha bahoyingizni tanlang", "Выберите свою среднюю оценку"],
+    "Decimals are fine": ["Kasr sonlar mumkin", "Десятичные допустимы"],
+    "e.g.": ["masalan", "например"],
     "Allowed range": ["Ruxsat etilgan oraliq", "Допустимый диапазон"],
     "weighted by credits": ["kreditlar boʻyicha vaznlangan", "с весом по кредитам"],
     "Where do you want to go?": ["Qayerga bormoqchisiz?", "Куда вы хотите поехать?"],

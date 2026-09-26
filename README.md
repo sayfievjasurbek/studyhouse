@@ -26,6 +26,7 @@ python3 -m http.server 8000     # then open http://localhost:8000/
 | `data/*.json` | University data per country, `grades.json` for the calculator, `programmes.json` for the Services page |
 | `services-strings.js`, `destinations/*/strings.js` | Uzbek and Russian for those pages |
 | `tools/seo.py` | Regenerates canonical/OG tags, `sitemap.xml` and `robots.txt` |
+| `tools/stamp.py` | Adds a `?v=<hash>` version to every local CSS/JS reference so browsers pick up edits |
 | `images/mascot/` | Polar-bear mascot images used by the booking form and calculator |
 
 Every page declares two things and gets the rest from `site.js`:
@@ -270,6 +271,19 @@ straight from the file system will leave the table and the calculator empty. Any
 locally, `python3 -m http.server` in the project root is enough.
 
 The Uzbek and Russian for each page lives beside it in `destinations/<country>/strings.js`.
+
+## After editing CSS or JavaScript
+
+Browsers hold on to a stylesheet or script they already have, so after an edit visitors (and you)
+can keep seeing the old version for a while. Run this after changing any `.css` or `.js` file:
+
+```bash
+python3 tools/stamp.py
+```
+
+It rewrites each page's references to `styles.css?v=3f9a1c2e` and so on, using a hash of the file,
+so only files that actually changed get a new address. Safe to run repeatedly. Data files under
+`data/` are fetched with `cache: 'no-cache'` and do not need it.
 
 ## Contact details and social profiles
 

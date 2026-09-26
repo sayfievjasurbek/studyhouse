@@ -6,7 +6,8 @@
   "scales": {
     "uz5": {
       "label": "5-point (Uzbekistan school / lyceum)",
-      "min": 2, "max": 5, "pass": 3, "step": 1, "decimals": 0, "gpa": "bands",
+      "min": 2, "max": 5, "pass": 3, "step": 0.01, "decimals": 2, "gpa": "bands",
+      "placeholder": "3.8", "example": "3.8 or 3.80",
       "bands": [
         { "min": 5, "letter": "A", "name": "Excellent (A'lo)", "gpa": 4 },
         { "min": 4, "letter": "B", "name": "Good (Yaxshi)", "gpa": 3 },
@@ -17,11 +18,13 @@
     "gpa4": {
       "label": "4-point scale (GPA)",
       "min": 0, "max": 4, "pass": 1, "step": 0.01, "decimals": 2, "gpa": "direct",
+      "placeholder": "3.5", "example": "3.5",
       "note": "On a 4.0 scale the lowest passing grade is a D, which is 1.0. Some German universities use 2.0 instead; the German figure shifts if yours does."
     },
     "uz100": {
       "label": "100-point (university transcript)",
-      "min": 0, "max": 100, "pass": 55, "step": 1, "decimals": 0, "gpa": "bands",
+      "min": 0, "max": 100, "pass": 55, "step": 0.01, "decimals": 2, "gpa": "bands",
+      "placeholder": "86.5", "example": "86.5",
       "bands": [
         { "min": 86, "letter": "A", "name": "Excellent (A'lo)", "gpa": 4 },
         { "min": 71, "letter": "B", "name": "Good (Yaxshi)", "gpa": 3 },
