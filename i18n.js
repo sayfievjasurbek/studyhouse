@@ -857,12 +857,9 @@
 
   /* Switcher lives in the sticky navbar, so it sits at the top of every page.
      Wrap the CTA + hamburger with it so the navbar layout stays balanced. */
-  function buildSwitcher() {
-    var inner = document.querySelector('.navbar__inner');
-    if (!inner) return;
-
+  function makeSwitcher(extraClass) {
     var sw = document.createElement('div');
-    sw.className = 'lang-switch';
+    sw.className = 'lang-switch' + (extraClass ? ' ' + extraClass : '');
     sw.setAttribute('role', 'group');
     sw.setAttribute('aria-label', 'Language');
     LANGS.forEach(function (l) {
@@ -879,15 +876,32 @@
       });
       sw.appendChild(b);
     });
+    return sw;
+  }
+
+  function buildSwitcher() {
+    var inner = document.querySelector('.navbar__inner');
+    if (!inner) return;
 
     var actions = document.createElement('div');
     actions.className = 'navbar__actions';
     var cta = inner.querySelector('.navbar__cta');
     var burger = inner.querySelector('.navbar__hamburger');
     inner.appendChild(actions);
-    actions.appendChild(sw);
+    actions.appendChild(makeSwitcher(''));
     if (cta) actions.appendChild(cta);
     if (burger) actions.appendChild(burger);
+
+    /* The same switcher, inside the mobile menu, for phones too narrow to fit it
+       in the header (CSS decides which of the two is visible). apply() updates every
+       .lang-switch__btn on the page, so the two always agree. */
+    var menu = document.getElementById('mobile-nav');
+    if (menu) {
+      var slot = document.createElement('div');
+      slot.className = 'mobile-nav__lang';
+      slot.appendChild(makeSwitcher('lang-switch--menu'));
+      menu.appendChild(slot);
+    }
   }
 
   /* Public API for scripts that build or change content at runtime

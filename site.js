@@ -104,8 +104,8 @@
       '<nav class="navbar" id="navbar">' +
         '<div class="container navbar__inner">' +
           '<a href="' + esc(url('index.html')) + '" class="navbar__logo" id="nav-logo" aria-label="Study House - International Education Agency">' +
-            '<img src="' + esc(root) + 'images/logo-mark.webp" alt="Study House Emblem" class="navbar__logo-mark-img" width="256" height="246">' +
-            '<img src="' + esc(root) + 'images/logo-text.webp" alt="Study House — International Education Agency" class="navbar__logo-text-img" width="600" height="80">' +
+            '<img src="' + esc(root) + 'images/logo-mark-108.webp" alt="Study House Emblem" class="navbar__logo-mark-img" width="108" height="104">' +
+            '<img src="' + esc(root) + 'images/logo-text-450.webp" alt="Study House — International Education Agency" class="navbar__logo-text-img" width="450" height="60">' +
           '</a>' +
           '<ul class="navbar__links" id="nav-links">' + links + '</ul>' +
           '<div class="navbar__cta">' +

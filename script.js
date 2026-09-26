@@ -30,23 +30,56 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Mobile menu ---
   const hamburgerBtn = document.getElementById('hamburger-btn');
   const mobileNav = document.getElementById('mobile-nav');
+  let inertSaved = [];
+
+  /* While the menu is open the page behind it must not be reachable by Tab or a
+     screen reader. The header stays live so the button can close the menu. */
+  function setBackgroundInert(on) {
+    if (on) {
+      Array.prototype.forEach.call(document.body.children, (n) => {
+        if (n === navbar || n === mobileNav || n.tagName === 'SCRIPT' || n.tagName === 'NOSCRIPT') return;
+        if (n.id === 'booking' || n.id === 'programme-modal') return;
+        inertSaved.push([n, n.inert]);
+        n.inert = true;
+      });
+    } else {
+      inertSaved.forEach((pair) => { pair[0].inert = pair[1]; });
+      inertSaved = [];
+    }
+  }
 
   function setMenu(open) {
     if (!hamburgerBtn || !mobileNav) return;
+    if (open === mobileNav.classList.contains('open')) return;
     hamburgerBtn.classList.toggle('active', open);
     hamburgerBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
     mobileNav.classList.toggle('open', open);
-    document.body.style.overflow = open ? 'hidden' : '';
+    document.body.style.overflow = open ? 'hidden' : '';      // scroll lock
+    setBackgroundInert(open);
+    if (open) {
+      const first = mobileNav.querySelector('a, button');
+      if (first) first.focus({ preventScroll: true });
+    }
   }
 
   if (hamburgerBtn && mobileNav) {
     hamburgerBtn.addEventListener('click', () => setMenu(!mobileNav.classList.contains('open')));
+
+    /* Tap on the empty part of the menu (outside the links) closes it */
+    mobileNav.addEventListener('click', (e) => { if (e.target === mobileNav) setMenu(false); });
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
         setMenu(false);
         hamburgerBtn.focus();
       }
     });
+
+    /* Rotating a tablet or widening the window past the menu breakpoint must not
+       leave the page locked behind an invisible menu. */
+    const wide = window.matchMedia('(min-width: 1101px)');
+    const onWide = () => { if (wide.matches) setMenu(false); };
+    if (wide.addEventListener) wide.addEventListener('change', onWide); else wide.addListener(onWide);
   }
 
   document.querySelectorAll('[data-nav-close]').forEach(link => {

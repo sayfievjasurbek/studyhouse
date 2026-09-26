@@ -369,18 +369,25 @@ button {
 }
 
 .navbar__logo {
+  /* One number drives the whole logo: the wordmark's height. It runs from 15px
+     on a 320px phone to 30px at about 830px and up, and the emblem, the gap and
+     the click area all follow it, so the pair never touches or overlaps the
+     buttons beside it at any width. */
+  --logo-h: clamp(15px, 3.6vw, 30px);
   display: inline-flex;
   align-items: center;
-  gap: 20px;                 /* emblem and wordmark stay clearly apart */
-  margin-left: -10px;        /* nudges the whole group left, off the gutter */
+  gap: clamp(9px, 2.4vw, 20px);          /* emblem and wordmark stay clearly apart */
+  min-height: 44px;                      /* a comfortable tap target */
+  margin-left: -10px;                    /* nudges the whole group left, off the gutter */
   padding-right: 8px;
   text-decoration: none;
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 0;
   background: transparent;
 }
 
 .navbar__logo-mark-img {
-  height: 52px;
+  height: calc(var(--logo-h) * 1.75);
   width: auto;
   object-fit: contain;
   display: block;
@@ -395,7 +402,7 @@ button {
 }
 
 .navbar__logo-text-img {
-  height: 30px;
+  height: var(--logo-h);
   width: auto;
   object-fit: contain;
   display: block;
@@ -531,8 +538,13 @@ button {
 .navbar__hamburger {
   display: none;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
-  padding: 8px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  padding: 0;
   cursor: pointer;
   background: none;
   border: none;
@@ -603,7 +615,7 @@ button {
   }
 
   .navbar__logo {
-    margin-left: -6px;
+    margin-left: -4px;
     padding-right: 0;
   }
 }
@@ -1323,17 +1335,37 @@ button {
   display: none;
   position: fixed;
   inset: 0;
+  height: 100vh;
+  height: 100dvh;
   z-index: 999;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* solid, not blurred: a full-screen backdrop blur is expensive on low-end phones */
+  background: #FFFFFF;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 32px;
+  align-items: stretch;
+  gap: 4px;
+  /* the header stays visible above the menu, so start below it; keep clear of
+     the notch and the home indicator */
+  padding: calc(var(--header-h) + env(safe-area-inset-top) + 12px)
+           max(24px, env(safe-area-inset-left))
+           calc(28px + env(safe-area-inset-bottom))
+           max(24px, env(safe-area-inset-right));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+/* Centre the items when they fit; scroll from the top when they do not (a phone
+   held sideways). `margin: auto` on the first and last child does this without
+   the clipping that `justify-content: center` causes on overflow. */
+.mobile-nav > :first-child {
+  margin-top: auto;
+}
+
+.mobile-nav > :last-child {
+  margin-bottom: auto;
 }
 
 .mobile-nav.open {
@@ -1342,6 +1374,10 @@ button {
 }
 
 .mobile-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
   font-family: var(--font-sans);
   font-size: 18px;
   font-weight: 500;
@@ -1349,6 +1385,19 @@ button {
   text-transform: uppercase;
   color: var(--color-navy);
   transition: color 0.3s ease;
+}
+
+.mobile-nav .btn {
+  align-self: center;
+  margin-top: 12px;
+}
+
+/* On the narrowest phones the language switcher does not fit beside the logo,
+   so it lives at the bottom of the menu instead. */
+.mobile-nav__lang {
+  display: none;
+  align-self: center;
+  margin-top: 20px;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1443,21 +1492,6 @@ button {
 /* ============================================
    RESPONSIVE — Mobile
    ============================================ */
-@media (max-width: 640px) {
-  .navbar__logo {
-    gap: 12px;
-  }
-
-  .navbar__logo-mark-img {
-    height: 46px;
-  }
-
-  .navbar__logo-text-img {
-    height: 26px;
-  }
-
-}
-
 @media (max-width: 420px) {
   .navbar__actions {
     gap: 6px;
@@ -1467,22 +1501,6 @@ button {
     font-size: 11px;
     letter-spacing: 0.5px;
     padding: 6px 8px;
-  }
-
-  .navbar__hamburger {
-    padding: 6px 4px;
-  }
-
-  .navbar__logo {
-    gap: 12px;
-  }
-
-  .navbar__logo-mark-img {
-    height: 38px;
-  }
-
-  .navbar__logo-text-img {
-    height: 20px;
   }
 
   .hero {
@@ -4798,4 +4816,44 @@ textarea:focus-visible,
   html {
     zoom: 2.4;
   }
+}
+
+
+/* ============================================
+   HEADER — TOUCH SIZES AND NARROW PHONES
+   ============================================ */
+
+/* Touch: every part of the language switcher is a 44px target */
+@media (pointer: coarse), (max-width: 1024px) {
+  .lang-switch__btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 12px;
+    font-size: 13px;
+  }
+
+  .lang-switch {
+    padding: 2px;
+  }
+}
+
+/* Below 400px the switcher moves from the header into the menu */
+@media (max-width: 400px) {
+  .navbar .lang-switch {
+    display: none;
+  }
+
+  .mobile-nav__lang {
+    display: block;
+  }
+
+  .navbar__actions {
+    gap: 0;
+  }
+}
+
+.lang-switch--menu .lang-switch__btn {
+  min-width: 56px;
+  min-height: 48px;
+  font-size: 14px;
 }
