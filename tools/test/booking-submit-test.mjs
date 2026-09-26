@@ -23,6 +23,8 @@ for (const [w, h] of [[375, 667], [1440, 900]]) {
   p.on('console', (m) => { if (m.type() === 'error' && !/\[booking\] submit failed/.test(m.text()) && !(expectFail && /Failed to load resource/.test(m.text()))) problems.push('console: ' + m.text()); });
   p.on('response', (r) => { if (r.status() >= 400 && !ENDPOINT.test(r.url())) problems.push('http ' + r.status() + ' ' + r.url()); });
 
+  const external = new Set();   // every URL that is not the local server
+  p.on('request', (r) => { if (!r.url().startsWith(BASE) && !r.url().startsWith('data:')) external.add(r.url()); });
   let mode = 'ok', requests = [];
   await p.route(ENDPOINT, async (route) => {
     const req = route.request();
@@ -89,6 +91,8 @@ for (const [w, h] of [[375, 667], [1440, 900]]) {
   await p.click('#bk-submit'); await p.waitForTimeout(300);
   check(size, 'bad phone: nothing sent', requests.length === 0);
 
+  const configured = (await (await p.request.get(BASE + '/booking.js')).text()).match(/BOOKING_ENDPOINT = '([^']+)'/)[1];
+  check(size, 'the only external URL contacted is the BOOKING_ENDPOINT in booking.js', external.size === 1 && external.has(configured), [...external].join(' | '));
   check(size, 'no console errors / failed requests', problems.length === 0, problems.join(' | '));
   await ctx.close();
 }

@@ -14,7 +14,7 @@
   'use strict';
 
   /* ---------- CONFIG ---------- */
-  const BOOKING_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwoSrUqIkPwBjGdYtIadnhGaRlBE2jBOPb3z1Uso_eH3J1tIKBgdIwsJlr0mQ14yp8/exec';
+  const BOOKING_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxwfk2gXRZ9UcPZW8bIIE6kTWT_hJ4KpImEFkD_F1BhHU42nywh1Jit7tEMEM-V-xBkzw/exec';
   var REQUEST_TIMEOUT_MS = 15000;
 
   var scriptSrc = document.currentScript ? document.currentScript.src : location.href;
