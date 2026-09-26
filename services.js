@@ -73,7 +73,7 @@
     var art = h('article', { class: 'prog-card' });
     art.appendChild(h('img', {
       src: root + 'images/programmes/' + p.id + '-card.webp', alt: '',
-      srcset: root + 'images/programmes/' + p.id + '-card-480.webp 480w, ' + root + 'images/programmes/' + p.id + '-card.webp 800w',
+      srcset: root + 'images/programmes/' + p.id + '-card-480.webp 480w, ' + root + 'images/programmes/' + p.id + '-card-640.webp 640w, ' + root + 'images/programmes/' + p.id + '-card.webp 800w',
       sizes: '(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 400px',
       class: 'prog-card__img', loading: p.id === 'universities' ? null : 'lazy',
       fetchpriority: p.id === 'universities' ? 'high' : null,

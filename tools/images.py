@@ -2,7 +2,7 @@
 """Make responsive versions of the site's photos and wire them into the pages.
 
 For every photo listed below it writes smaller WebP copies next to the original
-(photo-480.webp, photo-800.webp, photo-1200.webp — only widths smaller than the
+(photo-480.webp, photo-640.webp, photo-800.webp, photo-1200.webp — only widths smaller than the
 original), then rewrites each <img> that uses it with a srcset and a sizes
 attribute. A phone then downloads a 480px file instead of a 1600px one.
 
@@ -28,7 +28,7 @@ import re
 from PIL import Image
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-WIDTHS = [480, 800, 1200]
+WIDTHS = [480, 640, 800, 1200]
 
 # How wide each kind of image is displayed, by the class on the <img>.
 SIZES = {
@@ -40,7 +40,7 @@ SIZES = {
 }
 
 def is_variant(p):
-    return re.search(r"-(480|800|1200)\.webp$", p) is not None
+    return re.search(r"-(480|640|800|1200)\.webp$", p) is not None
 
 
 # Photos to make variants of (paths relative to the project root)

@@ -15,7 +15,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '.
 const PORT = Number(process.env.PORT || 8081);
 const TYPES = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg',
-  '.svg': 'image/svg+xml', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8', '.ico': 'image/x-icon' };
+  '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8', '.ico': 'image/x-icon' };
 const GZIP = new Set(['.html', '.css', '.js', '.json', '.svg', '.xml', '.txt']);
 
 http.createServer((req, res) => {
@@ -25,8 +25,8 @@ http.createServer((req, res) => {
   if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); return res.end('Not found'); }
   const ext = path.extname(file);
   const headers = { 'Content-Type': TYPES[ext] || 'application/octet-stream',
-    /* versioned CSS/JS (?v=hash) can be cached hard; everything else for an hour */
-    'Cache-Control': req.url.includes('?v=') ? 'public, max-age=31536000, immutable' : 'public, max-age=3600' };
+    /* versioned CSS/JS (?v=hash) and fonts can be cached hard; everything else for an hour */
+    'Cache-Control': (req.url.includes('?v=') || ext === '.woff2') ? 'public, max-age=31536000, immutable' : 'public, max-age=3600' };
   const body = fs.readFileSync(file);
   if (GZIP.has(ext) && /\bgzip\b/.test(req.headers['accept-encoding'] || '')) {
     headers['Content-Encoding'] = 'gzip'; headers['Vary'] = 'Accept-Encoding';

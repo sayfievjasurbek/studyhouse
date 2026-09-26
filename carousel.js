@@ -26,13 +26,13 @@
     { name: 'University of Cambridge',        file: 'logo-cambridge.webp',  w: 400, h: 93 },
     { name: 'University of Pittsburgh',       file: 'logo-pittsburgh.webp', w: 351, h: 112 },
     { name: 'Technical University of Munich', file: 'logo-tum.webp',        w: 300, h: 167 },
-    { name: 'The University of Melbourne',    file: 'logo-melbourne.webp',  w: 464, h: 112 },
+    { name: 'The University of Melbourne',    file: 'logo-melbourne.webp',  w: 400, h: 97 },
     { name: 'The University of Edinburgh',    file: 'logo-edinburgh.webp',  w: 400, h: 105 },
     { name: 'Humboldt-Universität zu Berlin', file: 'logo-humboldt.webp',   w: 144, h: 144, scale: 1.3 },
     { name: 'The University of Sydney',       file: 'logo-sydney.webp',     w: 400, h: 138 },
-    { name: 'Universitat de Barcelona',       file: 'logo-barcelona.webp',  w: 412, h: 112 },
+    { name: 'Universitat de Barcelona',       file: 'logo-barcelona.webp',  w: 400, h: 109 },
     { name: 'Tampere University',             file: 'logo-tampere.webp',    w: 400, h: 106 },
-    { name: 'Universiteit van Amsterdam',     file: 'logo-amsterdam.webp',  w: 457, h: 128, scale: 1.15 }
+    { name: 'Universiteit van Amsterdam',     file: 'logo-amsterdam.webp',  w: 400, h: 112, scale: 1.15 }
   ];
 
   var SECONDS_PER_LOGO = 1.8;      // the pace the strip has always had

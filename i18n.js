@@ -933,4 +933,6 @@
   collectHead();
   buildSwitcher();
   apply(getSaved());
+  /* The text is translated: show the page (see .i18n-pending in styles.css) */
+  document.documentElement.classList.remove('i18n-pending');
 })();

@@ -104,8 +104,8 @@
       '<nav class="navbar" id="navbar">' +
         '<div class="container navbar__inner">' +
           '<a href="' + esc(url('index.html')) + '" class="navbar__logo" id="nav-logo" aria-label="Study House - International Education Agency">' +
-            '<img src="' + esc(root) + 'images/logo-mark-108.webp" alt="Study House Emblem" class="navbar__logo-mark-img" width="108" height="104">' +
-            '<img src="' + esc(root) + 'images/logo-text-450.webp" alt="Study House — International Education Agency" class="navbar__logo-text-img" width="450" height="60">' +
+            '<img src="' + esc(root) + 'images/logo-mark-108.webp" srcset="' + esc(root) + 'images/logo-mark-54.webp 54w, ' + esc(root) + 'images/logo-mark-108.webp 108w" sizes="(max-width: 830px) 6.6vw, 54px" alt="Study House Emblem" class="navbar__logo-mark-img" width="108" height="104">' +
+            '<img src="' + esc(root) + 'images/logo-text-450.webp" srcset="' + esc(root) + 'images/logo-text-225.webp 225w, ' + esc(root) + 'images/logo-text-450.webp 450w" sizes="(max-width: 830px) 27vw, 225px" alt="Study House — International Education Agency" class="navbar__logo-text-img" width="450" height="60">' +
           '</a>' +
           '<ul class="navbar__links" id="nav-links">' + links + '</ul>' +
           '<div class="navbar__cta">' +
