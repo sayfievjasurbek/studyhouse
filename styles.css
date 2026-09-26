@@ -819,21 +819,27 @@ button {
 }
 
 /* The numerals used to be the border grey (1.16:1 on this background), so they
-   all but disappeared. They are now a deep gold gradient. It stays between
-   #916329 (4.9:1) and #B07A32 (3.5:1) on this background, above the 3:1 that
-   large text needs — the lighter brand gold (#CC9855, 2.4:1) would not pass.
-   The solid colour is the fallback where background-clip: text is unsupported. */
+   all but disappeared. They are now the brand navy gradient (#021F47 to
+   #07336D), which is 15:1 or better on this background.
+   The solid navy colour is what shows everywhere; the gradient only replaces it
+   where the browser can clip a background to text, so the numbers can never end
+   up transparent. */
 .step__number {
   font-family: var(--font-serif);
   font-size: 56px;
   font-weight: 700;
-  color: var(--color-gold-ink);
-  background: linear-gradient(135deg, #916329 0%, #B07A32 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--navy-deep);
   line-height: 1;
   margin-bottom: 20px;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .step__number {
+    background: var(--gradient-navy);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .step__icon {
