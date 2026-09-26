@@ -148,16 +148,5 @@
     ["Duolingo English Test — Understand scoring (10–160, 5-point steps)", "https://englishtest.duolingo.com/scores"],
     ["Cambridge English — B2 First results (140–190)", "https://www.cambridgeenglish.org/exams-and-tests/first/results/"],
     ["Cambridge English — C1 Advanced results (160–210)", "https://www.cambridgeenglish.org/exams-and-tests/advanced/results/"]
-  ],
-
-  "templates": {
-    "school": [
-      { "id": "core", "label": "Core school subjects", "subjects": ["Mother tongue and literature", "Mathematics", "English", "Physics", "Chemistry", "Biology", "History"] },
-      { "id": "stem", "label": "STEM focus", "subjects": ["Mathematics", "Physics", "Chemistry", "Informatics", "English"] }
-    ],
-    "university": [
-      { "id": "semester", "label": "One semester", "subjects": ["Subject 1", "Subject 2", "Subject 3", "Subject 4", "Subject 5"] },
-      { "id": "year", "label": "Full year", "subjects": ["Subject 1", "Subject 2", "Subject 3", "Subject 4", "Subject 5", "Subject 6", "Subject 7", "Subject 8"] }
-    ]
-  }
+  ]
 }

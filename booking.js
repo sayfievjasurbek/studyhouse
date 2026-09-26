@@ -29,8 +29,7 @@
     phone:   { file: 'mascot-phone.png',   say: 'How can we reach you?' },
     globe:   { file: 'mascot-globe.png',   say: 'Where would you like to study?' },
     happy:   { file: 'mascot-happy.png',   say: 'Yay! We got your request.' },
-    worried: { file: 'mascot-worried.png', say: "Oops, let's fix that together." },
-    thinking: { file: 'mascot-thinking.png', say: 'Let me look at those grades…' }
+    worried: { file: 'mascot-worried.png', say: "Oops, let's fix that together." }
   };
 
   /* One list of everything a visitor can be interested in. `kind` decides

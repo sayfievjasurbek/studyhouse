@@ -7,6 +7,7 @@
      <div data-gpa="full"></div>     also the Ambitious / Realistic / Safe lists
 
    Three steps: 1 Grades, 2 Profile, 3 Results, with a "Start over" link.
+   Grades are entered as one average score on the scale the visitor picks.
 
    Every conversion table, scale, score range and threshold lives in
    data/grades.json with its source and year. The university lists are the same
@@ -17,8 +18,7 @@
    because there is no cited source for them.
 
    Input rules: no minus or decrement control anywhere, every field is clamped
-   to its published range, no negative number can reach a result, and a subject
-   row is removed with a small "x".
+   to its published range, and no negative number can reach a result.
    ============================================ */
 
 (function () {
@@ -210,18 +210,11 @@
     var full = el.getAttribute('data-gpa') === 'full';
     var state, result, ui;
 
-    function isUniLevel() {
-      return state.level === 'university-student' || state.level === 'university-graduate';
-    }
-
     function fresh() {
       state = {
         step: 1,
-        mode: 'known',
         scaleId: 'uz5',
         known: null,
-        rows: [],
-        nextRowId: 1,
         countries: [],
         firstName: '',
         level: 'school-11',
@@ -230,21 +223,7 @@
       };
       result = null;
       ui = {};
-      seedRows();
     }
-
-    function seedRows() {
-      state.rows = [];
-      var tpl = G.templates[isUniLevel() ? 'university' : 'school'][0];
-      tpl.subjects.slice(0, full ? tpl.subjects.length : 5).forEach(function (s) { addRow(s, s); });
-    }
-
-    function addRow(name, key) {
-      state.rows.push({ id: state.nextRowId++, name: name || '', key: key || null,
-                        edited: false, value: null, weight: null });
-    }
-
-    function rowName(r) { return (r.key && !r.edited) ? t(r.key) : r.name; }
 
     /* ---------- Shell ---------- */
     function render() {
@@ -253,7 +232,6 @@
       el.appendChild(progress());
 
       var card = h('div', { class: 'gpa__card' });
-      card.appendChild(mascotFor(state.step));
       card.appendChild(state.step === 1 ? stepGrades() : state.step === 2 ? stepProfile() : stepResults());
       el.appendChild(card);
 
@@ -297,21 +275,6 @@
       reset.addEventListener('click', function () { fresh(); render(); });
       wrap.appendChild(reset);
       return wrap;
-    }
-
-    function mascotFor(step) {
-      var pose = step === 3 ? (result && result.profile.id === 'strong' ? 'happy' : 'wave') : 'thinking';
-      var img = h('img', { class: 'gpa__mascot', alt: '', width: '452', height: '545' });
-      img.setPose = function (name) {
-        img.dataset.pose = name;
-        img.src = root + 'images/mascot/mascot-' + name + '.png';
-      };
-      img.addEventListener('error', function () {
-        if (img.dataset.pose === 'wave') { img.hidden = true; return; }
-        img.setPose('wave');
-      });
-      img.setPose(pose);
-      return img;
     }
 
     function heading(title, sub) {
@@ -365,17 +328,6 @@
       var box = h('div', { class: 'gpa__step-body' });
       box.appendChild(heading(t('Your grades'), 'Tell us how your grades are written and where you would like to study.'));
 
-      var modes = h('div', { class: 'gpa__modes', role: 'group', 'aria-label': t('How do you want to enter your grades?') });
-      [['known', 'I know my GPA'], ['subjects', 'By subjects (more accurate)']].forEach(function (m) {
-        var b = h('button', {
-          type: 'button', class: 'gpa__mode' + (state.mode === m[0] ? ' gpa__mode--on' : ''),
-          'aria-pressed': state.mode === m[0] ? 'true' : 'false', text: t(m[1])
-        });
-        b.addEventListener('click', function () { state.mode = m[0]; render(); });
-        modes.appendChild(b);
-      });
-      box.appendChild(modes);
-
       var sc = scale(state.scaleId);
       var sel = h('select', { class: 'gpa__select', id: 'gpa-scale', 'aria-label': t('Grading system') });
       Object.keys(G.scales).forEach(function (id) {
@@ -385,13 +337,12 @@
       });
       sel.addEventListener('change', function () {
         state.scaleId = sel.value;
-        state.known = null;
-        state.rows.forEach(function (r) { r.value = null; });
+        state.known = null;          /* the old number means nothing on a new scale */
         render();
       });
       box.appendChild(field('Grading system', sel, sc.note ? t(sc.note) : null));
 
-      box.appendChild(state.mode === 'known' ? knownInput() : subjectRows());
+      box.appendChild(knownInput());
 
       var chips = h('div', { class: 'gpa__chips', role: 'group', 'aria-labelledby': 'gpa-dest-label' });
       G.countries.forEach(function (c) {
@@ -415,13 +366,8 @@
       var err = h('p', { class: 'gpa__error', role: 'alert', hidden: 'hidden' });
       var next = h('button', { type: 'button', class: 'btn btn--consult--dark gpa__next', text: t('Continue') + ' →' });
       next.addEventListener('click', function () {
-        var ok = state.mode === 'known'
-          ? state.known !== null
-          : state.rows.some(function (r) { return r.value !== null; });
-        if (!ok) {
-          err.textContent = t(state.mode === 'known'
-            ? 'Enter your average score to continue.'
-            : 'Enter at least one subject grade to continue.');
+        if (state.known === null) {
+          err.textContent = t('Enter your average score to continue.');
           err.hidden = false;
           return;
         }
@@ -455,109 +401,6 @@
         onInput: function (v) { state.known = v; }
       });
       return field('Average score', box, t('Allowed range') + ': ' + Math.max(0, sc.min) + ' – ' + sc.max);
-    }
-
-    function subjectRows() {
-      var wrap = h('div', { class: 'gpa__field' });
-      wrap.appendChild(h('span', { class: 'gpa__label', text: t('Your subjects') }));
-
-      var tpls = h('div', { class: 'gpa__templates' });
-      tpls.appendChild(h('span', { class: 'gpa__templates-label', text: t('Quick start') + ':' }));
-      G.templates[isUniLevel() ? 'university' : 'school'].forEach(function (tpl) {
-        var b = h('button', { type: 'button', class: 'gpa__tpl', text: t(tpl.label) });
-        b.addEventListener('click', function () {
-          state.rows = [];
-          tpl.subjects.forEach(function (s) { addRow(s, s); });
-          render();
-        });
-        tpls.appendChild(b);
-      });
-      wrap.appendChild(tpls);
-
-      var list = h('div', { class: 'gpa__rows' });
-      state.rows.forEach(function (r) { list.appendChild(rowEl(r)); });
-      wrap.appendChild(list);
-
-      var add = h('button', { type: 'button', class: 'gpa__add', text: '+ ' + t('Add subject') });
-      add.addEventListener('click', function () {
-        addRow('', null);
-        list.appendChild(rowEl(state.rows[state.rows.length - 1]));
-        list.lastChild.querySelector('input').focus();
-        updateTotal();
-      });
-      wrap.appendChild(add);
-
-      ui.total = h('p', { class: 'gpa__running', 'aria-live': 'polite' });
-      wrap.appendChild(ui.total);
-      setTimeout(updateTotal, 0);
-      return wrap;
-    }
-
-    function rowEl(r) {
-      var sc = scale(state.scaleId);
-      var row = h('div', { class: 'gpa__row' });
-
-      var name = h('input', {
-        type: 'text', class: 'gpa__name', value: rowName(r),
-        'aria-label': t('Subject name'), placeholder: t('Subject')
-      });
-      name.addEventListener('input', function () { r.name = name.value; r.edited = true; });
-      row.appendChild(name);
-
-      if (isLetterScale(state.scaleId)) {
-        var sel = h('select', { class: 'gpa__select gpa__grade', 'aria-label': t('Grade') });
-        sel.appendChild(h('option', { value: '', text: '—' }));
-        sc.letters.forEach(function (l) {
-          var o = h('option', { value: String(l.points), text: l.grade });
-          if (r.value === l.points) o.selected = true;
-          sel.appendChild(o);
-        });
-        sel.addEventListener('change', function () {
-          r.value = sel.value === '' ? null : parseFloat(sel.value);
-          updateTotal();
-        });
-        row.appendChild(sel);
-      } else {
-        row.appendChild(numberBox({
-          label: 'Grade', cls: 'gpa__grade', value: r.value, decimals: sc.decimals,
-          placeholder: String(sc.max),
-          clamp: function (v) { return clamp(state.scaleId, v); },
-          onInput: function (v) { r.value = v; updateTotal(); },
-          after: updateTotal
-        }));
-      }
-
-      row.appendChild(numberBox({
-        label: 'Credits or hours (optional)', cls: 'gpa__credits', value: r.weight, decimals: 0,
-        placeholder: t('Cr.'),
-        clamp: function (v) { return Math.max(0, Math.min(1000, v)); },
-        onInput: function (v) { r.weight = v; updateTotal(); },
-        after: updateTotal
-      }));
-
-      /* Removing a row is an "x", never a minus. */
-      var del = h('button', {
-        type: 'button', class: 'gpa__del', 'aria-label': t('Remove subject'), html: '&times;'
-      });
-      del.addEventListener('click', function () {
-        state.rows = state.rows.filter(function (x) { return x.id !== r.id; });
-        row.remove();
-        updateTotal();
-      });
-      row.appendChild(del);
-      return row;
-    }
-
-    /* ONE overall figure across every subject — never a per-subject result. */
-    function updateTotal() {
-      if (!ui.total) return;
-      var filled = state.rows.filter(function (r) { return r.value !== null; });
-      if (!filled.length) { ui.total.textContent = ''; return; }
-      var mean = rawMean(state.scaleId, state.rows);
-      var weighted = state.rows.some(function (r) { return r.value !== null && r.weight > 0; });
-      ui.total.textContent = t('Overall average across') + ' ' + filled.length + ' ' +
-        t('subjects') + ': ' + mean.toFixed(2) +
-        (weighted ? ' (' + t('weighted by credits') + ')' : '');
     }
 
     /* ---------- Step 2: profile ---------- */
@@ -636,9 +479,7 @@
 
     /* ---------- Compute ---------- */
     function compute() {
-      var rows = state.mode === 'known'
-        ? [{ value: state.known, weight: null }]
-        : state.rows;
+      var rows = [{ value: state.known, weight: null }];
       var sc = scale(state.scaleId);
       var gpa = gpaOf(state.scaleId, rows);
       var ratio = ratioOf(state.scaleId, rows);
@@ -647,9 +488,7 @@
         german: germanOf(state.scaleId, rows),
         ratio: ratio,
         profile: profileOf(ratio === null ? 0 : ratio),
-        scaleLabel: sc.label,
-        subjects: rows.filter(function (r) { return r.value !== null; }).length,
-        mode: state.mode
+        scaleLabel: sc.label
       };
       /* A UK class is a degree classification, so it is only shown for
          university-level grades. */
@@ -697,7 +536,6 @@
 
       box.appendChild(h('p', { class: 'gpa__estimate' },
         h('strong', { text: t('Estimate only.') }), ' ',
-        (r.mode === 'subjects' ? t('One overall average across') + ' ' + r.subjects + ' ' + t('subjects') + ' · ' : '') +
         t(r.scaleLabel) + '. ' +
         t('The German figure uses the modified Bavarian formula') + ': ' + G.german.formula + '. ' +
         t('Universities and credential-evaluation services apply their own rules.')));

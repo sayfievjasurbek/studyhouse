@@ -161,7 +161,6 @@ Study House emblem is shown):
 | `mascot-globe.png` | Country / programme select |
 | `mascot-happy.png` | Success (arms up) |
 | `mascot-worried.png` | Error (friendly) |
-| `mascot-thinking.png` | GPA calculator, while it works out a result |
 
 Use transparent PNGs, roughly 450×545 px (portrait, same framing for every pose so the swap does
 not jump). The current `mascot-wave.png` is cropped from the character sheet and still has the grey
@@ -202,6 +201,9 @@ Pexels, which permits commercial use without attribution.
 Three steps — Grades, Profile, Results — built by `gpa.js` into any `[data-gpa]` element
 (`data-gpa="full"` also shows the Ambitious / Realistic / Safe lists).
 
+Grades are entered as **one average score** on whichever scale the visitor picks. There is no
+per-subject entry mode and no mascot on this page.
+
 Every scale, score range, threshold and formula is in `data/grades.json` with its source and year.
 To add a grading system, add an entry to `scales`: `max`, `pass` and `gpa` (`"bands"`, `"direct"`,
 `"letters"` or `null` when no published conversion exists). `pass` is the lowest passing grade and
@@ -209,12 +211,9 @@ feeds the modified Bavarian formula.
 
 Rules the calculator holds to, and that any change should preserve:
 
-- no minus or decrement control; grade and score fields accept digits only, so a negative can
-  never be typed or displayed
+- no minus or decrement control; the score fields accept digits only, so a negative can never be
+  typed or displayed
 - every field is clamped to its published range
-- "By subjects" produces **one** overall average across all subjects, weighted by credits or hours
-  when given — never a per-subject result
-- a row is removed with a small "x"
 - every figure is labelled an estimate, and there are no percentile or earnings claims
 
 ## Country pages with the compare tool (USA, Australia, China)
