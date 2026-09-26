@@ -321,6 +321,18 @@ Organization structured data lives in `index.html` as a single JSON-LD block. Co
 left out of it on purpose — the comment directly above shows exactly what to paste in once the
 owner has them. Put the same details into `CONTACT` in `site.js`, which builds the footer.
 
+## Carousel logos
+
+The homepage strip is the `LOGOS` array at the top of `carousel.js`: a name, a file in `images/`
+and an optional `scale` (a round or stacked logo reads better a little larger). Export new logos
+as WebP with a transparent background, about 112 px tall, and trim the empty margin around them.
+The scroll speed is set from the number of logos, so adding one does not make the strip faster.
+
+The current ten are Cambridge, Pittsburgh, TUM, Melbourne, Edinburgh, Humboldt Berlin, Sydney,
+Barcelona, Tampere and Amsterdam. Pittsburgh, Melbourne and Amsterdam were supplied as stock-site
+images with a checkerboard baked in; it was converted to real transparency. Replace them with the
+official brand files when you have them.
+
 ## Images
 
 - Cards are about 800 px wide, heroes about 1600 px, all WebP and under 250 KB.

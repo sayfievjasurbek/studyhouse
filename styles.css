@@ -929,8 +929,9 @@ button {
   align-items: center;
   gap: 64px;
   width: max-content;
-  /* Slow and steady: one full pass takes ~9s per copy of the logo list. */
-  animation: logoCarouselScroll calc(var(--logo-copies, 4) * 9s) linear infinite;
+  /* Slow and steady: carousel.js sets --logo-duration from the number of logos,
+     so adding a logo does not make the strip faster. */
+  animation: logoCarouselScroll var(--logo-duration, 36s) linear infinite;
   will-change: transform;
 }
 
@@ -983,8 +984,8 @@ button {
 }
 
 .uni-logo-card__img {
-  max-height: 56px;
-  max-width: 200px;
+  max-height: calc(56px * var(--logo-scale, 1));
+  max-width: calc(200px * var(--logo-scale, 1));
   width: auto;
   height: auto;
   object-fit: contain;
@@ -1316,8 +1317,8 @@ button {
   }
 
   .uni-logo-card__img {
-    max-height: 48px;
-    max-width: 170px;
+    max-height: calc(48px * var(--logo-scale, 1));
+    max-width: calc(170px * var(--logo-scale, 1));
   }
 
 }
@@ -1436,12 +1437,14 @@ button {
 
   .universities__carousel-track {
     gap: 36px;
-    animation-duration: 22s;
+    /* a little quicker on phones (22s of the 36s desktop pace), but still
+       tied to the number of logos so adding one does not change the speed */
+    animation-duration: calc(var(--logo-duration, 36s) * 0.61);
   }
 
   .uni-logo-card__img {
-    max-height: 40px;
-    max-width: 140px;
+    max-height: calc(40px * var(--logo-scale, 1));
+    max-width: calc(140px * var(--logo-scale, 1));
   }
 
   .section-heading {
