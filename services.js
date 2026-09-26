@@ -73,6 +73,8 @@
     var art = h('article', { class: 'prog-card' });
     art.appendChild(h('img', {
       src: root + 'images/programmes/' + p.id + '-card.webp', alt: '',
+      srcset: root + 'images/programmes/' + p.id + '-card-480.webp 480w, ' + root + 'images/programmes/' + p.id + '-card.webp 800w',
+      sizes: '(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 400px',
       class: 'prog-card__img', loading: p.id === 'universities' ? null : 'lazy',
       fetchpriority: p.id === 'universities' ? 'high' : null,
       decoding: 'async', width: '800', height: '1000'
@@ -134,6 +136,9 @@
     var head = h('header', { class: 'pmodal__head' });
     head.appendChild(h('img', {
       src: root + 'images/programmes/' + p.id + '-hero.webp', alt: '',
+      srcset: root + 'images/programmes/' + p.id + '-hero-800.webp 800w, ' + root + 'images/programmes/' + p.id + '-hero-1200.webp 1200w, ' +
+              root + 'images/programmes/' + p.id + '-hero.webp 1600w',
+      sizes: '(max-width: 900px) 100vw, 880px',
       class: 'pmodal__img', width: '1600', height: '760', decoding: 'async'
     }));
     head.appendChild(h('div', { class: 'pmodal__head-overlay' }));

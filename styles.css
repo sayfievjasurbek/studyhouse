@@ -5200,3 +5200,56 @@ textarea:focus-visible,
     min-height: 640px;
   }
 }
+
+/* ============================================
+   PHONES: BODY COPY IS AT LEAST 16px
+   ============================================ */
+/* Paragraph-style text is 16px or larger on a phone (the tablet and desktop
+   sizes stay as designed). Fine print — the copyright line, source lines, small
+   notes and input hints — is not body copy and stays at 13px and above. */
+@media (max-width: 640px) {
+  .expertise-panel__item,
+  .visa-step__text,
+  .visa-spec__value,
+  .dest-card__desc,
+  .prog-card__blurb,
+  .fact-card__note,
+  .feature-item__desc,
+  .step__desc,
+  .approach-card__body,
+  .dowork__text,
+  .gpa__sub,
+  .gpa-home__text,
+  .cmp-picker__label,
+  .cmp-foot__note,
+  .prog-disclaimer,
+  .footer__blurb,
+  .footer__contact-list li,
+  .footer__contact-list a,
+  .footer__contact-empty,
+  .section-intro,
+  .inst-database__text,
+  .country-overview__text,
+  .page-header__text,
+  .faq-item p,
+  .pmodal__facts dd,
+  .pmodal__work-text,
+  .check-item,
+  .tl-step__what,
+  .cmp-card__list dd,
+  dd {
+    font-size: 16px;
+  }
+
+  /* fine print stays small but legible */
+  .footer__copyright,
+  .footer__note,
+  .source-line,
+  .visa-spec__note,
+  .cmp-todo,
+  .gpa__hint,
+  .gpa__stat-note,
+  .gpa__estimate {
+    font-size: 13.5px;
+  }
+}
