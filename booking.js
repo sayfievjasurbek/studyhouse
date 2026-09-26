@@ -5,24 +5,28 @@
      <a href="#booking" class="btn" data-booking>Book a Consultation →</a>
    Optional: data-booking-country="usa" pre-selects a country.
 
-   The form POSTs JSON to BOOKING_ENDPOINT. There is no backend in this repo —
-   see README.md ("Booking form") for how to connect it. Never put a Telegram
-   bot token or any other secret in this file: it is public.
+   The form POSTs JSON to BOOKING_ENDPOINT, a Google Apps Script web app that
+   passes the request on to Telegram. The bot token and chat ID live in that
+   script, never here: this file is public, so the only thing in it is the URL.
    ============================================ */
 
 (function () {
   'use strict';
 
   /* ---------- CONFIG ---------- */
-  var BOOKING_ENDPOINT = '';          // e.g. 'https://your-function.example.com/booking'
+  const BOOKING_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwoSrUqIkPwBjGdYtIadnhGaRlBE2jBOPb3z1Uso_eH3J1tIKBgdIwsJlr0mQ14yp8/exec';
   var REQUEST_TIMEOUT_MS = 15000;
 
   var scriptSrc = document.currentScript ? document.currentScript.src : location.href;
   var MASCOT_BASE = new URL('images/mascot/', scriptSrc).href;
   var LOGO_URL = new URL('images/logo-mark.webp', scriptSrc).href;
 
-  /* Mascot poses (files in /images/mascot/). Missing poses fall back to the
-     wave pose, and a missing wave pose falls back to the Study House emblem. */
+  /* Mascot poses (files in /images/mascot/). A pose whose file has not been added yet
+     shows the wave pose instead, and a missing wave pose falls back to the Study House
+     emblem. AVAILABLE lists the pose files that exist: when you add one (say
+     mascot-happy.png), add its name here too, and it is used from then on. Keeping the
+     list stops the browser from asking for files that are not there, which would log 404s. */
+  var AVAILABLE = ['wave'];
   var POSES = {
     wave:    { file: 'mascot-wave.png',    say: "Hi! Let's plan your studies abroad." },
     curious: { file: 'mascot-curious.png', say: 'Nice to meet you! What is your name?' },
@@ -107,7 +111,7 @@
               field('telegram', 'telegram', 'Telegram username (optional)', '<input id="bk-telegram" name="telegram" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="next" placeholder="@username" aria-describedby="bk-telegram-err">') +
               field('country', 'country', 'Country or programme of interest', '<select id="bk-country" name="country" required aria-describedby="bk-country-err">' + options + '</select>') +
               '<p class="booking__prefill" id="bk-prefill" hidden></p>' +
-              '<div class="booking__hp" aria-hidden="true"><label>Company<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>' +
+              '<div class="booking__hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>' +
               '<div class="field field--check" data-field="consent">' +
                 '<label class="check"><input id="bk-consent" name="consent" type="checkbox" required aria-describedby="bk-consent-err">' +
                 '<span>I agree that Study House may contact me using these details about my consultation request.</span></label>' +
@@ -119,7 +123,7 @@
             '</form>' +
           '</div>' +
           '<div class="booking__success" id="bk-success" tabindex="-1" hidden>' +
-            '<h2 class="booking__title">Thank you, we will reply within 24 hours</h2>' +
+            '<h2 class="booking__title">Thank you! We will contact you shortly</h2>' +
             '<button type="button" class="btn btn--outline" data-booking-close>Close</button>' +
           '</div>' +
         '</div>' +
@@ -149,7 +153,7 @@
   var fadeTimer = null;
   var fallbackStep = 0;
 
-  function poseUrl(name) { return MASCOT_BASE + POSES[name].file; }
+  function poseUrl(name) { return MASCOT_BASE + POSES[AVAILABLE.indexOf(name) >= 0 ? name : 'wave'].file; }
 
   function loadPose(name) {
     fallbackStep = 0;
@@ -181,7 +185,7 @@
   }
 
   function preloadPoses() {
-    Object.keys(POSES).forEach(function (k) { var i = new Image(); i.src = poseUrl(k); });
+    AVAILABLE.forEach(function (k) { var i = new Image(); i.src = poseUrl(k); });
   }
 
   form.addEventListener('focusin', function (e) {
@@ -287,12 +291,16 @@
      { gpa: '3.4 / 4.0 (university scale)', source: 'gpa-calculator' } */
   var context = {};
 
-  function resetForm() {
+  function clearFields() {
     form.reset();
     ORDER.forEach(function (name) { showError(name, ''); delete el[name].dataset.touched; });
     context = {};
     prefillNote.hidden = true;
     statusEl.hidden = true;
+  }
+
+  function resetForm() {
+    clearFields();
     submitBtn.disabled = false;
     submitBtn.classList.remove('is-loading');
     setText(submitBtn, 'Send request');
@@ -409,6 +417,8 @@
   }
 
   function showSuccess() {
+    clearFields();                 // the request is sent: start the next visit with an empty form
+    setLoading(false);
     setPose('happy');
     formWrap.hidden = true;
     success.hidden = false;
@@ -433,14 +443,13 @@
       return;
     }
 
-    if (form.elements.company.value) { showSuccess(); return; }   // honeypot: bots fill this
-
     var payload = {
       firstName: el.first.value.trim(),
       surname: el.surname.value.trim(),
       phone: '+998' + phoneDigits(el.phone.value),
       telegram: el.telegram.value.trim() ? '@' + el.telegram.value.trim().replace(/^@/, '') : '',
       interest: INTEREST_BY_VALUE[el.country.value].label,        // English label, not the translated one
+      website: form.elements.website.value,                       // honeypot: always empty for a person, the server drops the request if it is not
       interestType: INTEREST_BY_VALUE[el.country.value].kind,     // 'country' | 'programme' | 'other'
       consent: true,
       language: i18n() ? i18n().lang() : document.documentElement.lang,
@@ -450,23 +459,22 @@
     if (context.gpa) payload.gpa = context.gpa;
     if (context.source) payload.source = context.source;
 
-    if (!BOOKING_ENDPOINT) {
-      console.warn('[booking] BOOKING_ENDPOINT is not configured in booking.js, so nothing was sent. See README.md.');
-      showFailure();
-      return;
-    }
-
     setLoading(true);
     var controller = window.AbortController ? new AbortController() : null;
     var timer = controller ? setTimeout(function () { controller.abort(); }, REQUEST_TIMEOUT_MS) : null;
 
+    /* text/plain on purpose: it is a "simple" request, so the browser sends no CORS
+       preflight, which Apps Script cannot answer. The script still reads the body as JSON. */
     fetch(BOOKING_ENDPOINT, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload),
       signal: controller ? controller.signal : undefined
     }).then(function (res) {
       if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).then(function (result) {
+      if (!result || result.ok !== true) throw new Error('Server said: ' + JSON.stringify(result));
       showSuccess();
     }).catch(function (err) {
       console.error('[booking] submit failed:', err);

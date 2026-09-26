@@ -319,7 +319,7 @@
     "Send request": ["Soʻrov yuborish", "Отправить заявку"],
     "Sending…": ["Yuborilmoqda…", "Отправка…"],
     "Close": ["Yopish", "Закрыть"],
-    "Thank you, we will reply within 24 hours": ["Rahmat, 24 soat ichida javob beramiz", "Спасибо, мы ответим в течение 24 часов"],
+    "Thank you! We will contact you shortly": ["Rahmat! Tez orada siz bilan bogʻlanamiz", "Спасибо! Мы скоро свяжемся с вами"],
     "Please enter your first name.": ["Iltimos, ismingizni kiriting.", "Пожалуйста, введите имя."],
     "Please enter your surname.": ["Iltimos, familiyangizni kiriting.", "Пожалуйста, введите фамилию."],
     "Enter a valid Uzbek mobile number: +998 followed by 9 digits.": ["Oʻzbekiston mobil raqamini toʻgʻri kiriting: +998 va undan keyin 9 ta raqam.", "Введите корректный узбекский мобильный номер: +998 и далее 9 цифр."],

@@ -71,26 +71,32 @@ openBooking({ gpa: '3.4 / 4.0 (university scale)', source: 'gpa-calculator' });
 The list of countries and programmes is the `INTERESTS` array at the top of `booking.js` —
 edit it there and the `<select>`, the validation and the payload all follow.
 
-There is **no backend in this repo**. `booking.js` POSTs JSON to the single constant
-`BOOKING_ENDPOINT` at the top of the file. Until you set it, submitting shows the failure message
-and logs a warning to the console (it never pretends to succeed).
+The form is connected to a Google Apps Script web app: `booking.js` POSTs to the single constant
+`BOOKING_ENDPOINT` at the top of the file. The request uses `Content-Type: text/plain` on purpose —
+it needs no CORS preflight, which Apps Script cannot answer — and the script parses the body as JSON.
+The visitor sees the success screen only if the reply is JSON with `ok: true`; anything else (an
+error page, a timeout, no network) shows the failure message and keeps what they typed.
 
 Payload:
 
 ```json
 { "firstName": "…", "surname": "…", "phone": "+998901234567", "telegram": "@name or empty",
-  "interest": "Chevening", "interestType": "programme",
+  "interest": "Chevening", "website": "", "interestType": "programme",
   "consent": true, "language": "uz", "page": "/index.html",
   "submittedAt": "2026-01-01T12:00:00.000Z",
   "gpa": "3.4 / 4.0 (university scale)", "source": "gpa-calculator" }
 ```
 
-`interest` is always the English label even when the visitor is reading the site in Uzbek or
+`website` is the honeypot: a hidden field that people never fill in, so a bot that does gives itself
+away — the script should discard any request where it is not empty. `interest` is always the English label even when the visitor is reading the site in Uzbek or
 Russian. `interestType` is `country`, `programme` or `other`. `gpa` and `source` appear only when
 the form was opened with them.
 
 **Never put a Telegram bot token (or any secret) in front-end code** — everything in this repo is
-public. Keep it in a serverless function's environment variables.
+public. The token and chat ID belong in the Apps Script's Script Properties (or a serverless
+function's environment variables); the only thing in the site is the endpoint URL.
+
+The two options below are alternatives if you ever move away from Apps Script.
 
 ### Option A — Telegram bot behind a serverless function
 
@@ -153,8 +159,10 @@ cross-origin (CORS) JSON requests from your domain.
 ## Mascot images
 
 The booking form looks for these files in `images/mascot/` and swaps between them as the visitor
-moves through the form (a missing pose falls back to `mascot-wave.png`; if that is missing too, the
-Study House emblem is shown):
+moves through the form. Only `mascot-wave.png` exists so far; the other poses show the wave pose
+until their file is added **and** its name is added to `AVAILABLE` at the top of `booking.js` (that
+list stops the browser asking for files that are not there). If the wave file is missing too, the
+Study House emblem is shown:
 
 | File | When it is shown |
 | --- | --- |
@@ -300,6 +308,7 @@ node responsive.mjs --lang ru               # same in Russian (the longest words
 node responsive.mjs --sweep                 # the 16-width sweep, 320px to 3840px
 node responsive.mjs --only 320x568 --pages /services/ --shots   # one case, with screenshots
 node modals-test.mjs                        # booking form and programme popups, 11 sizes
+node booking-submit-test.mjs                # booking submit against a stand-in endpoint: success, every failure, loading
 node carousel-test.mjs                      # logo carousel: drift, swipe, pause, wrap
 node compare-test.mjs                       # comparison table at tablet widths
 node fontsize.mjs 375                       # any body text under 16px on a phone
