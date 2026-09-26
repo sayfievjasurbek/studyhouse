@@ -28,8 +28,8 @@
   var CONTACT = {
     phone: '',        // e.g. '+998 90 123 45 67'
     telegram: '',     // e.g. 'studyhouse_uz'
-    email: '',        // e.g. 'hello@studyhouse.uz'
-    address: ''       // e.g. 'Amir Temur 1, Tashkent'
+    email: 'info@studyhouse.uz',
+    address: "Toshkent shahri, Yakkasaroy tumani, Dilbuloq MFY, Shota Rustaveli ko'chasi, 2 tor ko'chasi, 2-uy"
   };
 
   /* ---------- CONFIG: social profiles ----------

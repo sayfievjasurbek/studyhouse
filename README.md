@@ -276,13 +276,14 @@ The Uzbek and Russian for each page lives beside it in `destinations/<country>/s
 Both live in one place, at the top of `site.js`:
 
 ```js
-var CONTACT = { phone: '', telegram: '', email: '', address: '' };
+var CONTACT = { phone: '', telegram: '', email: 'info@studyhouse.uz', address: '…' };
 var SOCIAL  = { instagram: '', telegram: '', linkedin: '', youtube: '' };
 ```
 
 An entry left empty is simply not shown — the site never displays an invented phone number or a
 dead social link. While every `CONTACT` field is empty the footer's contact column offers the
-booking form instead. Fill a value in and it appears on every page.
+booking form instead. Fill a value in and it appears on every page. The email and address are
+filled in; a phone number and Telegram username are still empty, so they are not shown.
 
 The same contact details should also go into the JSON-LD block in `index.html` (see **SEO**).
 

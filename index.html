@@ -30,18 +30,11 @@
   <!-- /SEO -->
 
   <!-- Organization structured data.
-       Contact details are deliberately absent rather than invented. Once the
-       owner has them, add this block inside the JSON below (and fill the same
-       details into CONTACT in site.js, which builds the footer):
+       The email and address match CONTACT in site.js, which builds the footer —
+       change them in both places. A phone number and social profiles are still
+       missing; when the owner has them, add to the JSON below:
 
-         "telephone": "+998 90 123 45 67",
-         "email": "hello@example.uz",
-         "address": {
-           "@type": "PostalAddress",
-           "streetAddress": "…",
-           "addressLocality": "Tashkent",
-           "addressCountry": "UZ"
-         },
+         "telephone": "+998 …",
          "sameAs": ["https://instagram.com/…", "https://t.me/…"],
   -->
   <script type="application/ld+json">
@@ -54,6 +47,14 @@
     "logo": "https://sayfievjasurbek.github.io/studyhouse/images/logo-mark.webp",
     "image": "https://sayfievjasurbek.github.io/studyhouse/images/og-card.jpg",
     "description": "Study House helps students from Uzbekistan apply to universities in Europe, Australia, China and the USA, and to the UWC, Work and Travel, FLEX, Erasmus+ and Chevening programmes.",
+    "email": "info@studyhouse.uz",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Shota Rustaveli ko'chasi, 2 tor ko'chasi, 2-uy, Dilbuloq MFY",
+      "addressLocality": "Yakkasaroy tumani",
+      "addressRegion": "Toshkent shahri",
+      "addressCountry": "UZ"
+    },
     "areaServed": { "@type": "Country", "name": "Uzbekistan" },
     "knowsLanguage": ["uz", "ru", "en"]
   }
