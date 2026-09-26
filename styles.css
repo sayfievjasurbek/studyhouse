@@ -83,6 +83,9 @@
   --gutter: clamp(16px, 4vw, 40px);
   /* Header height, used for anchor offsets and the mobile menu */
   --header-h: 80px;
+  /* Page zoom on wide screens (see the last media queries). Viewport units such
+     as dvh are NOT scaled by `zoom`, so anything sized in them divides by this. */
+  --zoom: 1;
 }
 
 /* --- Reset & Base --- */
@@ -4497,7 +4500,6 @@ h3 em {
 .pmodal__panel {
   position: relative;
   width: min(880px, 100%);
-  max-height: min(880px, 92vh);
   overflow-y: auto;
   overscroll-behavior: contain;
   background: var(--color-white);
@@ -4735,8 +4737,8 @@ img, svg, video, canvas {
    phone while the browser bar is showing. The `vh` line is the fallback for
    browsers without `dvh`. --- */
 .pmodal__panel {
-  max-height: min(880px, 92vh);
-  max-height: min(880px, 92dvh);
+  max-height: min(880px, calc(92vh / var(--zoom)));
+  max-height: min(880px, calc(92dvh / var(--zoom)));
 }
 
 /* --- Focus: every interactive element shows where the keyboard (or a TV
@@ -4804,18 +4806,30 @@ textarea:focus-visible,
 }
 
 @media (min-width: 1920px) {
+  :root {
+    --zoom: 1.25;
+  }
+
   html {
     zoom: 1.25;
   }
 }
 
 @media (min-width: 2560px) {
+  :root {
+    --zoom: 1.6;
+  }
+
   html {
     zoom: 1.6;
   }
 }
 
 @media (min-width: 3840px) {
+  :root {
+    --zoom: 2.4;
+  }
+
   html {
     zoom: 2.4;
   }
@@ -4988,5 +5002,108 @@ textarea:focus-visible,
 
   .visa-spec__value {
     text-align: left;
+  }
+}
+
+/* ============================================
+   MODALS ON PHONES: FULL-HEIGHT SHEETS
+   ============================================ */
+
+/* --- Booking form ---
+   On a phone the panel is a fixed-height column: the mascot strip on top, then
+   the form, which scrolls inside it. So the close button never scrolls away and
+   the submit button is always in view. --vvh is the visible height as reported by
+   the visual viewport, which shrinks when the on-screen keyboard opens; that
+   keeps the last field and the button above the keyboard. */
+@media (max-width: 768px) {
+  .booking {
+    padding: 0;
+    overflow: hidden;
+    align-items: stretch;
+  }
+
+  .booking__panel {
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    margin: 0;
+    border-radius: 0;
+    min-height: 0;
+    height: 100vh;
+    height: 100dvh;
+    height: var(--vvh, 100dvh);
+  }
+
+  .booking__mascot {
+    flex: 0 0 auto;
+    padding-top: max(12px, env(safe-area-inset-top));
+    padding-left: max(16px, env(safe-area-inset-left));
+  }
+
+  .booking__close {
+    top: max(10px, env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
+  }
+
+  .booking__main {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+
+  /* The submit button stays at the bottom of the visible form. The wide white
+     shadow hides the fields scrolling underneath it. */
+  .booking__submit {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    box-shadow: 0 0 0 14px var(--color-bg);
+  }
+}
+
+/* A phone held sideways has very little height: the mascot goes, the form keeps
+   all of it. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .booking__mascot {
+    display: none;
+  }
+
+  .booking__main {
+    padding-top: 16px;
+  }
+
+  .booking__title {
+    padding-right: 56px;          /* clear of the close button */
+  }
+}
+
+/* --- Programme popups ---
+   The panel scrolls, so the close button is sticky: it stays at the top-right of
+   the visible area instead of scrolling away with the photo. */
+.pmodal__close {
+  position: sticky;
+  top: max(12px, env(safe-area-inset-top));
+  z-index: 3;
+  display: block;
+  margin: 12px 12px -56px auto;
+}
+
+@media (max-width: 768px) {
+  .pmodal__panel {
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .pmodal__head-text {
+    padding-top: max(28px, env(safe-area-inset-top));
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
   }
 }
