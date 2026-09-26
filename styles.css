@@ -999,7 +999,14 @@ button {
 .universities__carousel {
   position: relative;
   width: 100%;
-  overflow: hidden;
+  /* A scroll box: a finger swipe scrolls it natively and carousel.js drifts it
+     slowly when nobody is touching it. The scrollbar is hidden, not removed. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   padding: 24px 0 28px;
   mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
@@ -1026,30 +1033,26 @@ button {
   background: linear-gradient(to left, var(--color-bg), rgba(255, 255, 255, 0));
 }
 
+.universities__carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.universities__carousel:focus-visible {
+  outline: 3px solid var(--navy-light);
+  outline-offset: -3px;
+  border-radius: 8px;
+}
+
 .universities__carousel-track {
   display: flex;
   align-items: center;
   gap: 64px;
   width: max-content;
-  /* Slow and steady: carousel.js sets --logo-duration from the number of logos,
-     so adding a logo does not make the strip faster. */
-  animation: logoCarouselScroll var(--logo-duration, 36s) linear infinite;
-  will-change: transform;
-}
-
-.universities__carousel:focus-within .universities__carousel-track {
-  animation-play-state: paused;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .universities__carousel:hover .universities__carousel-track {
-    animation-play-state: paused;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* nothing drifts; the logos sit still (one copy), centred and wrapped */
   .universities__carousel-track {
-    animation: none;
     justify-content: center;
     flex-wrap: wrap;
     width: 100%;
@@ -1057,15 +1060,6 @@ button {
   .universities__carousel {
     mask-image: none;
     -webkit-mask-image: none;
-  }
-}
-
-@keyframes logoCarouselScroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
   }
 }
 
@@ -1092,11 +1086,17 @@ button {
   }
 }
 
+/* Sized from the logo's own aspect ratio (--ar = width / height, set by
+   carousel.js), not from the loaded image, so every slot has its final size
+   before any image arrives. Otherwise the strip is measured as a fraction of its
+   real length and the loop and drift speed come out wrong. The height is the
+   smaller of the standard height and whatever keeps the width under the maximum. */
 .uni-logo-card__img {
-  max-height: calc(56px * var(--logo-scale, 1));
-  max-width: calc(200px * var(--logo-scale, 1));
+  --h: calc(56px * var(--logo-scale, 1));
+  --maxw: calc(200px * var(--logo-scale, 1));
+  height: min(var(--h), calc(var(--maxw) / var(--ar, 3)));
   width: auto;
-  height: auto;
+  aspect-ratio: var(--ar, 3);
   object-fit: contain;
   display: block;
   transition: transform 0.3s ease;
@@ -1468,8 +1468,8 @@ button {
   }
 
   .uni-logo-card__img {
-    max-height: calc(48px * var(--logo-scale, 1));
-    max-width: calc(170px * var(--logo-scale, 1));
+    --h: calc(48px * var(--logo-scale, 1));
+    --maxw: calc(170px * var(--logo-scale, 1));
   }
 
 }
@@ -1549,14 +1549,11 @@ button {
 
   .universities__carousel-track {
     gap: 36px;
-    /* a little quicker on phones (22s of the 36s desktop pace), but still
-       tied to the number of logos so adding one does not change the speed */
-    animation-duration: calc(var(--logo-duration, 36s) * 0.61);
   }
 
   .uni-logo-card__img {
-    max-height: calc(40px * var(--logo-scale, 1));
-    max-width: calc(140px * var(--logo-scale, 1));
+    --h: calc(40px * var(--logo-scale, 1));
+    --maxw: calc(140px * var(--logo-scale, 1));
   }
 
   .section-heading {
@@ -2099,6 +2096,7 @@ button {
 
 .visa-spec__row {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
   padding: 14px 0;
@@ -2114,10 +2112,12 @@ button {
   font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.65);          /* was 0.45, about 3:1 — now above 4.5:1 */
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  flex-shrink: 0;
+  /* it may shrink and wrap: a long translated label (Uzbek "Moliyaviy taʼminot
+     hujjatlari") must not push the panel wider than the screen */
+  min-width: 0;
 }
 
 .visa-spec__value {
@@ -2126,6 +2126,7 @@ button {
   font-weight: 600;
   color: var(--color-white);
   text-align: right;
+  min-width: 0;
 }
 
 /* ============================================
@@ -4970,5 +4971,22 @@ textarea:focus-visible,
   .pmodal__close {
     width: 44px;
     height: 44px;
+  }
+}
+
+/* On a phone the visa panel's rows read better stacked: label above value */
+@media (max-width: 480px) {
+  .visa-spec {
+    padding: 28px 20px;
+  }
+
+  .visa-spec__row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .visa-spec__value {
+    text-align: left;
   }
 }
