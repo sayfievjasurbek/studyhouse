@@ -27,6 +27,8 @@ python3 -m http.server 8000     # then open http://localhost:8000/
 | `services-strings.js`, `destinations/*/strings.js` | Uzbek and Russian for those pages |
 | `tools/seo.py` | Regenerates canonical/OG tags, `sitemap.xml` and `robots.txt` |
 | `tools/stamp.py` | Adds a `?v=<hash>` version to every local CSS/JS reference so browsers pick up edits |
+| `tools/images.py` | Makes 480/800/1200px WebP variants of the photos and writes their `srcset`/`sizes` into the pages |
+| `tools/test/` | Automated checks: responsive layout, modals, carousel, comparison table, Lighthouse |
 | `images/mascot/` | Polar-bear mascot images used by the booking form and calculator |
 
 Every page declares two things and gets the rest from `site.js`:
@@ -285,6 +287,45 @@ python3 tools/stamp.py
 It rewrites each page's references to `styles.css?v=3f9a1c2e` and so on, using a hash of the file,
 so only files that actually changed get a new address. Safe to run repeatedly. Data files under
 `data/` are fetched with `cache: 'no-cache'` and do not need it.
+
+## Testing on every screen size
+
+Automated checks live in `tools/test/` (Playwright driving your installed Chrome, plus Lighthouse).
+Serve the site first (`python3 -m http.server 8000` in the project root), then:
+
+```bash
+cd tools/test && npm install                # once
+node responsive.mjs                         # every page x 14 device sizes, Uzbek
+node responsive.mjs --lang ru               # same in Russian (the longest words)
+node responsive.mjs --sweep                 # the 16-width sweep, 320px to 3840px
+node responsive.mjs --only 320x568 --pages /services/ --shots   # one case, with screenshots
+node modals-test.mjs                        # booking form and programme popups, 11 sizes
+node carousel-test.mjs                      # logo carousel: drift, swipe, pause, wrap
+node compare-test.mjs                       # comparison table at tablet widths
+node fontsize.mjs 375                       # any body text under 16px on a phone
+node serve.mjs &                            # a gzip + cache-header server on :8081, then:
+node lighthouse.mjs                         # mobile Lighthouse for the home page and calculator
+```
+
+`responsive.mjs` fails (exit 1) if any page at any size has horizontal overflow, a console error,
+a broken image, a touch target under 44px, or a wrapped or overlapping header. When it reports an
+overflow it names the elements; for a stubborn one, `node who.mjs <url> <width>` lists everything
+wider than the screen and `node bisect.mjs <url> <width>` finds the block responsible.
+
+Things the layout relies on, so they are not undone by accident:
+
+- **One number drives the header logo** (`--logo-h` in `styles.css`); below 400px the language
+  switcher moves into the mobile menu because it cannot fit beside the logo.
+- **From 1920px the page is scaled with CSS `zoom`** (1.25 at 1920, 1.6 at 2560, 2.4 at 3840) so text
+  stays readable on a TV. Viewport units are not scaled by zoom, so anything sized in `vh`/`dvh`
+  divides by `--zoom`.
+- **All hover styles sit inside `@media (hover: hover) and (pointer: fine)`**, so a touch screen never
+  gets a stuck hover state. Add new ones the same way.
+- **Controls are 44px on touch and narrow screens; form fields are 16px** (iOS zooms the page on
+  focus for anything smaller).
+- **The booking form on phones is a fixed-height sheet** whose height follows `--vvh` (the visual
+  viewport, which shrinks when the keyboard opens); only the form scrolls, so the close and submit
+  buttons stay visible.
 
 ## Contact details and social profiles
 

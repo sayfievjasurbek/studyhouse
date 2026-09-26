@@ -368,7 +368,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 40px;                 /* never lets the logo touch the first menu item */
-  height: 80px;
+  height: var(--header-h);
 }
 
 .navbar__logo {
@@ -5251,5 +5251,28 @@ textarea:focus-visible,
   .gpa__stat-note,
   .gpa__estimate {
     font-size: 13.5px;
+  }
+}
+
+/* Taps on controls act at once: no double-tap-to-zoom wait on older mobile
+   browsers, and a tap highlight in the brand colour instead of grey. */
+a,
+button,
+summary,
+select,
+input,
+label,
+[role="button"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: rgba(2, 31, 71, 0.12);
+}
+
+
+/* A phone held sideways is only about 375px tall: an 80px header would take a
+   fifth of the screen, so it is slimmer there. Everything that positions itself
+   below the header (anchor offsets, the mobile menu) reads --header-h. */
+@media (max-height: 480px) and (orientation: landscape) {
+  :root {
+    --header-h: 56px;
   }
 }
