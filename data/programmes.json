@@ -1,11 +1,13 @@
 {
   "updated": "2026-09-26",
+  "_logo": "Set a programme's \"logo\" to the path of its official logo file once you have added it, e.g. \"images/programmes/logos/uwc.png\". While it is null the card shows the programme name in type and the page makes no request for a file that does not exist.",
   "_note": "Content for the six cards and the five programme modals on /services/. A value of null is a fact we could not verify on an official page: it renders as a clearly marked placeholder, never a guess.",
 
   "programmes": [
     {
       "id": "universities",
       "name": "Universities",
+      "logo": null,
       "title": "University admission",
       "line": "Bachelor's and master's admission in Europe, the USA, Australia and China.",
       "action": "booking"
@@ -14,6 +16,7 @@
     {
       "id": "uwc",
       "name": "UWC",
+      "logo": null,
       "title": "United World Colleges",
       "line": "A two-year IB Diploma, selected through the UWC Uzbekistan national committee.",
       "action": "modal",
@@ -56,6 +59,7 @@
     {
       "id": "work-and-travel",
       "name": "Work and Travel",
+      "logo": null,
       "title": "Work and Travel in Germany",
       "line": "Work, gain experience and travel in Germany, starting May 2026.",
       "action": "modal",
@@ -94,6 +98,7 @@
     {
       "id": "flex",
       "name": "FLEX",
+      "logo": null,
       "title": "Future Leaders Exchange",
       "line": "A fully funded academic year at a US high school, sponsored by the U.S. Department of State.",
       "action": "modal",
@@ -135,6 +140,7 @@
     {
       "id": "erasmus-plus",
       "name": "Erasmus+",
+      "logo": null,
       "title": "Erasmus+",
       "line": "Two EU routes: an Erasmus Mundus Joint Master, or an exchange through your own university.",
       "action": "modal",
@@ -173,6 +179,7 @@
     {
       "id": "chevening",
       "name": "Chevening",
+      "logo": null,
       "title": "Chevening Scholarship",
       "line": "The UK government's fully funded scholarship for a one-year master's, for people with work experience.",
       "action": "modal",

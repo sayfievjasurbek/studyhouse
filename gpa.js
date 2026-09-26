@@ -299,7 +299,8 @@
       var input = h('input', {
         type: 'text', inputmode: 'decimal', class: 'gpa__num ' + (opts.cls || ''),
         id: opts.id || null, 'aria-label': t(opts.label),
-        placeholder: opts.placeholder || '', autocomplete: 'off'
+        placeholder: opts.placeholder || '', autocomplete: 'off',
+        enterkeyhint: 'done', autocapitalize: 'off', autocorrect: 'off'
       });
       if (opts.value !== null && opts.value !== undefined) input.value = opts.value;
 
@@ -422,7 +423,8 @@
 
       var name = h('input', {
         type: 'text', class: 'gpa__text', id: 'gpa-name', maxlength: '40',
-        value: state.firstName, placeholder: t('e.g. Nodira'), 'aria-label': t('First name')
+        value: state.firstName, placeholder: t('e.g. Nodira'), 'aria-label': t('First name'),
+        autocomplete: 'given-name', autocapitalize: 'words', enterkeyhint: 'done'
       });
       name.addEventListener('input', function () { state.firstName = name.value; });
       box.appendChild(field('First name', name, t('Used on your result card.')));

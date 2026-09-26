@@ -984,13 +984,15 @@ button {
   padding: 8px 0 72px;
 }
 
+/* A quiet label above the logos, not a section headline: small and grey
+   (#6A727D, 4.9:1 on white), so the logos are what the eye goes to. */
 .universities__heading {
   font-family: var(--font-serif);
-  font-size: clamp(22px, 2.6vw, 30px);
-  font-weight: 600;
-  color: var(--color-navy);
+  font-size: clamp(16px, 1.7vw, 19px);
+  font-weight: 500;
+  color: var(--color-gray-light);
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 /* --- Universities Logo Carousel --- */
@@ -4856,4 +4858,117 @@ textarea:focus-visible,
   min-width: 56px;
   min-height: 48px;
   font-size: 14px;
+}
+
+/* ============================================
+   TOUCH TARGETS AND FORM CONTROLS
+   ============================================ */
+
+/* Text fields are at least 16px everywhere: iOS Safari zooms the page when a
+   field smaller than that gets focus, and never zooms back out on its own. */
+.gpa__num,
+.gpa__text,
+.gpa__select,
+.booking input[type="text"],
+.booking input[type="tel"],
+.booking select {
+  font-size: 16px;
+}
+
+/* On touch screens (and any narrow window) every control is at least 44px in
+   both directions, with room between neighbours. Inline links inside a sentence
+   are exempt, as in WCAG 2.5.8. */
+@media (pointer: coarse), (max-width: 1024px) {
+  button,
+  .btn,
+  select,
+  input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]) {
+    min-height: 44px;
+  }
+
+  .btn {
+    min-height: 48px;
+  }
+
+  .gpa__select,
+  .gpa__num,
+  .gpa__text,
+  .booking input[type="text"],
+  .booking input[type="tel"],
+  .booking select {
+    min-height: 48px;
+  }
+
+  .breadcrumb__link,
+  .section-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .breadcrumb__nav {
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* footer links and the contact details */
+  .footer__col-list {
+    gap: 0;
+  }
+
+  .footer__link,
+  .footer__contact-list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 44px;          /* a short word such as "Aloqa" is still a full-size target */
+  }
+
+  .footer__contact-list {
+    gap: 4px;
+  }
+
+  /* chips, pills, filters and the calculator's buttons */
+  .gpa__chip,
+  .cmp-chip,
+  .pill,
+  .gpa__test-toggle,
+  .gpa__reset,
+  .gpa__back,
+  .gpa__ghost,
+  .gpa__step--clickable {
+    min-height: 44px;
+  }
+
+  .gpa__reset,
+  .gpa__back {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 8px;
+  }
+
+  .gpa__chips,
+  .cmp-chips {
+    gap: 8px;
+  }
+
+  /* the sources disclosure under the comparison table */
+  .cmp-sources summary {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* the consent checkbox: the whole line is the target, not the 18px box */
+  .booking .check {
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .booking__close,
+  .pmodal__close {
+    width: 44px;
+    height: 44px;
+  }
 }

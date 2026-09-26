@@ -100,11 +100,11 @@
             '<p class="booking__intro" id="bk-intro">Leave your details and we will reply within 24 hours.</p>' +
             '<form id="bk-form" novalidate>' +
               '<div class="booking__row">' +
-                field('first', 'first', 'First name', '<input id="bk-first" name="firstName" type="text" autocomplete="given-name" required aria-describedby="bk-first-err">') +
-                field('surname', 'surname', 'Surname', '<input id="bk-surname" name="surname" type="text" autocomplete="family-name" required aria-describedby="bk-surname-err">') +
+                field('first', 'first', 'First name', '<input id="bk-first" name="firstName" type="text" autocomplete="given-name" autocapitalize="words" enterkeyhint="next" required aria-describedby="bk-first-err">') +
+                field('surname', 'surname', 'Surname', '<input id="bk-surname" name="surname" type="text" autocomplete="family-name" autocapitalize="words" enterkeyhint="next" required aria-describedby="bk-surname-err">') +
               '</div>' +
-              field('phone', 'phone', 'Mobile phone', '<input id="bk-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+998 90 123 45 67" required aria-describedby="bk-phone-err">') +
-              field('telegram', 'telegram', 'Telegram username (optional)', '<input id="bk-telegram" name="telegram" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="@username" aria-describedby="bk-telegram-err">') +
+              field('phone', 'phone', 'Mobile phone', '<input id="bk-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next" placeholder="+998 90 123 45 67" required aria-describedby="bk-phone-err">') +
+              field('telegram', 'telegram', 'Telegram username (optional)', '<input id="bk-telegram" name="telegram" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="next" placeholder="@username" aria-describedby="bk-telegram-err">') +
               field('country', 'country', 'Country or programme of interest', '<select id="bk-country" name="country" required aria-describedby="bk-country-err">' + options + '</select>') +
               '<p class="booking__prefill" id="bk-prefill" hidden></p>' +
               '<div class="booking__hp" aria-hidden="true"><label>Company<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>' +

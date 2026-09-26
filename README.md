@@ -187,9 +187,10 @@ Globe XBA, Edu Action and Bildung & Beruf. Age, exact dates and cost are not pub
 are left as placeholders. The page states that Study House is an independent preparation service,
 not an organiser — change that only if the owner is actually an authorised organiser.
 
-**Logos.** Put each programme's official logo, downloaded unmodified from its own site, at
-`images/programmes/logos/<id>.png` (transparent PNG, about 400×160). Until the file exists the
-badge shows the programme name in type, so no mark is ever invented. Do not use a government seal
+**Logos.** Put each programme's official logo, downloaded unmodified from its own site, in
+`images/programmes/logos/` (transparent PNG, about 400×160), then set that programme's `"logo"` in
+`data/programmes.json` to the file's path. While `logo` is `null` the badge shows the programme name
+in type, so no mark is ever invented and the page never requests a file that is not there. Do not use a government seal
 or the EU flag — on these pages they would read as an endorsement.
 
 **Photos.** `images/programmes/<id>-card.webp` (800×1000) and `<id>-hero.webp` (1600×760), from

@@ -50,16 +50,21 @@
 
   function badge(p) {
     var wrap = h('span', { class: 'prog-badge' });
-    var img = h('img', {
-      src: root + 'images/programmes/logos/' + p.id + '.png',
-      alt: p.name + ' logo', class: 'prog-badge__img', width: '200', height: '80'
-    });
-    img.addEventListener('error', function () {
-      wrap.textContent = '';
+    /* A logo is shown only once its file is listed in data/programmes.json.
+       Until then the badge is the programme name in type, and the page does not
+       request a file that does not exist (which would log a 404 on every visit). */
+    if (p.logo) {
+      var img = h('img', {
+        src: root + p.logo, alt: p.name + ' logo', class: 'prog-badge__img', width: '200', height: '80'
+      });
+      img.addEventListener('error', function () {
+        wrap.textContent = '';
+        wrap.appendChild(h('span', { class: 'prog-badge__text', text: p.name }));
+      });
+      wrap.appendChild(img);
+    } else {
       wrap.appendChild(h('span', { class: 'prog-badge__text', text: p.name }));
-    });
-    if (img.complete && img.naturalWidth === 0) img.dispatchEvent(new Event('error'));
-    wrap.appendChild(img);
+    }
     return wrap;
   }
 

@@ -5,7 +5,7 @@
    the university's own official site or brand page, unmodified, and put the
    file in /images as logo-<name>.webp.
 
-   The heading on the page is "Universities we help you apply to". Do not
+   The heading on the page is "Top Universities we help you apply to". Do not
    change it to "partners" or "recently admitted" — neither is verified.
    ============================================ */
 

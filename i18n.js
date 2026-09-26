@@ -161,7 +161,7 @@
     "Select a country or programme": ["Davlat yoki dasturni tanlang", "Выберите страну или программу"],
     "Please choose a country or programme.": ["Iltimos, davlat yoki dasturni tanlang.", "Пожалуйста, выберите страну или программу."],
     "We will send your GPA estimate with this request:": ["Ushbu ariza bilan GPA bahoingizni ham yuboramiz:", "Вместе с этой заявкой мы отправим вашу оценку GPA:"],
-    "Universities we help you apply to": ["Biz ariza topshirishda yordam beradigan universitetlar", "Университеты, с поступлением в которые мы помогаем"],
+    "Top Universities we help you apply to": ["Biz ariza topshirishda yordam beradigan top universitetlar", "Топ-университеты, с поступлением в которые мы помогаем"],
     "See Where Your Grades": ["Baholaringiz sizni qayerga", "Узнайте, куда вас могут"],
     "Can Take You.": ["olib borishi mumkinligini koʻring.", "привести ваши оценки."],
     "Turn your Uzbek school or university grades into a 4.0 GPA, an approximate German grade and a UK class band, then see which universities are ambitious, realistic or safe for that profile. Every result is an estimate.": ["Oʻzbek maktab yoki universitet baholaringizni 4.0 tizimidagi GPA, taxminiy nemis bahosi va Britaniya daraja toifasiga aylantiring, soʻng shu profil uchun qaysi universitetlar ambitsiyali, real yoki xavfsiz variant ekanini koʻring. Har bir natija — taxminiy.", "Переведите свои узбекские школьные или университетские оценки в GPA по шкале 4.0, приблизительную немецкую оценку и британскую категорию диплома, а затем посмотрите, какие университеты для такого профиля амбициозные, реалистичные или запасные. Каждый результат — оценочный."],

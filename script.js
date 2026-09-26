@@ -86,6 +86,27 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', () => setMenu(false));
   });
 
+  // --- The on-screen keyboard must not cover the field being typed in ---
+  /* --vvh is the height of the part of the page that is actually visible. On iOS
+     the keyboard shrinks the visual viewport but not the layout viewport, so
+     `100dvh` alone leaves the bottom of a sheet under the keyboard; the booking
+     form uses --vvh to shrink with it. */
+  const vv = window.visualViewport;
+  const setVvh = () => document.documentElement.style.setProperty('--vvh', (vv ? vv.height : window.innerHeight) + 'px');
+  setVvh();
+  if (vv) { vv.addEventListener('resize', setVvh); vv.addEventListener('scroll', setVvh); }
+  window.addEventListener('resize', setVvh);
+
+  const coarse = window.matchMedia('(pointer: coarse)');
+  document.addEventListener('focusin', (e) => {
+    const el = e.target;
+    if (!el || !/^(INPUT|SELECT|TEXTAREA)$/.test(el.tagName) || !coarse.matches) return;
+    /* the keyboard takes a moment to appear; scroll after it has */
+    setTimeout(() => {
+      try { el.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (err) { el.scrollIntoView(); }
+    }, 320);
+  });
+
   // --- Smooth scroll for in-page anchors ---
   document.addEventListener('click', (e) => {
     const anchor = e.target.closest('a[href^="#"]');
