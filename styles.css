@@ -511,21 +511,22 @@ button {
 .navbar__links {
   display: flex;
   align-items: center;
-  gap: 36px;
+  gap: 14px;
   list-style: none;
   flex-wrap: nowrap;
   white-space: nowrap;
+  margin-left: clamp(24px, 3.2vw, 48px);
 }
 
 .navbar__link {
   font-family: var(--font-sans);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 1px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.35px;
   text-transform: uppercase;
   color: var(--color-gray);
   position: relative;
-  padding: 4px 0;
+  padding: 5px 0;
   white-space: nowrap;
   transition: color 0.3s ease;
 }
@@ -552,8 +553,8 @@ button {
 }
 
 .navbar__cta .btn {
-  padding: 12px 24px;
-  font-size: 13px;
+  padding: 10px 18px;
+  font-size: 12px;
   white-space: nowrap;
 }
 
@@ -561,29 +562,8 @@ button {
 .navbar__actions {
   display: flex;
   align-items: center;
-  gap: 20px;
-  flex-shrink: 0;
-}
-
-/* The language switcher and longer UZ/RU labels need more room, so the navbar
-   is a little tighter, drops its CTA on mid-size screens (it stays in the
-   mobile menu) and collapses to the hamburger earlier. */
-.navbar__links {
-  gap: 16px;
-}
-
-.navbar__link {
-  font-size: 12px;
-  letter-spacing: 0.5px;
-}
-
-.navbar__actions {
   gap: 12px;
-}
-
-.navbar__cta .btn {
-  padding: 11px 18px;
-  font-size: 12px;
+  flex-shrink: 0;
 }
 
 .lang-switch {
@@ -691,11 +671,12 @@ button {
    letting it wrap or overflow. Spacing stays even. */
 @media (max-width: 1200px) {
   .navbar__inner {
-    gap: 24px;
+    gap: 20px;
   }
 
   .navbar__links {
-    gap: 12px;
+    gap: 10px;
+    margin-left: 20px;
   }
 }
 
